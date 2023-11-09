@@ -19,8 +19,9 @@ class MusicEntity {
     var duration: TimeInterval = .zero
     var imageData: Data? = nil
     var played: Bool = false
+    var type: EntityType = .album
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false) {
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType) {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -29,5 +30,6 @@ class MusicEntity {
         self.duration = duration
         self.imageData = imageData
         self.played = played
+        self.type = type
     }
 }

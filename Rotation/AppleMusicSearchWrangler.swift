@@ -16,6 +16,7 @@ class AppleMusicSearchWrangler {
     var playlistResults: [Playlist] = []
     
     var searchError: SearchError? = nil
+    var isLoading = false
     
     @MainActor
     func search(withTerm term: String) async {
@@ -76,37 +77,93 @@ class AppleMusicSearchWrangler {
         return []
     }
     
-    func getSongTitlesDurationAndArtwork(forAlbum album: Album) async -> ([String], TimeInterval, Data?) {
-        let tracks = await getTracksForAlbum(album)
+    private func getTracksForPlaylist(_ playlist: Playlist) async -> [Track] {
+        let id = playlist.id
+        var request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
+        request.properties = [.tracks]
+        request.limit = 1
         
-        var albumDuration: TimeInterval = 0
-        var titles: [String] = []
-        
-        var dontTrustTheDuration = false
-        
-        for track in tracks {
-            if let trackDuration = track.duration {
-                albumDuration += trackDuration
+        do {
+            let response = try await request.response()
+            if let tracks = response.items.first?.tracks {
+                return Array<Track>(tracks)
             } else {
-                dontTrustTheDuration = true
+                searchError = .tracksUnavailable
+            }
+        } catch {
+            searchError = .tracksUnavailable
+        }
+        
+        return []
+    }
+    
+    func makeMusicEntity(from item: MusicItem) async -> MusicEntity? {
+        isLoading = true
+        
+        var titles: [String] = []
+        var duration: TimeInterval = .zero
+        var imageData: Data? = nil
+        
+        if let song = item as? Song {
+            titles = [song.title]
+            duration = song.duration ?? .zero
+            if let url = song.artwork?.url(width: 600, height: 600) {
+                do {
+                    imageData = try Data(contentsOf: url)
+                } catch {
+                    searchError = .badArtwork
+                }
             }
             
-            titles.append(track.title)
-        }
-        
-        if dontTrustTheDuration {
-            albumDuration = .zero
-        }
-        
-        var imageData: Data? = nil
-        if let artwork = album.artwork, let url = artwork.url(width: 600, height: 600) {
-            do {
-                imageData = try Data(contentsOf: url)
-            } catch {
-                searchError = .badArtwork
+            isLoading = false
+            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song)
+        } else if let album = item as? Album {
+            let tracks = await getTracksForAlbum(album)
+            var dontTrustTheDuration = false
+            for track in tracks {
+                if let trackDuration = track.duration {
+                    duration += trackDuration
+                } else {
+                    dontTrustTheDuration = true
+                }
+                titles.append(track.title)
+                if let url = album.artwork?.url(width: 600, height: 600) {
+                    do {
+                        imageData = try Data(contentsOf: url)
+                    } catch {
+                        searchError = .badArtwork
+                    }
+                }
             }
+            if dontTrustTheDuration { duration = .zero }
+            
+            isLoading = false
+            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album)
+        } else if let playlist = item as? Playlist {
+            let tracks = await getTracksForPlaylist(playlist)
+            var dontTrustTheDuration = false
+            for track in tracks {
+                if let trackDuration = track.duration {
+                    duration += trackDuration
+                } else {
+                    dontTrustTheDuration = true
+                }
+                titles.append(track.title)
+                if let url = playlist.artwork?.url(width: 600, height: 600) {
+                    do {
+                        imageData = try Data(contentsOf: url)
+                    } catch {
+                        searchError = .badArtwork
+                    }
+                }
+            }
+            if dontTrustTheDuration { duration = .zero }
+            
+            isLoading = false
+            return MusicEntity(title: playlist.name, artistName: playlist.curatorName ?? "N/A", releaseDate: playlist.lastModifiedDate ?? .distantFuture, numberOfTracks: tracks.count, songTitles: titles, duration: duration, imageData: imageData, type: .playlist)
         }
         
-        return (titles, albumDuration, imageData)
+        isLoading = false
+        return nil
     }
 }

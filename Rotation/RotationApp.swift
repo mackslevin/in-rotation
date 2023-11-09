@@ -14,7 +14,7 @@ struct RotationApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ScratchView()
+            ExternalMusicSearchView()
         }
         
     }

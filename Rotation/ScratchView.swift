@@ -78,7 +78,9 @@ struct ScratchView: View {
                 
                 Spacer()
                 
-                if let musicEntity {
+                if amSearchWrangler.isLoading {
+                    ProgressView()
+                } else if let musicEntity {
                     VStack(alignment: .leading, spacing: 12) {
                         if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
                             Image(uiImage: uiImage)
@@ -120,16 +122,8 @@ struct ScratchView: View {
     }
     
     func setMusicEntity<T: MusicItem>(withItem item: T) async {
-        if let album = item as? Album {
-            let (titles, duration, imageData) = await amSearchWrangler.getSongTitlesDurationAndArtwork(forAlbum: album)
-            
-            
-            musicEntity = MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData)
-            
-        }
-        
-        
         await amSearchWrangler.reset()
+        musicEntity = await amSearchWrangler.makeMusicEntity(from: item)
     }
 }
 
