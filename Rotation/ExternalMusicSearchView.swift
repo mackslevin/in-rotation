@@ -12,6 +12,7 @@ struct ExternalMusicSearchView: View {
     @State private var amAuthWrangler = AppleMusicAuthWrangler()
     @State private var amSearchWrangler = AppleMusicSearchWrangler()
     @State private var amWrangler = AppleMusicWrangler()
+    @State private var spotifyWrangler = SpotifyAPIWrangler()
     @State private var searchText = ""
     @State private var musicEntity: MusicEntity? = nil
     
@@ -132,7 +133,21 @@ struct ExternalMusicSearchView: View {
                         .buttonStyle(.borderedProminent)
                         .frame(width: 300)
                         .fontWeight(.semibold)
+                        
+                        Button("Open in Spotify") {
+                            Task {
+                                do {
+                                    try await spotifyWrangler.getAccessToken()
+                                } catch {
+                                    print("^^ spotify error! \(error.localizedDescription)")
+                                }
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .frame(width: 300)
+                        .fontWeight(.semibold)
                     }
+                    
                 }
                 
                 Spacer()
