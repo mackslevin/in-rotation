@@ -137,7 +137,7 @@ struct ExternalMusicSearchView: View {
                         Button("Open in Spotify") {
                             Task {
                                 do {
-                                    try await spotifyWrangler.getAccessToken()
+                                    try await spotifyWrangler.openInSpotify(musicEntity)
                                 } catch {
                                     print("^^ spotify error! \(error.localizedDescription)")
                                 }

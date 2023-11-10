@@ -21,7 +21,10 @@ class MusicEntity {
     var played: Bool = false
     var type: EntityType = .album
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType) {
+    var isrc = "" // Cross-platform identifier for songs only
+    var upc = "" // Cross-platform identifier for albums only
+    
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "") {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -31,5 +34,7 @@ class MusicEntity {
         self.imageData = imageData
         self.played = played
         self.type = type
+        self.isrc = isrc
+        self.upc = upc
     }
 }

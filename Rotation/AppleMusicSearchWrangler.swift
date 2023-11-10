@@ -116,7 +116,8 @@ class AppleMusicSearchWrangler {
             }
             
             isLoading = false
-            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song)
+            
+            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, isrc: song.isrc ?? "")
         } else if let album = item as? Album {
             let tracks = await getTracksForAlbum(album)
             var dontTrustTheDuration = false
@@ -138,7 +139,7 @@ class AppleMusicSearchWrangler {
             if dontTrustTheDuration { duration = .zero }
             
             isLoading = false
-            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album)
+            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, upc: album.upc ?? "")
         } else if let playlist = item as? Playlist {
             let tracks = await getTracksForPlaylist(playlist)
             var dontTrustTheDuration = false

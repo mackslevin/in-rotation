@@ -22,8 +22,10 @@ class AppleMusicWrangler {
         
         switch musicEntity.type {
             case .song:
+                // TODO: Factor in song's ISRC code
                 request = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self])
             case .album:
+                // TODO: Factor in album's UPC code
                 request = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
             case .playlist:
                 request = MusicCatalogSearchRequest(term: searchTerm, types: [Playlist.self])
@@ -46,10 +48,7 @@ class AppleMusicWrangler {
         }
         
         if let url {
-            
             await UIApplication.shared.open(url)
-            
-            
         }
     }
     
