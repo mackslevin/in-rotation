@@ -21,8 +21,8 @@ class MusicEntity {
     var played: Bool = false
     var type: EntityType = .album
     
-    var isrc = "" // Cross-platform identifier for songs only
-    var upc = "" // Cross-platform identifier for albums only
+    var isrc = "" // Cross-platform identifier for songs only 
+    var upc = "" // Cross-platform identifier for albums only. (Might not be working for Spotify search.)
     
     init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "") {
         self.title = title
@@ -36,5 +36,11 @@ class MusicEntity {
         self.type = type
         self.isrc = isrc
         self.upc = upc
+    }
+    
+    func releaseYear() -> Int? {
+        guard self.releaseDate != .distantFuture else { return nil }
+        let dateComponents = Calendar.current.dateComponents([.year], from: self.releaseDate)
+        return dateComponents.year
     }
 }

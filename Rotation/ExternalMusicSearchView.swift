@@ -74,19 +74,19 @@ struct ExternalMusicSearchView: View {
                                 }
                             }
                             
-                            if !amSearchWrangler.playlistResults.isEmpty {
-                                Text("Playlists").font(.caption).bold().foregroundStyle(.secondary)
-                            }
-                            ForEach(amSearchWrangler.playlistResults, id: \.id) { playlist in
-                                Button {
-                                    Task {
-                                        await setMusicEntity(withItem: playlist)
-                                    }
-                                } label: {
-                                    HStack { Text(playlist.name) ; Spacer()}
-                                        .multilineTextAlignment(.leading)
-                                }
-                            }
+//                            if !amSearchWrangler.playlistResults.isEmpty {
+//                                Text("Playlists").font(.caption).bold().foregroundStyle(.secondary)
+//                            }
+//                            ForEach(amSearchWrangler.playlistResults, id: \.id) { playlist in
+//                                Button {
+//                                    Task {
+//                                        await setMusicEntity(withItem: playlist)
+//                                    }
+//                                } label: {
+//                                    HStack { Text(playlist.name) ; Spacer()}
+//                                        .multilineTextAlignment(.leading)
+//                                }
+//                            }
                         }
                     }
                     .padding()

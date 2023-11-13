@@ -16,6 +16,7 @@
 		012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B42AFB1C770064AA07 /* Preview Assets.xcassets */; };
 		012513BE2AFB1CC00064AA07 /* ScratchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BD2AFB1CC00064AA07 /* ScratchView.swift */; };
 		012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
+		019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
 		01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
@@ -35,6 +36,7 @@
 		012513B72AFB1C770064AA07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		012513BD2AFB1CC00064AA07 /* ScratchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchView.swift; sourceTree = "<group>"; };
 		012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAuthWrangler.swift; sourceTree = "<group>"; };
+		019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySearchResults.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
 		01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicSearchWrangler.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				010393C12AFCA4B5000DF698 /* EntityType.swift */,
 				01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */,
 				01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */,
+				019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */,
 			);
 			path = Rotation;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				010393C02AFC9B14000DF698 /* Utility.swift in Sources */,
 				012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */,
 				01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */,
+				019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */,
 				010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */,
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */,
