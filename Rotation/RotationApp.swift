@@ -27,7 +27,7 @@ struct RotationApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ExternalMusicSearchView()
+            HomeView()
         }
         .modelContainer(sharedModelContainer)
         
