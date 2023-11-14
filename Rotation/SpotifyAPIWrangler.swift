@@ -72,7 +72,7 @@ class SpotifyAPIWrangler {
         // The string returned by this function will be the URI of a Spotify catalog item
         
         var urlComponents = URLComponents(string: "https://api.spotify.com/v1/search")
-        var resultsLimit = "1"
+        let resultsLimit = "1"
 
         // Adjust the request parameters depending on entity type
         switch musicEntity.type {
@@ -115,6 +115,10 @@ class SpotifyAPIWrangler {
         switch musicEntity.type {
             case .song:
                 if let uri = results.tracks?.items.first?.uri {
+                    
+                    // Add URI to the model object so we don't have to do all this again
+                    musicEntity.spotifyURI = uri
+                    
                     return uri
                 }
                 throw SpotifyAPIError.noResults
@@ -125,6 +129,9 @@ class SpotifyAPIWrangler {
                         print("^^ Resorting to fuzzy album search")
                         return try await fuzzyAlbumSearch(musicEntity)
                     } else if let uri = albums.first?.uri {
+                        // Add URI to the model object so we don't have to do all this again
+                        musicEntity.spotifyURI = uri
+                        
                         return uri
                     }
                 }
@@ -140,7 +147,7 @@ class SpotifyAPIWrangler {
         guard musicEntity.type == .album else { throw SpotifyAPIError.incorrectType }
         
         var urlComponents = URLComponents(string: "https://api.spotify.com/v1/search")
-        var resultsLimit = "5"
+        let resultsLimit = "5"
         let type = URLQueryItem(name: "type", value: "album")
         let query = URLQueryItem(name: "query", value: "\(musicEntity.title) \(musicEntity.artistName)")
         urlComponents?.queryItems = [query, type]
@@ -169,11 +176,14 @@ class SpotifyAPIWrangler {
             for album in albums {
                 // If possible, only return an album with matching number of tracks
                 if let trackCount = album.totalTracks, trackCount == musicEntity.numberOfTracks {
+                    
+                    musicEntity.spotifyURI = album.uri
                     return album.uri
                 }
             }
             if let uri = albums.first?.uri {
                 // Alright, well at least return something
+                musicEntity.spotifyURI = uri
                 return uri
             }
         }
