@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-@Observable
+@Model
 class MusicEntity {
     let id = UUID()
     var title: String = ""
@@ -16,17 +16,20 @@ class MusicEntity {
     var releaseDate: Date = Date.distantFuture
     var numberOfTracks: Int = 0
     var songTitles: [String] = []
-    var duration: TimeInterval = .zero
+    var duration: TimeInterval = TimeInterval.zero
     var imageData: Data? = nil
     var played: Bool = false
-    var type: EntityType = .album
+    var type: EntityType = EntityType.album
     
     var isrc = "" // Cross-platform identifier for songs only 
     var upc = "" // Cross-platform identifier for albums only.
     var appleMusicURLString = ""
     var spotifyURI = ""
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "") {
+    var tags: [Tag]?
+    var notes: String = ""
+    
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", tags: [Tag]? = [], notes: String = "") {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -40,6 +43,8 @@ class MusicEntity {
         self.upc = upc
         self.appleMusicURLString = appleMusicURLString
         self.spotifyURI = spotifyURI
+        self.tags = tags
+        self.notes = notes
     }
     
     func releaseYear() -> Int? {

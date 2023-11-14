@@ -16,6 +16,7 @@
 		012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B42AFB1C770064AA07 /* Preview Assets.xcassets */; };
 		012513BE2AFB1CC00064AA07 /* ScratchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BD2AFB1CC00064AA07 /* ScratchView.swift */; };
 		012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
+		017AA6932B0404A0005E43D8 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6922B0404A0005E43D8 /* Tag.swift */; };
 		019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
@@ -36,6 +37,7 @@
 		012513B72AFB1C770064AA07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		012513BD2AFB1CC00064AA07 /* ScratchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchView.swift; sourceTree = "<group>"; };
 		012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAuthWrangler.swift; sourceTree = "<group>"; };
+		017AA6922B0404A0005E43D8 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySearchResults.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
@@ -74,21 +76,14 @@
 			isa = PBXGroup;
 			children = (
 				012513AB2AFB1C750064AA07 /* RotationApp.swift */,
+				017AA6912B040393005E43D8 /* Misc */,
+				017AA6902B040381005E43D8 /* Data */,
+				017AA68F2B040357005E43D8 /* Wranglers */,
+				017AA68E2B04033F005E43D8 /* Views */,
 				012513B12AFB1C770064AA07 /* Assets.xcassets */,
 				012513B62AFB1C770064AA07 /* Rotation.entitlements */,
 				012513B72AFB1C770064AA07 /* Info.plist */,
 				012513B32AFB1C770064AA07 /* Preview Content */,
-				012513BD2AFB1CC00064AA07 /* ScratchView.swift */,
-				012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */,
-				01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */,
-				01FC64E62AFC2E2600D53903 /* MusicEntity.swift */,
-				010393BB2AFC67FD000DF698 /* SearchError.swift */,
-				010393BD2AFC81A3000DF698 /* ExternalMusicSearchView.swift */,
-				010393BF2AFC9B14000DF698 /* Utility.swift */,
-				010393C12AFCA4B5000DF698 /* EntityType.swift */,
-				01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */,
-				01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */,
-				019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */,
 			);
 			path = Rotation;
 			sourceTree = "<group>";
@@ -99,6 +94,46 @@
 				012513B42AFB1C770064AA07 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		017AA68E2B04033F005E43D8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				012513BD2AFB1CC00064AA07 /* ScratchView.swift */,
+				010393BD2AFC81A3000DF698 /* ExternalMusicSearchView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		017AA68F2B040357005E43D8 /* Wranglers */ = {
+			isa = PBXGroup;
+			children = (
+				012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */,
+				01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */,
+				01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */,
+				01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */,
+			);
+			path = Wranglers;
+			sourceTree = "<group>";
+		};
+		017AA6902B040381005E43D8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				01FC64E62AFC2E2600D53903 /* MusicEntity.swift */,
+				010393BB2AFC67FD000DF698 /* SearchError.swift */,
+				010393C12AFCA4B5000DF698 /* EntityType.swift */,
+				019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */,
+				017AA6922B0404A0005E43D8 /* Tag.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		017AA6912B040393005E43D8 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				010393BF2AFC9B14000DF698 /* Utility.swift */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +218,7 @@
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */,
 				012513BE2AFB1CC00064AA07 /* ScratchView.swift in Sources */,
+				017AA6932B0404A0005E43D8 /* Tag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
