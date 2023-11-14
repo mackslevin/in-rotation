@@ -10,45 +10,57 @@ import Observation
 import MusicKit
 
 enum AppleMusicWranglerError: Error, Equatable {
-    case noMatch, noRequest
+    case noMatch, noRequest, badURL
 }
 
 @Observable
 class AppleMusicWrangler {
     @MainActor
     func openInAppleMusic(_ musicEntity: MusicEntity) async throws {
-        let searchTerm = "\(musicEntity.title) \(musicEntity.artistName)"
-        var request: MusicCatalogSearchRequest? = nil
         
-        switch musicEntity.type {
-            case .song:
-                // TODO: Factor in song's ISRC code
-                request = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self])
-            case .album:
-                // TODO: Factor in album's UPC code
-                request = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
-            case .playlist:
-                request = MusicCatalogSearchRequest(term: searchTerm, types: [Playlist.self])
-        }
+        // If the model already has the UR: stored, just open it. Otherwise, conduct another search based on the MusicEntity properties and find a URL from the results.
         
-        guard var request else { throw AppleMusicWranglerError.noRequest }
-        
-        request.limit = 20
-        let response = try await request.response()
-        
-        var url: URL? = nil
-        
-        switch musicEntity.type {
-            case .song:
-                url = try songMatch(forMusicEntity: musicEntity, fromSongs:  [Song](response.songs)).url
-            case .album:
-                url = try albumMatch(forMusicEntity: musicEntity, fromAlbums: [Album](response.albums)).url
-            case .playlist:
-                url = try playlistMatch(forMusicEntity: musicEntity, fromPlaylists: [Playlist](response.playlists)).url
-        }
-        
-        if let url {
-            await UIApplication.shared.open(url)
+        if !musicEntity.appleMusicURLString.isEmpty {
+            print("^^ opening directly")
+            if let url = URL(string: musicEntity.appleMusicURLString) {
+                await UIApplication.shared.open(url)
+            } else {
+                throw AppleMusicWranglerError.badURL
+            }
+        } else {
+            let searchTerm = "\(musicEntity.title) \(musicEntity.artistName)"
+            var request: MusicCatalogSearchRequest? = nil
+            
+            switch musicEntity.type {
+                case .song:
+                    // TODO: Factor in song's ISRC code
+                    request = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self])
+                case .album:
+                    // TODO: Factor in album's UPC code
+                    request = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
+                case .playlist:
+                    request = MusicCatalogSearchRequest(term: searchTerm, types: [Playlist.self])
+            }
+            
+            guard var request else { throw AppleMusicWranglerError.noRequest }
+            
+            request.limit = 20
+            let response = try await request.response()
+            
+            var url: URL? = nil
+            
+            switch musicEntity.type {
+                case .song:
+                    url = try songMatch(forMusicEntity: musicEntity, fromSongs:  [Song](response.songs)).url
+                case .album:
+                    url = try albumMatch(forMusicEntity: musicEntity, fromAlbums: [Album](response.albums)).url
+                case .playlist:
+                    url = try playlistMatch(forMusicEntity: musicEntity, fromPlaylists: [Playlist](response.playlists)).url
+            }
+            
+            if let url {
+                await UIApplication.shared.open(url)
+            }
         }
     }
     

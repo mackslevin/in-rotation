@@ -23,8 +23,9 @@ class MusicEntity {
     
     var isrc = "" // Cross-platform identifier for songs only 
     var upc = "" // Cross-platform identifier for albums only. (Might not be working for Spotify search.)
+    var appleMusicURLString = ""
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "") {
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "", appleMusicURLString: String = "") {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -36,6 +37,7 @@ class MusicEntity {
         self.type = type
         self.isrc = isrc
         self.upc = upc
+        self.appleMusicURLString = appleMusicURLString
     }
     
     func releaseYear() -> Int? {

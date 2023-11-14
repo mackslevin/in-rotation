@@ -16,6 +16,7 @@ enum SpotifyAPIError: String, Error, CaseIterable {
     case countryCodeUnavailable = "Could not get user country code"
     case decodingError = "Could not decode search results"
     case noResults = "No search results"
+    case incorrectType = "The wrong entity type was used"
 }
 
 @Observable
@@ -62,16 +63,9 @@ class SpotifyAPIWrangler {
     func openInSpotify(_ musicEntity: MusicEntity) async throws {
         let spotifyURI = try await findMatch(forMusicEntity: musicEntity)
         
-        let url = URL(string: "https://api.spotify.com/v1/me/player/play")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let accessToken = try await getAccessToken()
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        let body: Data = try JSONSerialization.data(withJSONObject: [
-            "context_uri": "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr"
-        ], options: [])
-        request.httpBody = body
+        await MainActor.run {
+            UIApplication.shared.open(URL(string: spotifyURI)!)
+        }
     }
     
     private func findMatch(forMusicEntity musicEntity: MusicEntity) async throws -> String {
@@ -89,9 +83,8 @@ class SpotifyAPIWrangler {
 
             case .album:
                 let type = URLQueryItem(name: "type", value: "album")
-                let query = URLQueryItem(name: "query", value: "\(musicEntity.title) \(musicEntity.artistName)")
+                let query = URLQueryItem(name: "query", value: "upc:\(musicEntity.upc)")
                 urlComponents?.queryItems = [query, type]
-                resultsLimit = "5"
             
             default: throw SpotifyAPIError.badQuery
         }
@@ -127,21 +120,64 @@ class SpotifyAPIWrangler {
                 throw SpotifyAPIError.noResults
             case .album:
                 if let albums = results.albums?.items {
-                    for album in albums {
-                        // If possible, only return an album with matching number of tracks
-                        if let trackCount = album.totalTracks, trackCount == musicEntity.numberOfTracks {
-                            return album.uri
-                        }
-                    }
-                    if let uri = albums.first?.uri {
-                        // Alright, well at least return something
+                    if albums.isEmpty {
+                        // UPC-based search did not turn up a match. Search by album name and artist name instead.
+                        print("^^ Resorting to fuzzy album search")
+                        return try await fuzzyAlbumSearch(musicEntity)
+                    } else if let uri = albums.first?.uri {
                         return uri
                     }
                 }
-                
                 throw SpotifyAPIError.noResults
             default:
                 throw SpotifyAPIError.noResults
         }
+    }
+    
+    func fuzzyAlbumSearch(_ musicEntity: MusicEntity) async throws -> String {
+        // This method is a fallback for if the UPC-based search we try initially doesn't turn up any results. Here we'll search by album and artist name instead and return the result (if any) with a matching track count.
+        // The return value is a Spotify URI.
+        guard musicEntity.type == .album else { throw SpotifyAPIError.incorrectType }
+        
+        var urlComponents = URLComponents(string: "https://api.spotify.com/v1/search")
+        var resultsLimit = "5"
+        let type = URLQueryItem(name: "type", value: "album")
+        let query = URLQueryItem(name: "query", value: "\(musicEntity.title) \(musicEntity.artistName)")
+        urlComponents?.queryItems = [query, type]
+        
+        if let code = Locale.autoupdatingCurrent.region?.identifier {
+            urlComponents?.queryItems?.append(URLQueryItem(name: "market", value: code))
+        } else {
+            throw SpotifyAPIError.countryCodeUnavailable
+        }
+        urlComponents?.queryItems?.append(URLQueryItem(name: "limit", value: resultsLimit))
+        guard let url = urlComponents?.url else { throw SpotifyAPIError.badURL }
+        var request = URLRequest(url: url)
+        let accessToken = try await getAccessToken()
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let statusCode = (response as? HTTPURLResponse)?.statusCode
+        guard let statusCode, statusCode > 199 && statusCode < 300 else {
+            throw SpotifyAPIError.badResponseStatus
+        }
+        guard let results = try? JSONDecoder().decode(SpotifySearchResults.self, from: data) else {
+            throw SpotifyAPIError.decodingError
+        }
+        
+        if let albums = results.albums?.items {
+            for album in albums {
+                // If possible, only return an album with matching number of tracks
+                if let trackCount = album.totalTracks, trackCount == musicEntity.numberOfTracks {
+                    return album.uri
+                }
+            }
+            if let uri = albums.first?.uri {
+                // Alright, well at least return something
+                return uri
+            }
+        }
+        
+        throw SpotifyAPIError.noResults
     }
 }
