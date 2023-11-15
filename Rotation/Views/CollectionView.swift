@@ -9,7 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct CollectionView: View {
+    @Environment(\.modelContext) var modelContext
     @Query var musicEntities: [MusicEntity]
+    
+    
     var body: some View {
         NavigationStack {
             HStack {
@@ -30,13 +33,6 @@ struct CollectionView: View {
                 .frame(width: 30)
                 .padding([.trailing])
                 
-//                Button {
-//                    
-//                } label: {
-//                    Image(systemName: "plus.circle").resizable().scaledToFit()
-//                }
-//                .frame(width: 30)
-                
                 NavigationLink(destination: MusicSearchView()) {
                     Image(systemName: "plus.circle").resizable().scaledToFit()
                         .frame(width: 30)
@@ -46,17 +42,14 @@ struct CollectionView: View {
             
             List {
                 Section {
-                    ForEach(musicEntities) { musicEntity in
-                        NavigationLink {
-                            Text("Detail view for \(musicEntity.title)")
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(musicEntity.title)
-                                    .bold()
-                                Text(musicEntity.artistName)
-                            }
-                        }
+                    ForEach(musicEntities.reversed()) { musicEntity in
+                        CollectionViewListRow(musicEntity: musicEntity)
                     }
+                    .onDelete(perform: { indexSet in
+                        if let index = indexSet.first {
+                            withAnimation { modelContext.delete(musicEntities[index]) }
+                        }
+                    })
                 }
             }
             .listStyle(.plain)

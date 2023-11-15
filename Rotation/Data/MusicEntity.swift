@@ -5,7 +5,7 @@
 //  Created by Mack Slevin on 11/8/23.
 //
 
-import Foundation
+import SwiftUI
 import SwiftData
 
 @Model
@@ -28,6 +28,14 @@ class MusicEntity {
     
     var tags: [Tag]?
     var notes: String = ""
+    
+    var image: Image {
+        if let data = self.imageData, let uiImage = UIImage(data: data) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image(systemName: "music.note")
+        }
+    }
     
     init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", tags: [Tag]? = [], notes: String = "") {
         self.title = title

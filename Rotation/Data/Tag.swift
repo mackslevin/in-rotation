@@ -16,7 +16,7 @@ class Tag {
     
     @Relationship(inverse: \MusicEntity.tags) var musicEntities: [MusicEntity]?
     
-    init(title: String, symbolName: String = "tag.fill", musicEntities: [MusicEntity]? = nil) {
+    init(title: String, symbolName: String = "tag.fill", musicEntities: [MusicEntity]? = []) {
         self.title = title
         self.symbolName = symbolName
         self.musicEntities = musicEntities

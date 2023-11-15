@@ -141,7 +141,7 @@ class SpotifyAPIWrangler {
         }
     }
     
-    func fuzzyAlbumSearch(_ musicEntity: MusicEntity) async throws -> String {
+    private func fuzzyAlbumSearch(_ musicEntity: MusicEntity) async throws -> String {
         // This method is a fallback for if the UPC-based search we try initially doesn't turn up any results. Here we'll search by album and artist name instead and return the result (if any) with a matching track count.
         // The return value is a Spotify URI.
         guard musicEntity.type == .album else { throw SpotifyAPIError.incorrectType }
