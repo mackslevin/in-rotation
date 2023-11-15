@@ -33,6 +33,8 @@
 		01ACB8DD2B05536100C13BDA /* RecordCoverGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */; };
 		01ACB8DF2B0570FD00C13BDA /* SymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */; };
 		01ACB8E12B05740700C13BDA /* EditTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E02B05740700C13BDA /* EditTagView.swift */; };
+		01ACB8E32B05803800C13BDA /* PPPierSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */; };
+		01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E42B05808400C13BDA /* Font-Ext.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
 		01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
@@ -69,6 +71,8 @@
 		01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoverGridView.swift; sourceTree = "<group>"; };
 		01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPicker.swift; sourceTree = "<group>"; };
 		01ACB8E02B05740700C13BDA /* EditTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagView.swift; sourceTree = "<group>"; };
+		01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PPPierSans-Bold.otf"; sourceTree = "<group>"; };
+		01ACB8E42B05808400C13BDA /* Font-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font-Ext.swift"; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
 		01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicSearchWrangler.swift; sourceTree = "<group>"; };
@@ -175,7 +179,9 @@
 		017AA6912B040393005E43D8 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */,
 				010393BF2AFC9B14000DF698 /* Utility.swift */,
+				01ACB8E42B05808400C13BDA /* Font-Ext.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -249,6 +255,7 @@
 			files = (
 				012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */,
 				012513B22AFB1C770064AA07 /* Assets.xcassets in Resources */,
+				01ACB8E32B05803800C13BDA /* PPPierSans-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +287,7 @@
 				019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */,
 				010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */,
 				017AA69C2B041A54005E43D8 /* ExploreView.swift in Sources */,
+				01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */,
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				011BB8F02B044F7B00F3609D /* TagDetailView.swift in Sources */,
 				01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */,

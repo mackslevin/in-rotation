@@ -17,10 +17,7 @@ struct CollectionView: View {
         NavigationStack {
             HStack {
                 Text("Collection")
-                    .listRowBackground(Color.clear)
-                    .font(.largeTitle)
-                    .bold()
-                    .listRowInsets(EdgeInsets())
+                    .font(Font.displayFont(ofSize: 32))
                     .foregroundStyle(.tint)
                 
                 Spacer()
@@ -45,11 +42,6 @@ struct CollectionView: View {
                     ForEach(musicEntities.reversed()) { musicEntity in
                         CollectionViewListRow(musicEntity: musicEntity)
                     }
-//                    .onDelete(perform: { indexSet in
-//                        if let index = indexSet.first {
-//                            withAnimation { modelContext.delete(musicEntities[index]) }
-//                        }
-//                    })
                 }
             }
             .listStyle(.plain)
