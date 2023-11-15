@@ -11,8 +11,8 @@ import SwiftData
 @Model
 class Tag {
     let id = UUID()
-    let title: String = ""
-    let symbolName: String = "tag.fill"
+    var title: String = ""
+    var symbolName: String = "tag.fill"
     let dateCreated = Date.now
     
     @Relationship(inverse: \MusicEntity.tags) var musicEntities: [MusicEntity]?

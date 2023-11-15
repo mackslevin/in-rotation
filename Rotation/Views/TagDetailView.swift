@@ -11,6 +11,7 @@ import SwiftData
 struct TagDetailView: View {
     @Bindable var tag: Tag
     
+    @State private var isShowingEditTag = false
     
     var body: some View {
         NavigationStack {
@@ -36,12 +37,15 @@ struct TagDetailView: View {
             .toolbar {
                 ToolbarItem {
                     Button {
-                        
+                        isShowingEditTag = true
                     } label: {
                         Image(systemName: "square.and.pencil.circle").resizable().scaledToFit()
                     }
                     .frame(width: 30)
                 }
+            }
+            .sheet(isPresented: $isShowingEditTag) {
+                EditTagView(tag: tag)
             }
         }
     }

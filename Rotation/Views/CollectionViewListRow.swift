@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct CollectionViewListRow: View {
-    let musicEntity: MusicEntity
+    @Bindable var musicEntity: MusicEntity
     
     @Environment(\.modelContext) var modelContext
+    
+    @State private var isShowingTagManager = false
     
     var body: some View {
         NavigationLink {
@@ -58,6 +60,16 @@ struct CollectionViewListRow: View {
             } label: {
                 Label("Delete", systemImage: "trash")
             }
+            
+            Button {
+                isShowingTagManager = true
+            } label: {
+                Label("Tag", systemImage: "tag")
+            }
+            .tint(Color.accentColor)
+        }
+        .sheet(isPresented: $isShowingTagManager) {
+            TagManagerView(musicEntity: musicEntity)
         }
     }
 }

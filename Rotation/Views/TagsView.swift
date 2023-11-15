@@ -33,11 +33,6 @@ struct TagsView: View {
                 .frame(width: 30)
                 .padding([.trailing])
                 
-//                NavigationLink(destination: AddTagView()) {
-//                    Image(systemName: "plus.circle").resizable().scaledToFit()
-//                        .frame(width: 30)
-//                }
-                
                 Button {
                     isShowingAddTag = true
                 } label: {

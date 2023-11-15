@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct TagManagerView: View {
-    var musicEntity: MusicEntity
+    @Bindable var musicEntity: MusicEntity
     @Environment(\.dismiss) var dismiss
     @Query var tags: [Tag]
     @State private var isShowingAddTag = false

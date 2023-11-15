@@ -22,20 +22,7 @@ struct AddTagView: View {
                     .textFieldStyle(.roundedBorder)
                 
                 ScrollView(showsIndicators: true) {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 16, content: {
-                        
-                        ForEach(Utility.sfSymbols, id: \.self) { sfSymbol in
-                            Image(systemName: sfSymbol)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 44, height: 44)
-                                .onTapGesture {
-                                    symbolName = sfSymbol
-                                }
-                                .foregroundStyle(sfSymbol == symbolName ? Color.accentColor : .secondary)
-                        }
-                    })
-                    .ignoresSafeArea(.container, edges: .bottom)
+                    SymbolPicker(symbolName: $symbolName)
                 }
                 .ignoresSafeArea(.container, edges: .bottom)
             }
