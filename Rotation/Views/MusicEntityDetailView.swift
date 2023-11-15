@@ -34,6 +34,8 @@ struct MusicEntityDetailView: View {
                     
                     VStack(spacing: 16) {
                         Toggle("Played", isOn: $musicEntity.played)
+                            .frame(width: 180, height: 30)
+                            
                         Button {
                             Task {
                                 do {
@@ -44,14 +46,12 @@ struct MusicEntityDetailView: View {
                                 }
                             }
                         } label: {
-                            HStack {
-                                Spacer()
-                                Text("Open in Apple Music")
-                                    .bold()
-                                Spacer()
-                            }
+                            Text("Open in Apple Music")
+                                .bold()
+                                .frame(width: 180, height: 30)
                         }
                         .buttonStyle(.borderedProminent)
+                        
                         Button {
                             Task {
                                 do {
@@ -62,12 +62,9 @@ struct MusicEntityDetailView: View {
                                 }
                             }
                         } label: {
-                            HStack {
-                                Spacer()
-                                Text("Open in Spotify")
-                                    .bold()
-                                Spacer()
-                            }
+                            Text("Open in Spotify")
+                                .bold()
+                                .frame(width: 180, height: 30)
                         }
                         .buttonStyle(.borderedProminent)
                     }

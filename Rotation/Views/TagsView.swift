@@ -42,7 +42,7 @@ struct TagsView: View {
             
             List(selection: $selectedTag, content: {
                 ForEach(tags) { tag in
-                    Text(tag.title)
+                    TagsViewListRow(tag: tag)
                 }
                 .onDelete(perform: { indexSet in
                     if let index = indexSet.first {

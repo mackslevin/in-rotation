@@ -18,7 +18,7 @@ struct CollectionViewListRow: View {
                     Spacer()
                     Circle()
                         .frame(width: 12)
-                        .foregroundStyle(.tint)
+                        .foregroundStyle(Color.accentColor.gradient)
                         .opacity(musicEntity.played ? 0 : 1)
                     Spacer()
                 }

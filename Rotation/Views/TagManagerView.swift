@@ -38,9 +38,13 @@ struct TagManagerView: View {
                         if let entityTags = musicEntity.tags, !entityTags.contains(tag) {
                             Text(tag.title).foregroundStyle(.secondary)
                                 .onTapGesture {
+                                    
                                     withAnimation {
                                         musicEntity.tags?.append(tag)
+
                                     }
+                                    
+                                    
                                 }
                         }
                     }
