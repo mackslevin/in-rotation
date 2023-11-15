@@ -45,11 +45,11 @@ struct CollectionView: View {
                     ForEach(musicEntities.reversed()) { musicEntity in
                         CollectionViewListRow(musicEntity: musicEntity)
                     }
-                    .onDelete(perform: { indexSet in
-                        if let index = indexSet.first {
-                            withAnimation { modelContext.delete(musicEntities[index]) }
-                        }
-                    })
+//                    .onDelete(perform: { indexSet in
+//                        if let index = indexSet.first {
+//                            withAnimation { modelContext.delete(musicEntities[index]) }
+//                        }
+//                    })
                 }
             }
             .listStyle(.plain)

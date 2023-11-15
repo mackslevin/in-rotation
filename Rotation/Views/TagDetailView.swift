@@ -16,21 +16,10 @@ struct TagDetailView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text(tag.title)
-                        .listRowBackground(Color.clear)
+                    Label(tag.title, systemImage: tag.symbolName)
                         .font(.largeTitle)
                         .fontWeight(.semibold)
-                        .listRowInsets(EdgeInsets())
                         .foregroundStyle(.tint)
-                    
-//                    Spacer()
-//                    
-//                    Button {
-//                        
-//                    } label: {
-//                        Image(systemName: "square.and.pencil.circle").resizable().scaledToFit()
-//                    }
-//                    .frame(width: 30)
                 }
                 
                 if let musicEntities = tag.musicEntities, !musicEntities.isEmpty {

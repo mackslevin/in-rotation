@@ -12,6 +12,7 @@ struct TagsView: View {
     @Query var tags: [Tag]
     @State private var selectedTag: Tag?
     @Environment(\.modelContext) var modelContext
+    @State private var isShowingAddTag = false
     
     var body: some View {
         NavigationStack {
@@ -20,7 +21,6 @@ struct TagsView: View {
                     .listRowBackground(Color.clear)
                     .font(.largeTitle)
                     .bold()
-                    .listRowInsets(EdgeInsets())
                     .foregroundStyle(.tint)
                 
                 Spacer()
@@ -33,7 +33,14 @@ struct TagsView: View {
                 .frame(width: 30)
                 .padding([.trailing])
                 
-                NavigationLink(destination: AddTagView()) {
+//                NavigationLink(destination: AddTagView()) {
+//                    Image(systemName: "plus.circle").resizable().scaledToFit()
+//                        .frame(width: 30)
+//                }
+                
+                Button {
+                    isShowingAddTag = true
+                } label: {
                     Image(systemName: "plus.circle").resizable().scaledToFit()
                         .frame(width: 30)
                 }
@@ -53,6 +60,9 @@ struct TagsView: View {
                 })
             })
             .listStyle(.plain)
+            .sheet(isPresented: $isShowingAddTag, content: {
+                AddTagView()
+            })
         }
 
     }

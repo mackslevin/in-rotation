@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CollectionViewListRow: View {
     let musicEntity: MusicEntity
+    
+    @Environment(\.modelContext) var modelContext
+    
     var body: some View {
         NavigationLink {
             MusicEntityDetailView(musicEntity: musicEntity)
@@ -48,6 +51,13 @@ struct CollectionViewListRow: View {
                 }
             }
             .tint(Color.accentColor)
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(role: .destructive) {
+                modelContext.delete(musicEntity)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
         }
     }
 }

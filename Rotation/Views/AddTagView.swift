@@ -49,6 +49,7 @@ struct AddTagView: View {
                         dismiss()
                     }
                     .bold()
+                    .disabled(title.isEmpty)
                 }
             })
         }
