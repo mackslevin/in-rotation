@@ -24,6 +24,8 @@ struct TagManagerView: View {
                                 .onTapGesture {
                                     withAnimation {
                                         musicEntity.tags?.removeAll(where: {$0.id == tag.id})
+                                        
+                                        tag.musicEntities?.removeAll(where: {$0.id == musicEntity.id}) // This should be redundant. A workaround to tag not updating entity removal promptly.
                                     }
                                 }
                         }
@@ -41,7 +43,6 @@ struct TagManagerView: View {
                                     
                                     withAnimation {
                                         musicEntity.tags?.append(tag)
-
                                     }
                                     
                                     
