@@ -10,15 +10,15 @@ import SwiftData
 
 struct TagDetailView: View {
     @Bindable var tag: Tag
-    
     @State private var isShowingEditTag = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
                     Label(tag.title, systemImage: tag.symbolName)
-                        .font(.largeTitle)
+                        .font(Font.displayFont(ofSize: 22))
                         .fontWeight(.semibold)
                         .foregroundStyle(.tint)
                 }
@@ -34,6 +34,11 @@ struct TagDetailView: View {
                 Spacer()
             }
             .padding([.horizontal])
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
+            .navigationTitle("Tag")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem {
                     Button {

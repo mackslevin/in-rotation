@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MusicEntityDetailView: View {
     @Bindable var musicEntity: MusicEntity
-    @State private var isShowingTagManager = false
     @State private var amWrangler = AppleMusicWrangler()
     @State private var isShowingErrorAlert = false
     @State private var spotifyWrangler = SpotifyAPIWrangler()
@@ -17,82 +16,117 @@ struct MusicEntityDetailView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 12) {
-                    if musicEntity.imageData != nil { // We're not gonna show the placeholder image
-                        musicEntity.image.resizable().scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
-                    }
-                    
+                VStack(spacing: 20) {
                     VStack {
-                        Text(musicEntity.title)
-                            .fontWeight(.bold)
-                            .foregroundStyle(.tint)
-                        Text(musicEntity.artistName)
-                    }
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                    
-                    VStack(spacing: 16) {
-                        Toggle("Played", isOn: $musicEntity.played)
-                            .frame(width: 180, height: 30)
-                            
-                        Button {
-                            Task {
-                                do {
-                                    try await amWrangler.openInAppleMusic(musicEntity)
-                                } catch {
-                                    print(error)
-                                    isShowingErrorAlert = true
-                                }
-                            }
-                        } label: {
-                            Text("Open in Apple Music")
-                                .bold()
-                                .frame(width: 180, height: 30)
+                        if musicEntity.imageData != nil { // We're not gonna show the placeholder image
+                            musicEntity.image.resizable().scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
                         }
-                        .buttonStyle(.borderedProminent)
                         
-                        Button {
-                            Task {
-                                do {
-                                    try await spotifyWrangler.openInSpotify(musicEntity)
-                                } catch {
-                                    print(error)
-                                    isShowingErrorAlert = true
-                                }
-                            }
-                        } label: {
-                            Text("Open in Spotify")
-                                .bold()
-                                .frame(width: 180, height: 30)
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                    
-                    if let tags = musicEntity.tags, tags.count > 0 {
                         HStack {
-                            Text("Tags:").bold()
-                            Text(tags.map({$0.title}).joined(separator: ", "))
+                            VStack(alignment: .leading) {
+                                Text(musicEntity.title)
+                                    .font(.displayFont(ofSize: 28))
+                                    
+                                HStack(alignment: .bottom) {
+                                    Text("by \(musicEntity.artistName)")
+                                        .font(.displayFont(ofSize: 20))
+                                        .multilineTextAlignment(.leading)
+                                    
+                                    if let tags = musicEntity.tags, !tags.isEmpty {
+                                        
+                                        Spacer()
+                                        Group {
+                                            let last = tags.count < 4 ? tags.count - 1 : 3
+                                            
+                                            ForEach(tags[0...last]) { tag in
+                                                Image(systemName: tag.symbolName)
+                                                    .font(.caption)
+                                            }
+                                            
+                                            if tags.count > 4 {
+                                                let howManyMoreTags = tags.count - 4
+                                                Text("+\(howManyMoreTags)")
+                                                    .font(.caption)
+                                            }
+                                        }
+                                        .foregroundStyle(.secondary)
+                                    } else {
+                                        Spacer()
+                                    }
+                                }
+                                
+                            }
+                            
                         }
                     }
                     
-                    Button("Manage Tags") {
-                        isShowingTagManager = true
-                    }
+//                    if let tags = musicEntity.tags, !tags.isEmpty {
+//                        HStack {
+//                            Spacer()
+//                            
+//                            LazyVGrid(columns: Array(repeating: GridItem(.fixed(20)), count: tags.count > 5 ? 5 : tags.count), alignment: .trailing, spacing: 20, content: {
+//                                ForEach(tags) { tag in
+//                                    HStack {
+//                                        Spacer()
+//                                        Image(systemName: tag.symbolName)
+//                                            .font(.body)
+//                                        Spacer()
+//                                    }
+//                                    
+//                                        
+//                                }
+//                                
+//                            })
+//                        }
+//                        .foregroundStyle(.secondary)
+//                    }
+                    
+                    MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
+                    
+                    MusicEntityDetailsBlock(musicEntity: musicEntity)
+                    
+                    MusicEntityTagsBlock(musicEntity: musicEntity)
+                    
+                    MusicEntityNotesBlock(musicEntity: musicEntity)
                 }
                 .padding([.horizontal, .bottom])
                 
                 
             }
-            .navigationTitle(musicEntity.title)
+            .background {
+                ZStack {
+                    musicEntity.image.resizable().scaledToFill()
+                    Rectangle()
+                        .foregroundStyle(.regularMaterial)
+                }
+                .ignoresSafeArea()
+            }
+            .navigationTitle(stringForType(musicEntity.type))
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $isShowingTagManager, content: {
-                TagManagerView(musicEntity: musicEntity)
-            })
             .alert(isPresented: $isShowingErrorAlert, content: {
                 Alert(title: Text("Something went wrong"))
             })
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                       // Trigger options to share via AM or SP
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                    }
+                }
+            }
         }
+    }
+    
+    func stringForType(_ type: EntityType) -> String {
+        if type == .song {
+            return "Song"
+        } else if type == .album {
+            return "Album"
+        }
+        
+        return ""
     }
 }
 

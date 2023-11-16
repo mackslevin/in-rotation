@@ -18,6 +18,7 @@ struct MusicSearchView: View {
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var isShowingErrorAlert = false
     @State private var errorAlertMessage: String? = nil
@@ -27,10 +28,6 @@ struct MusicSearchView: View {
         NavigationStack {
             // MARK: Search box
             VStack(alignment: .leading) {
-//                Text("Search")
-//                    .font(.title)
-//                    .bold()
-                
                 HStack {
                     TextField("Search for an album or song...", text: $searchText)
                         .textFieldStyle(.roundedBorder)
@@ -96,11 +93,17 @@ struct MusicSearchView: View {
                         }
                         VStack {
                             Text(musicEntity.title)
+                                .font(Font.displayFont(ofSize: 24))
                             Text(musicEntity.artistName)
-                                .fontWeight(.semibold)
                                 .foregroundStyle(.secondary)
+                                .fontWeight(.semibold)
+                            if let year = musicEntity.releaseYear() {
+                                Text(String(year))
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         .padding(.bottom)
+                        .multilineTextAlignment(.center)
                         
                         
                         Button("Add to Collection") {
@@ -115,6 +118,10 @@ struct MusicSearchView: View {
                 Spacer()
             }
             .padding()
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
+            
             
         }
         .onChange(of: searchText) { oldValue, newValue in
@@ -126,9 +133,6 @@ struct MusicSearchView: View {
         .onChange(of: amSearchWrangler.searchError) { _, newValue in
             if newValue != nil { isShowingErrorAlert = true }
         }
-//        .onChange(of: musicEntity, { oldValue, newValue in
-//            amSearchWrangler.reset()
-//        })
         .alert("Error", isPresented: $isShowingErrorAlert) {
             Button("OK"){}
         } message: {

@@ -30,18 +30,21 @@ struct CollectionViewListRow: View {
                 
                 musicEntity.image.resizable().scaledToFit()
                     .padding(musicEntity.imageData == nil ? 10 : 0)
-                    .frame(width: 60, height: 60)
+                    .frame(width: 80, height: 80)
                     .background(Color.secondary)
                     .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                 
                 VStack(alignment: .leading) {
                     Text(musicEntity.title)
-                        .bold()
+                        .font(Font.displayFont(ofSize: 18))
                     Text(musicEntity.artistName)
+                        .foregroundStyle(.secondary)
                 }
             }
             
         }
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
         .swipeActions(edge: .leading) {
             Button {
                 musicEntity.played.toggle()

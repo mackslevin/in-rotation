@@ -27,11 +27,14 @@ struct TagsViewListRow: View {
                 
                 VStack(alignment: .leading) {
                     Text(tag.title)
-                        .fontWeight(.bold)
+                        .font(.displayFont(ofSize: 18))
                     Text("\(count) items")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
+        .listRowBackground(Color.clear)
         .onAppear {
             count = tag.musicEntities?.count ?? 0
         }

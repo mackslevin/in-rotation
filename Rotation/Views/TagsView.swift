@@ -13,51 +13,58 @@ struct TagsView: View {
     @State private var selectedTag: Tag?
     @Environment(\.modelContext) var modelContext
     @State private var isShowingAddTag = false
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
-            HStack {
-                Text("Tags")
-                    .listRowBackground(Color.clear)
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundStyle(.tint)
-                
-                Spacer()
-                
-                Button {
+            VStack {
+                HStack {
+                    Text("Tags")
+                        .listRowBackground(Color.clear)
+                        .font(Font.displayFont(ofSize: 32))
+                        .bold()
+                        .foregroundStyle(.tint)
                     
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
-                }
-                .frame(width: 30)
-                .padding([.trailing])
-                
-                Button {
-                    isShowingAddTag = true
-                } label: {
-                    Image(systemName: "plus.circle").resizable().scaledToFit()
-                        .frame(width: 30)
-                }
-            }
-            .padding()
-            
-            List(selection: $selectedTag, content: {
-                ForEach(tags) { tag in
-                    TagsViewListRow(tag: tag)
-                }
-                .onDelete(perform: { indexSet in
-                    if let index = indexSet.first {
-                        withAnimation {
-                            modelContext.delete(tags[index])
-                        }
+                    Spacer()
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
                     }
+                    .frame(width: 30)
+                    .padding([.trailing])
+                    
+                    Button {
+                        isShowingAddTag = true
+                    } label: {
+                        Image(systemName: "plus.circle").resizable().scaledToFit()
+                            .frame(width: 30)
+                    }
+                }
+                .padding()
+                
+                List(selection: $selectedTag, content: {
+                    ForEach(tags) { tag in
+                        TagsViewListRow(tag: tag)
+                    }
+                    .onDelete(perform: { indexSet in
+                        if let index = indexSet.first {
+                            withAnimation {
+                                modelContext.delete(tags[index])
+                            }
+                        }
+                    })
                 })
-            })
-            .listStyle(.plain)
-            .sheet(isPresented: $isShowingAddTag, content: {
-                AddTagView()
-            })
+                .listStyle(.plain)
+                .sheet(isPresented: $isShowingAddTag, content: {
+                    AddTagView()
+                })
+            }
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
+            
         }
 
     }

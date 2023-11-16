@@ -5,10 +5,12 @@
 //  Created by Mack Slevin on 11/8/23.
 //
 
-import Foundation
+
 import SwiftUI
 
 struct Utility {
+    
+    
     static let exampleEntity = MusicEntity(title: "Cool Title", artistName: "Great Artist", numberOfTracks: 15, songTitles: [], type: .album)
     static let exampleTag = Tag(title: "Cool Tag", symbolName: "photo.fill", musicEntities: [])
     
@@ -16,6 +18,15 @@ struct Utility {
     @MainActor
     static func dismissKeyboard() {
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+    }
+    
+    static func formattedTimeInterval(_ timeInterval: TimeInterval) -> String {
+        let hours = Int(timeInterval / 3600)
+        let minutes = Int((timeInterval / 60).truncatingRemainder(dividingBy: 60))
+        let seconds = Int(timeInterval.truncatingRemainder(dividingBy: 60))
+
+        let formattedString = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        return formattedString
     }
     
     static func wasOverAnHourAgo(date: Date) -> Bool {
@@ -26,6 +37,18 @@ struct Utility {
     static func defaultCorderRadius(small: Bool) -> CGFloat {
         if small { return 4 }
         return 10
+    }
+    
+    static func prettyDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM d, yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
+    static func customBackground(withColorScheme colorScheme: ColorScheme) -> some View {
+        let bg = Rectangle().ignoresSafeArea().foregroundStyle(colorScheme == .dark ? Color.clear : Color.orange)
+            .opacity(0.07)
+        return bg
     }
     
     static var sfSymbols: [String] = [

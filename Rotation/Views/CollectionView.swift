@@ -10,41 +10,48 @@ import SwiftData
 
 struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(\.colorScheme) var colorScheme
     @Query var musicEntities: [MusicEntity]
     
     
     var body: some View {
         NavigationStack {
-            HStack {
-                Text("Collection")
-                    .font(Font.displayFont(ofSize: 32))
-                    .foregroundStyle(.tint)
-                
-                Spacer()
-                
-                Button {
+            VStack {
+                HStack {
+                    Text("Collection")
+                        .font(Font.displayFont(ofSize: 32))
+                        .foregroundStyle(.tint)
                     
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
-                }
-                .frame(width: 30)
-                .padding([.trailing])
-                
-                NavigationLink(destination: MusicSearchView()) {
-                    Image(systemName: "plus.circle").resizable().scaledToFit()
-                        .frame(width: 30)
-                }
-            }
-            .padding()
-            
-            List {
-                Section {
-                    ForEach(musicEntities.reversed()) { musicEntity in
-                        CollectionViewListRow(musicEntity: musicEntity)
+                    Spacer()
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
+                    }
+                    .frame(width: 30)
+                    .padding([.trailing])
+                    
+                    NavigationLink(destination: MusicSearchView()) {
+                        Image(systemName: "plus.circle").resizable().scaledToFit()
+                            .frame(width: 30)
                     }
                 }
+                .padding()
+                
+                List {
+                    Section {
+                        ForEach(musicEntities.reversed()) { musicEntity in
+                            CollectionViewListRow(musicEntity: musicEntity)
+                        }
+                    }
+                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
+            
         }
         
     }
