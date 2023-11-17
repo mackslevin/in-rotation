@@ -45,14 +45,24 @@ struct CollectionView: View {
                 }
                 .padding()
                 
-                List {
-                    Section {
-                        ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
-                            CollectionViewListRow(musicEntity: musicEntity)
+                if viewModel.useGridView {
+                    ScrollView {
+                        RecordCoverGridView(musicEntites: viewModel.sortedEntities(musicEntities))
+                            .padding()
+                    }
+                    
+                } else {
+                    List {
+                        Section {
+                            ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
+                                CollectionViewListRow(musicEntity: musicEntity)
+                            }
                         }
                     }
+                    .listStyle(.plain)
                 }
-                .listStyle(.plain)
+                
+                
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)

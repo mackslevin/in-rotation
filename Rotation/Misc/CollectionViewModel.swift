@@ -12,6 +12,8 @@ import SwiftData
 class CollectionViewModel {
     var sortCriteria: CollectionSortCriteria
     
+    var useGridView = false
+    
     init() {
         sortCriteria = .dateAddedNewest
     }

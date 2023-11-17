@@ -17,6 +17,18 @@ struct CollectionSortOptionsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
+                
+                
+                Picker("View", selection: $viewModel.useGridView) {
+                    Text("List").tag(false)
+                    Text("Grid").tag(true)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                
+                
+                
                 Text("Sort by...")
                     .padding(.bottom, 6)
                     .padding(.horizontal)

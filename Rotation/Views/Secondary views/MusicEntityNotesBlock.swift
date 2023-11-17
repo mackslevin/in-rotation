@@ -53,11 +53,14 @@ struct MusicEntityNotesBlock: View {
         .onAppear {
             noteText = musicEntity.notes
         }
-        .onChange(of: noteText) { _, newValue in
-            musicEntity.notes = newValue
-        }
+//        .onChange(of: noteText) { _, newValue in
+//            musicEntity.notes = newValue
+//        }
+        .onChange(of: musicEntity.notes, { oldValue, newValue in
+            noteText = newValue
+        })
         .sheet(isPresented: $isShowingEditor, content: {
-            NotesEditorView(notesText: $noteText)
+            NotesEditorView(notesText: $noteText, musicEntity: musicEntity)
         })
     }
 }

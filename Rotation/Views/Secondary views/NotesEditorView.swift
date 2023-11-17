@@ -10,7 +10,11 @@ import SwiftUI
 struct NotesEditorView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @Binding var notesText: String
+    
+    
+    @Binding var notesText: String // Using this as an intermediate rather than manipulating musicEntity.notes directly, as that seems to cause performance issues
+    
+    @Bindable var musicEntity: MusicEntity
     
     
     
@@ -39,18 +43,20 @@ struct NotesEditorView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {
+                    Button("Save") {
+                        musicEntity.notes = notesText
+                        
                         dismiss()
                     }
                     .bold()
                 }
                 
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Clear") {
-                        notesText = ""
-                    }
-                    .disabled(notesText.isEmpty)
-                }
+//                ToolbarItem(placement: .topBarLeading) {
+//                    Button("Clear") {
+//                        notesText = ""
+//                    }
+//                    .disabled(notesText.isEmpty)
+//                }
             }
             .navigationTitle("Notes")
             .navigationBarTitleDisplayMode(.inline)
@@ -59,6 +65,6 @@ struct NotesEditorView: View {
     }
 }
 
-#Preview {
-    NotesEditorView(notesText: .constant(""))
-}
+//#Preview {
+//    NotesEditorView(notesText: .constant(""))
+//}
