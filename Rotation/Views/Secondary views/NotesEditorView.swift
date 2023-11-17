@@ -38,11 +38,18 @@ struct NotesEditorView: View {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
                         dismiss()
                     }
                     .bold()
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Clear") {
+                        notesText = ""
+                    }
+                    .disabled(notesText.isEmpty)
                 }
             }
             .navigationTitle("Notes")

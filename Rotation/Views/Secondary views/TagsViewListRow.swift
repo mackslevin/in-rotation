@@ -17,22 +17,48 @@ struct TagsViewListRow: View {
         NavigationLink {
             TagDetailView(tag: tag)
         } label: {
-            HStack {
-                VStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                HStack {
+
+                    Image(systemName: tag.symbolName).resizable().scaledToFit()
+                        .frame(width: 50)
+                        .frame(maxHeight: 50)
+                        .padding(5)
+                        .fontWeight(.light)
+
+                    
+                    VStack(alignment: .leading) {
+                        Text(tag.title)
+                            .font(.displayFont(ofSize: 18))
+                        
+                        HStack {
+                            if let musicEntities = tag.musicEntities, !musicEntities.isEmpty {
+                                let last = if musicEntities.count < 5 {
+                                    musicEntities.count - 1
+                                } else {
+                                    4
+                                }
+                                
+                                ForEach(musicEntities[0...last]) { musicEntity in
+                                    musicEntity.image
+                                        .resizable().scaledToFill()
+                                        .frame(width: 20, height: 20)
+                                }
+                                
+                                if musicEntities.count > 5 {
+                                    Text("+\(musicEntities.count - 5)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                    
                     Spacer()
-                    Image(systemName: tag.symbolName).font(.title)
-                    Spacer()
-                }
-                .frame(width: 50, height: 50)
-                
-                VStack(alignment: .leading) {
-                    Text(tag.title)
-                        .font(.displayFont(ofSize: 18))
-                    Text("\(count) items")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
             }
+            .padding(.vertical)
+            
         }
         .listRowBackground(Color.clear)
         .onAppear {

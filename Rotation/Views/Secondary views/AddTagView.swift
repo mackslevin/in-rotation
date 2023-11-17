@@ -18,8 +18,15 @@ struct AddTagView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
+                HStack {
+                    Text("New Tag")
+                        .font(.displayFont(ofSize: 32))
+                    Spacer()
+                }
+                
                 TextField("Title", text: $title)
                     .textFieldStyle(.roundedBorder)
+
                 
                 ScrollView(showsIndicators: true) {
                     SymbolPicker(symbolName: $symbolName)
@@ -27,7 +34,6 @@ struct AddTagView: View {
                 .ignoresSafeArea(.container, edges: .bottom)
             }
             .padding([.top, .horizontal])
-            .navigationTitle("New Tag")
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {

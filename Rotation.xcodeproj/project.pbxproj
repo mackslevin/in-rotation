@@ -160,6 +160,7 @@
 				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
 				019045AF2B06D240007F78C1 /* TagTogglerView.swift */,
 				01D544F12B06F26100B37D6A /* LittleTagGrid.swift */,
+				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -177,7 +178,6 @@
 				017AA69F2B041EC2005E43D8 /* MusicSearchView.swift */,
 				017AA6A32B043D72005E43D8 /* MusicEntityDetailView.swift */,
 				011BB8EF2B044F7B00F3609D /* TagDetailView.swift */,
-				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

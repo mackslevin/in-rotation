@@ -21,6 +21,7 @@ struct MusicEntityDetailView: View {
                         if musicEntity.imageData != nil { // We're not gonna show the placeholder image
                             musicEntity.image.resizable().scaledToFit()
                                 .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15) , radius: 5, x: 1, y: 5)
                         }
                         
                         HStack {

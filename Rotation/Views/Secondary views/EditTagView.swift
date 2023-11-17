@@ -14,6 +14,11 @@ struct EditTagView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 40) {
+                HStack {
+                    Text("Edit Tag")
+                        .font(.displayFont(ofSize: 32))
+                    Spacer()
+                }
                 TextField("Title", text: $tag.title)
                     .textFieldStyle(.roundedBorder)
                 
@@ -28,9 +33,10 @@ struct EditTagView: View {
                         dismiss()
                     }
                     .bold()
+                    .disabled(tag.title.isEmpty)
                 }
             }
-            .navigationTitle("Edit Tag")
+            
         }
     }
 }
