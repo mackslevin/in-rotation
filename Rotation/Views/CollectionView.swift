@@ -11,10 +11,11 @@ import SwiftData
 struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
-    @Query var musicEntities: [MusicEntity]
     
+    @Query(sort: \MusicEntity.dateAdded, order: .reverse) var musicEntities: [MusicEntity]
     
     @State private var isShowingSortingOptions = false
+    @State private var viewModel = CollectionViewModel()
     
     var body: some View {
         NavigationStack {
@@ -33,6 +34,9 @@ struct CollectionView: View {
                     }
                     .frame(width: 30)
                     .padding([.trailing])
+                    .popover(isPresented: $isShowingSortingOptions, content: {
+                        CollectionSortOptionsView(viewModel: viewModel, isShowingSortingOptions: $isShowingSortingOptions)
+                    })
                     
                     NavigationLink(destination: MusicSearchView()) {
                         Image(systemName: "plus.circle").resizable().scaledToFit()
@@ -43,7 +47,7 @@ struct CollectionView: View {
                 
                 List {
                     Section {
-                        ForEach(musicEntities) { musicEntity in
+                        ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
                             CollectionViewListRow(musicEntity: musicEntity)
                         }
                     }
