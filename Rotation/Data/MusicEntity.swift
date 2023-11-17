@@ -11,6 +11,7 @@ import SwiftData
 @Model
 class MusicEntity {
     let id = UUID()
+    let dateAdded = Date.now
     var title: String = ""
     var artistName: String = ""
     var releaseDate: Date = Date.distantFuture

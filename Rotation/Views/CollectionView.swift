@@ -14,6 +14,8 @@ struct CollectionView: View {
     @Query var musicEntities: [MusicEntity]
     
     
+    @State private var isShowingSortingOptions = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -25,7 +27,7 @@ struct CollectionView: View {
                     Spacer()
                     
                     Button {
-                        
+                        isShowingSortingOptions = true
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
                     }
@@ -41,7 +43,7 @@ struct CollectionView: View {
                 
                 List {
                     Section {
-                        ForEach(musicEntities.reversed()) { musicEntity in
+                        ForEach(musicEntities) { musicEntity in
                             CollectionViewListRow(musicEntity: musicEntity)
                         }
                     }
