@@ -10,7 +10,9 @@ import SwiftUI
 struct MusicEntityTagsBlock: View {
     @Bindable var musicEntity: MusicEntity
     
-    @State private var isShowingTagManager = false
+    @State private var isShowingTagToggler = false
+    
+    @State private var newTags: [Tag] = []
     
     var body: some View {
         VStack(spacing: 12) {
@@ -20,7 +22,7 @@ struct MusicEntityTagsBlock: View {
                         .fontWeight(.semibold)
                     Spacer()
                     Button {
-                        isShowingTagManager = true
+                        isShowingTagToggler = true
                     } label: {
                         Image(systemName: "minus.forwardslash.plus")
                     }
@@ -50,7 +52,7 @@ struct MusicEntityTagsBlock: View {
                 HStack {
                     Spacer()
                     Button {
-                       isShowingTagManager = true
+                       isShowingTagToggler = true
                     } label: {
                         Label("Add Tags", systemImage: "plus.circle")
                             .fontWeight(.semibold)
@@ -59,31 +61,22 @@ struct MusicEntityTagsBlock: View {
                     Spacer()
                 }
             }
-            
-//            Button {
-//                isShowingTagManager = true
-//            } label: {
-//                HStack(spacing: 12) {
-//                    Spacer()
-//                    Text("Edit...")
-//                        .fontWeight(.bold)
-//                    Spacer()
-//                }
-//                .padding()
-//                .background {
-//                    RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true))
-//                        .foregroundStyle(Color.secondary)
-//                }
-//            }
-//            .tint(.primary)
         }
         .padding()
         .background {
             RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
                 .foregroundStyle(.regularMaterial)
         }
-        .sheet(isPresented: $isShowingTagManager, content: {
-            TagManagerView(musicEntity: musicEntity)
+        .onAppear {
+            if let existingTags = musicEntity.tags {
+                newTags = existingTags
+            }
+        }
+        .onChange(of: newTags, { _, newValue in
+            musicEntity.tags = newValue
+        })
+        .sheet(isPresented: $isShowingTagToggler, content: {
+            TagTogglerView(selectedTags: $newTags)
         })
     }
 }

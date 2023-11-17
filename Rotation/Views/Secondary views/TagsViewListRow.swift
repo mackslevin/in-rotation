@@ -20,7 +20,7 @@ struct TagsViewListRow: View {
             HStack {
                 VStack(alignment: .center) {
                     Spacer()
-                    Image(systemName: tag.symbolName).resizable().scaledToFit()
+                    Image(systemName: tag.symbolName).font(.title)
                     Spacer()
                 }
                 .frame(width: 50, height: 50)
