@@ -34,6 +34,16 @@ struct Utility {
         return abs(date.timeIntervalSinceNow) > secondsInAnHour
     }
     
+    static func stringForType(_ type: EntityType) -> String {
+        if type == .song {
+            return "Song"
+        } else if type == .album {
+            return "Album"
+        }
+        
+        return ""
+    }
+    
     static func defaultCorderRadius(small: Bool) -> CGFloat {
         if small { return 4 }
         return 10

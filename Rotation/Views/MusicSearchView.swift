@@ -24,104 +24,134 @@ struct MusicSearchView: View {
     @State private var errorAlertMessage: String? = nil
     let defaultErrorAlertMessage = "Something went wrong"
     
+    @State private var selectedTags: [Tag] = []
+    @State private var isShowingTagToggler = false
+    
     var body: some View {
         NavigationStack {
-            // MARK: Search box
-            VStack(alignment: .leading) {
-                HStack {
-                    TextField("Search for an album or song...", text: $searchText)
-                        .textFieldStyle(.roundedBorder)
-                        .submitLabel(.done)
-                        .autocorrectionDisabled()
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill").resizable().scaledToFit()
-                            .frame(width: 24)
+            ScrollView {
+                // MARK: Search box
+                VStack(alignment: .leading) {
+                    HStack {
+                        TextField("Search for an album or song...", text: $searchText)
+                            .textFieldStyle(.roundedBorder)
+                            .submitLabel(.done)
+                            .autocorrectionDisabled()
+                        Button {
+                            searchText = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill").resizable().scaledToFit()
+                                .frame(width: 24)
+                        }
+                        .tint(.secondary)
+                        .disabled(searchText.isEmpty)
                     }
-                    .tint(.secondary)
-                    .disabled(searchText.isEmpty)
-                }
-                
-                // MARK: Search results
-                if amSearchWrangler.resultsExist() {
-                    ScrollView(showsIndicators: true) {
-                        VStack(alignment: .leading, spacing: 12) {
-                            if !amSearchWrangler.albumResults.isEmpty {
-                                Text("Albums").font(.caption).bold().foregroundStyle(.secondary)
+                    
+                    // MARK: Search results
+                    if amSearchWrangler.resultsExist() {
+                        ScrollView(showsIndicators: true) {
+                            VStack(alignment: .leading, spacing: 12) {
+                                if !amSearchWrangler.albumResults.isEmpty {
+                                    Text("Albums").font(.caption).bold().foregroundStyle(.secondary)
+                                }
+                                ForEach(amSearchWrangler.albumResults) { album in
+                                    Button {setEntity(album)} label: {
+                                        HStack { Text("\(album.title) by \(album.artistName)"); Spacer() }
+                                            .multilineTextAlignment(.leading)
+                                    }
+                                }
+                                
+                                if !amSearchWrangler.songResults.isEmpty {
+                                    Text("Songs").font(.caption).bold().foregroundStyle(.secondary)
+                                }
+                                ForEach(amSearchWrangler.songResults) { song in
+                                    Button {setEntity(song)} label: {
+                                        HStack { Text("\(song.title) by \(song.artistName)"); Spacer() }
+                                            .multilineTextAlignment(.leading)
+                                    }
+                                }
                             }
-                            ForEach(amSearchWrangler.albumResults) { album in
-                                Button {setEntity(album)} label: {
-                                    HStack { Text("\(album.title) by \(album.artistName)"); Spacer() }
-                                        .multilineTextAlignment(.leading)
+                        }
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .foregroundStyle(.ultraThinMaterial)
+                        }
+                    }
+                    
+                    // MARK: Music Entity
+                    if amSearchWrangler.isLoading {
+                        ProgressView()
+                    } else if let musicEntity {
+                        Spacer()
+                        
+                        VStack(spacing: 12) {
+                            
+                            if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
+                                Image(uiImage: uiImage).resizable().scaledToFit()
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                            }
+                            
+                            VStack {
+                                Text(musicEntity.title)
+                                    .font(Font.displayFont(ofSize: 24))
+                                Text("\(Utility.stringForType(musicEntity.type)) by \(musicEntity.artistName)")
+                                    .foregroundStyle(.secondary)
+                                    .fontWeight(.semibold)
+                                    .multilineTextAlignment(.center)
+                                if let year = musicEntity.releaseYear() {
+                                    Text(String(year))
+                                        .foregroundStyle(.secondary)
                                 }
                             }
                             
-                            if !amSearchWrangler.songResults.isEmpty {
-                                Text("Songs").font(.caption).bold().foregroundStyle(.secondary)
-                            }
-                            ForEach(amSearchWrangler.songResults) { song in
-                                Button {setEntity(song)} label: {
-                                    HStack { Text("\(song.title) by \(song.artistName)"); Spacer() }
-                                        .multilineTextAlignment(.leading)
+                            // TAGGING
+                            HStack {
+                                if selectedTags.isEmpty {
+                                    Spacer()
+                                    Button {
+                                        isShowingTagToggler = true
+                                    } label: {
+                                        Label("Tag...", systemImage: "tag")
+                                            .fontWeight(.semibold)
+                                    }
+                                    Spacer()
+                                } else {
+                                    VStack(spacing: 8) {
+                                        LittleTagGrid(tags: selectedTags)
+                                        
+                                        Button("Edit Tags") {
+                                            isShowingTagToggler = true
+                                        }
+                                        
+                                    }
                                 }
                             }
+                            .padding(.vertical)
+                            
+                            
+                            Button {
+                                modelContext.insert(musicEntity)
+                                
+                                musicEntity.tags = selectedTags
+                                
+                                dismiss()
+                            } label: {
+                                Label("Save to Collection", systemImage: "plus")
+                            }
+                            .bold()
+                            .buttonStyle(.borderedProminent)
                         }
                     }
-                    .padding()
-                    .background {
-                        RoundedRectangle(cornerRadius: 5)
-                            .foregroundStyle(.ultraThinMaterial)
-                    }
-                }
-                
-                // MARK: Music Entity
-                if amSearchWrangler.isLoading {
-                    ProgressView()
-                } else if let musicEntity {
-                    Spacer()
                     
-                    VStack(spacing: 12) {
-                        HStack {
-                            Spacer()
-                            if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
-                                Image(uiImage: uiImage).resizable().scaledToFit()
-                                    .frame(maxWidth: 300)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                            }
-                            Spacer()
-                        }
-                        VStack {
-                            Text(musicEntity.title)
-                                .font(Font.displayFont(ofSize: 24))
-                            Text(musicEntity.artistName)
-                                .foregroundStyle(.secondary)
-                                .fontWeight(.semibold)
-                            if let year = musicEntity.releaseYear() {
-                                Text(String(year))
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                        .padding(.bottom)
-                        .multilineTextAlignment(.center)
-                        
-                        
-                        Button("Add to Collection") {
-                            modelContext.insert(musicEntity)
-                            dismiss()
-                        }
-                        .bold()
-                        .buttonStyle(.borderedProminent)
-                    }
+                    Spacer()
                 }
-                
-                Spacer()
             }
             .padding()
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
-            
+            .navigationTitle("Search")
             
         }
         .onChange(of: searchText) { oldValue, newValue in
@@ -138,6 +168,9 @@ struct MusicSearchView: View {
         } message: {
             Text(errorAlertMessage ?? defaultErrorAlertMessage)
         }
+        .sheet(isPresented: $isShowingTagToggler) {
+            TagTogglerView(selectedTags: $selectedTags)
+        }
     }
     
     func setEntity<T: MusicItem>(_ musicItem: T) {
@@ -147,6 +180,8 @@ struct MusicSearchView: View {
             await Utility.dismissKeyboard()
         }
     }
+    
+    
 }
 
 #Preview {

@@ -61,27 +61,6 @@ struct MusicEntityDetailView: View {
                         }
                     }
                     
-//                    if let tags = musicEntity.tags, !tags.isEmpty {
-//                        HStack {
-//                            Spacer()
-//                            
-//                            LazyVGrid(columns: Array(repeating: GridItem(.fixed(20)), count: tags.count > 5 ? 5 : tags.count), alignment: .trailing, spacing: 20, content: {
-//                                ForEach(tags) { tag in
-//                                    HStack {
-//                                        Spacer()
-//                                        Image(systemName: tag.symbolName)
-//                                            .font(.body)
-//                                        Spacer()
-//                                    }
-//                                    
-//                                        
-//                                }
-//                                
-//                            })
-//                        }
-//                        .foregroundStyle(.secondary)
-//                    }
-                    
                     MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
                     
                     MusicEntityDetailsBlock(musicEntity: musicEntity)
@@ -102,7 +81,7 @@ struct MusicEntityDetailView: View {
                 }
                 .ignoresSafeArea()
             }
-            .navigationTitle(stringForType(musicEntity.type))
+            .navigationTitle(Utility.stringForType(musicEntity.type))
             .navigationBarTitleDisplayMode(.inline)
             .alert(isPresented: $isShowingErrorAlert, content: {
                 Alert(title: Text("Something went wrong"))
@@ -119,15 +98,7 @@ struct MusicEntityDetailView: View {
         }
     }
     
-    func stringForType(_ type: EntityType) -> String {
-        if type == .song {
-            return "Song"
-        } else if type == .album {
-            return "Album"
-        }
-        
-        return ""
-    }
+    
 }
 
 #Preview {
