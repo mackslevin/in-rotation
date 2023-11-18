@@ -17,6 +17,8 @@ struct CollectionView: View {
     @State private var isShowingSortingOptions = false
     @State private var viewModel = CollectionViewModel()
     
+    
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -35,7 +37,7 @@ struct CollectionView: View {
                     .frame(width: 30)
                     .padding([.trailing])
                     .popover(isPresented: $isShowingSortingOptions, content: {
-                        CollectionSortOptionsView(viewModel: viewModel, isShowingSortingOptions: $isShowingSortingOptions)
+                        CollectionSortOptionsView(viewModel: viewModel)
                     })
                     
                     NavigationLink(destination: MusicSearchView()) {
@@ -47,7 +49,7 @@ struct CollectionView: View {
                 
                 if viewModel.useGridView {
                     ScrollView {
-                        RecordCoverGridView(musicEntites: viewModel.sortedEntities(musicEntities))
+                        RecordCoverGridView(musicEntities: viewModel.sortedEntities(musicEntities))
                             .padding()
                     }
                     
@@ -55,7 +57,7 @@ struct CollectionView: View {
                     List {
                         Section {
                             ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
-                                CollectionViewListRow(musicEntity: musicEntity)
+                                CollectionViewListRow(musicEntity: musicEntity, viewModel: viewModel)
                             }
                         }
                     }

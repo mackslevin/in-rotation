@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecordCoverGridView: View {
-    let musicEntites: [MusicEntity]
+    let musicEntities: [MusicEntity]
     
     @Environment(\.horizontalSizeClass) var horizontalSize
     
@@ -16,7 +16,7 @@ struct RecordCoverGridView: View {
     
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 5), count: columnCount), alignment: .center, spacing: 5) {
-            ForEach(musicEntites) { musicEntity in
+            ForEach(musicEntities) { musicEntity in
                 NavigationLink {
                     MusicEntityDetailView(musicEntity: musicEntity)
                 } label: {

@@ -25,7 +25,7 @@ struct TagDetailView: View {
                 
                 if let musicEntities = tag.musicEntities, !musicEntities.isEmpty {
                     ScrollView {
-                        RecordCoverGridView(musicEntites: musicEntities)
+                        RecordCoverGridView(musicEntities: musicEntities)
                     }
                 } else {
                     ContentUnavailableView("Nothing here yet...", systemImage: "eyes")
@@ -44,7 +44,7 @@ struct TagDetailView: View {
                     Button {
                         isShowingEditTag = true
                     } label: {
-                        Image(systemName: "square.and.pencil.circle").resizable().scaledToFit()
+                        Image(systemName: "slider.vertical.3").resizable().scaledToFit()
                     }
                     .frame(width: 30)
                 }

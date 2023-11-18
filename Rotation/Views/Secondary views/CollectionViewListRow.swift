@@ -9,10 +9,12 @@ import SwiftUI
 
 struct CollectionViewListRow: View {
     @Bindable var musicEntity: MusicEntity
+    @Bindable var viewModel: CollectionViewModel
     
     @Environment(\.modelContext) var modelContext
-    
     @State private var isShowingTagManager = false
+    
+    @State private var sortingText: String? = nil
     
     var body: some View {
         NavigationLink {
@@ -37,8 +39,15 @@ struct CollectionViewListRow: View {
                 VStack(alignment: .leading) {
                     Text(musicEntity.title)
                         .font(Font.displayFont(ofSize: 18))
+                        .lineLimit(3)
                     Text(musicEntity.artistName)
                         .foregroundStyle(.secondary)
+                    if let sortingText {
+                        Text(sortingText)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fontWeight(.semibold)
+                    }
                 }
             }
             
@@ -47,7 +56,9 @@ struct CollectionViewListRow: View {
         .listRowBackground(Color.clear)
         .swipeActions(edge: .leading) {
             Button {
-                musicEntity.played.toggle()
+                withAnimation {
+                    musicEntity.played.toggle()
+                }
             } label: {
                 if musicEntity.played {
                     Label("Unplayed", systemImage: "play.slash")
@@ -74,13 +85,32 @@ struct CollectionViewListRow: View {
         .sheet(isPresented: $isShowingTagManager) {
             TagManagerView(musicEntity: musicEntity)
         }
+        .onAppear {
+            setSortingText()
+        }
+        .onChange(of: viewModel.sortCriteria) {
+            setSortingText()
+        }
+    }
+    
+    func setSortingText() {
+        switch viewModel.sortCriteria {
+            case .dateAddedNewest, .dateAddedOldest:
+                sortingText = "Added: \(musicEntity.dateAdded.formatted())"
+            
+            case .byType:
+                sortingText = Utility.stringForType(musicEntity.type)
+                
+            default:
+                sortingText = nil
+        }
     }
 }
 
 
 #Preview {
     List {
-        CollectionViewListRow(musicEntity: Utility.exampleEntity)
+        CollectionViewListRow(musicEntity: Utility.exampleEntity, viewModel: CollectionViewModel())
     }
     .listStyle(.plain)
     
