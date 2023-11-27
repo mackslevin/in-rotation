@@ -63,8 +63,6 @@ class MusicURLWrangler {
             album = try await fetchSpotifyAlbum(withID: albumStub.id)
         }
         
-//        print("^^ album: \(album!)")
-        
         let duration = Double(track.duration / 1000)
         
         var imgData: Data? = nil
@@ -78,9 +76,17 @@ class MusicURLWrangler {
             releaseDate = dateFromSpotifyDate(dateString: album.releaseDate)
         }
         
+        var artistName: String? = nil
+        // Account for possibility of multiple artists
+        if track.artists.count > 1 {
+            artistName = track.artists.map({$0.name}).joined(separator: " & ")
+        } else {
+            artistName = track.artists.first?.name
+        }
+        
         return MusicEntity(
             title: track.name,
-            artistName: track.artists.first?.name ?? "",
+            artistName: artistName ?? "",
             releaseDate: releaseDate ?? .distantFuture,
             numberOfTracks: 1,
             songTitles: [track.name],
@@ -110,12 +116,17 @@ class MusicURLWrangler {
             imgData = data
         }
         
-//        var artistName = ""
+        var artistName: String? = nil
         // Account for possibility of multiple artists
+        if album.artists.count > 1 {
+            artistName = album.artists.map({$0.name}).joined(separator: " & ")
+        } else {
+            artistName = album.artists.first?.name
+        }
         
         let musicEntity = MusicEntity(
             title: album.name,
-            artistName: album.artists.first?.name ?? "",
+            artistName: artistName ?? "",
             releaseDate: releaseDate ?? .distantFuture,
             numberOfTracks: album.tracks.items.count,
             songTitles: songTitles,
