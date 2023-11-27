@@ -16,7 +16,7 @@ class CollectionViewModel {
     var useGridView = false
     
     init() {
-        sortCriteria = .unplayedFirst
+        sortCriteria = .dateAddedNewest
     }
     
     @MainActor

@@ -8,23 +8,12 @@
 import SwiftUI
 import Observation
 
-enum SpotifyAPIError: String, Error, CaseIterable {
-    case badQuery = "Could not construct search query"
-    case badURL = "Could not construct a URL for the request"
-    case badAccessToken = "Bad (or no) access token"
-    case badResponseStatus = "The server request was unsuccessful"
-    case countryCodeUnavailable = "Could not get user country code"
-    case decodingError = "Could not decode search results"
-    case noResults = "No search results"
-    case incorrectType = "The wrong entity type was used"
-}
-
 @Observable
 class SpotifyAPIWrangler {
     private let clientID = "e3d47c96c2384fabb9bf112ac641575c"
     private let clientSecret = "25a5e9010204460bb8c70af1b78278ee"
     
-    private func getAccessToken() async throws -> String {
+    func getAccessToken() async throws -> String {
         struct TokenResponse: Decodable {
             let accessToken: String
             

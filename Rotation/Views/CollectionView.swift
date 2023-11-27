@@ -18,7 +18,6 @@ struct CollectionView: View {
     @State private var viewModel = CollectionViewModel()
     
     
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -69,7 +68,6 @@ struct CollectionView: View {
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
-            
         }
         
     }

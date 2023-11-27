@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 enum EntityType: String, CaseIterable, Codable {
     case song, album, playlist
 }

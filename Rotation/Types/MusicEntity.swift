@@ -21,11 +21,15 @@ class MusicEntity {
     var imageData: Data? = nil
     var played: Bool = false
     var type: EntityType = EntityType.album
+    var recordLabel: String = ""
     
     var isrc = "" // Cross-platform identifier for songs only 
     var upc = "" // Cross-platform identifier for albums only.
     var appleMusicURLString = ""
     var spotifyURI = ""
+    var spotifyURLString = ""
+    var spotifyID: String = ""
+    var appleMusicID: String = ""
     
     var tags: [Tag]?
     var notes: String = ""
@@ -38,7 +42,7 @@ class MusicEntity {
         }
     }
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", tags: [Tag]? = [], notes: String = "") {
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, recordLabel: String = "", isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", spotifyURLString: String = "", spotifyID: String = "", appleMusicID: String = "", tags: [Tag]? = [], notes: String = "") {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -48,10 +52,14 @@ class MusicEntity {
         self.imageData = imageData
         self.played = played
         self.type = type
+        self.recordLabel = recordLabel
         self.isrc = isrc
         self.upc = upc
         self.appleMusicURLString = appleMusicURLString
         self.spotifyURI = spotifyURI
+        self.spotifyURLString = spotifyURLString
+        self.spotifyID = spotifyID
+        self.appleMusicID = appleMusicID
         self.tags = tags
         self.notes = notes
     }

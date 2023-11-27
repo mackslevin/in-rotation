@@ -115,7 +115,7 @@ class AppleMusicSearchWrangler {
             
             isLoading = false
             
-            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, isrc: song.isrc ?? "", appleMusicURLString: song.url?.absoluteString ?? "")
+            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, isrc: song.isrc ?? "", appleMusicURLString: song.url?.absoluteString ?? "", appleMusicID: song.id.rawValue)
         } else if let album = item as? Album {
             let tracks = await getTracksForAlbum(album)
             var dontTrustTheDuration = false
@@ -139,7 +139,7 @@ class AppleMusicSearchWrangler {
             print("^^ Album UPC: \(album.upc ?? "N/A")")
             
             isLoading = false
-            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "")
+            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", appleMusicID: album.id.rawValue)
         } else if let playlist = item as? Playlist {
             let tracks = await getTracksForPlaylist(playlist)
             var dontTrustTheDuration = false
@@ -161,7 +161,7 @@ class AppleMusicSearchWrangler {
             if dontTrustTheDuration { duration = .zero }
             
             isLoading = false
-            return MusicEntity(title: playlist.name, artistName: playlist.curatorName ?? "N/A", releaseDate: playlist.lastModifiedDate ?? .distantFuture, numberOfTracks: tracks.count, songTitles: titles, duration: duration, imageData: imageData, type: .playlist)
+            return MusicEntity(title: playlist.name, artistName: playlist.curatorName ?? "N/A", releaseDate: playlist.lastModifiedDate ?? .distantFuture, numberOfTracks: tracks.count, songTitles: titles, duration: duration, imageData: imageData, type: .playlist, appleMusicURLString: playlist.url?.absoluteString ?? "", appleMusicID: playlist.id.rawValue)
         }
         
         isLoading = false
