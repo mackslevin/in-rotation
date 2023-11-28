@@ -25,14 +25,12 @@ class AppleMusicWrangler {
         // If the model already has the URL stored, just open it. Otherwise, conduct another search based on the MusicEntity properties and find a URL from the results.
         
         if !musicEntity.appleMusicURLString.isEmpty {
-            print("^^ opening directly")
             if let url = URL(string: musicEntity.appleMusicURLString) {
                 await UIApplication.shared.open(url)
             } else {
                 throw AppleMusicWranglerError.badURL
             }
         } else {
-            print("^^ gonna search")
             let searchTerm = "\(musicEntity.title) \(musicEntity.artistName)"
             var request: MusicCatalogSearchRequest? = nil
             
@@ -55,13 +53,10 @@ class AppleMusicWrangler {
                     request = MusicCatalogSearchRequest(term: searchTerm, types: [Playlist.self])
             }
             
-            print("^^ request \(request as Any)")
-            
             guard var request else { throw AppleMusicWranglerError.noRequest }
             
             request.limit = 20
             let response = try await request.response()
-            print("^^ got a respoinse")
             var url: URL? = nil
             
             switch musicEntity.type {
@@ -139,12 +134,10 @@ class AppleMusicWrangler {
     }
     
     private func albumMatch(forMusicEntity musicEntity: MusicEntity, fromAlbums albums: [Album]) throws -> Album {
-        print("^^ albums \(albums)")
         let match = albums.first { album in
             let titleMatch = album.title.lowercased().trimmingCharacters(in: .whitespaces) == musicEntity.title.lowercased().trimmingCharacters(in: .whitespaces)
-            print("^^ \(titleMatch)")
+
             let artistMatch = album.artistName.lowercased().trimmingCharacters(in: .whitespaces) == musicEntity.artistName.lowercased().trimmingCharacters(in: .whitespaces)
-            print("^^ \(artistMatch)")
             
             let trackCountMatch = album.trackCount == musicEntity.numberOfTracks
             

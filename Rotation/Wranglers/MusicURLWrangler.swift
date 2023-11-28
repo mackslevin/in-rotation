@@ -82,7 +82,6 @@ class MusicURLWrangler {
             
             if let musicItem = try await appleMusicItemFromID(id, forType: appleMusicType) {
                 if let musicEntity = await AppleMusicSearchWrangler().makeMusicEntity(from: musicItem) {
-                    print("^^ entity: \(musicEntity)")
                     isLoading = false
                     return musicEntity
                 } else {
@@ -90,7 +89,6 @@ class MusicURLWrangler {
                     throw MusicURLWranglerError.musicEntityConversionError
                 }
             } else {
-                print("^^ no music item")
                 isLoading = false
                 throw MusicURLWranglerError.appleMusicAPIError
             }
@@ -253,9 +251,6 @@ class MusicURLWrangler {
             print("^^ Non-200 response: \(response)")
             throw SpotifyAPIError.badResponseStatus
         }
-        
-        print("^^ track info \(String(data: data, encoding: .utf8)!)")
-        
         
         let track = try JSONDecoder().decode(SpotifyTrack.self, from: data)
         

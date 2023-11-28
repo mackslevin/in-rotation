@@ -64,8 +64,7 @@ class SpotifyAPIWrangler {
     }
     
     private func findMatch(forMusicEntity musicEntity: MusicEntity) async throws -> String {
-        // The string returned by this function will be the URI of a Spotify catalog item
-        
+        // The string returned by this function will be the URL of a Spotify catalog item
         var urlComponents = URLComponents(string: "https://api.spotify.com/v1/search")
         let resultsLimit = "1"
 
@@ -73,16 +72,13 @@ class SpotifyAPIWrangler {
         switch musicEntity.type {
             case .song:
                 let type = URLQueryItem(name: "type", value: "track")
-
                 var query: URLQueryItem? = nil
                 if !musicEntity.isrc.isEmpty {
                     query = URLQueryItem(name: "query", value: "isrc:\(musicEntity.isrc)")
                 } else {
                     query = URLQueryItem(name: "query", value: "track:\(musicEntity.title) artist:\(musicEntity.artistName)")
                 }
-                
                 urlComponents?.queryItems = [query!, type]
-
             case .album:
                 let type = URLQueryItem(name: "type", value: "album")
                 let query = URLQueryItem(name: "query", value: "upc:\(musicEntity.upc)")
@@ -113,7 +109,7 @@ class SpotifyAPIWrangler {
             throw SpotifyAPIError.decodingError
         }
         
-        // Get Spotify ID from search results
+        // Get and save various pieces of Spotify info from search results (so we can avoid this process next time), return URL string
         switch musicEntity.type {
             case .song:
                 if let result = results.tracks?.items.first, let url = result.externalURLs?.spotify {
