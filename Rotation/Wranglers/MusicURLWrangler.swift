@@ -14,6 +14,9 @@ enum MusicURLWranglerError: String, Error, Equatable {
     case unknownSource = "Could not determine the URL source to be Spotify or Apple Music. Please try a URL which begins in either \"open.spotify.com\" or \"music.apple.com\""
     case unknownSpotifyType = "The Spotify link was to a resource that does not appear to be an album, track, or playlist."
     case noSpotifyID = "The resource could not be retrieved from the link provided"
+    case unsupportedURL = "URL is unsupported"
+    case appleMusicAPIError = "There was a problem with the Apple Music API"
+    case musicEntityConversionError = "The requested item could not be saved."
 }
 
 @Observable
@@ -49,9 +52,73 @@ class MusicURLWrangler {
                     isLoading = false
                     return try await musicEntityFromSpotifyPlaylist(playlist, spotifyURL: url)
             }
+        } else if source == .appleMusic {
+            // We need to fish the ID out of the URL 🙃
+            let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            var id: String? = nil
+            var appleMusicType: EntityType? = nil
+            
+            // If it's a song, its Apple Music ID should be in query item named `i`. If it's just an album or playlist we can find that ID in the path.
+            if let items = urlComponents?.queryItems {
+                for item in items {
+                    if item.name == "i" {
+                        id = item.value
+                        appleMusicType = .song
+                    }
+                }
+            }
+            if id == nil {
+                if let pathBits = urlComponents?.path.components(separatedBy: "/") {
+                    if let lastBit = pathBits.last {
+                        id = lastBit
+                        
+                        // Playlist IDs have a specific prefix, album IDs do not
+                        appleMusicType = lastBit.hasPrefix("pl.") ? .playlist : .album
+                    }
+                }
+            }
+            
+            guard let id, let appleMusicType else { throw MusicURLWranglerError.unsupportedURL }
+            
+            if let musicItem = try await appleMusicItemFromID(id, forType: appleMusicType) {
+                if let musicEntity = await AppleMusicSearchWrangler().makeMusicEntity(from: musicItem) {
+                    print("^^ entity: \(musicEntity)")
+                    isLoading = false
+                    return musicEntity
+                } else {
+                    isLoading = false
+                    throw MusicURLWranglerError.musicEntityConversionError
+                }
+            } else {
+                print("^^ no music item")
+                isLoading = false
+                throw MusicURLWranglerError.appleMusicAPIError
+            }
         }
         
-        throw fatalError()
+        isLoading = false
+        throw MusicURLWranglerError.unsupportedURL
+    }
+    
+    private func appleMusicItemFromID(_ id: String, forType type: EntityType) async throws -> (any MusicItem)? {
+        do {
+            switch type {
+                case .song:
+                    let request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: MusicItemID(rawValue: id))
+                    let response = try await request.response()
+                    return response.items.first
+                case .album:
+                    let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(rawValue: id))
+                    let response = try await request.response()
+                    return response.items.first
+                case .playlist:
+                    let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: MusicItemID(rawValue: id))
+                    let response = try await request.response()
+                    return response.items.first
+            }
+        } catch {
+            throw MusicURLWranglerError.appleMusicAPIError
+        }
     }
     
     private func musicEntityFromSpotifyTrack(_ track: SpotifyTrack, spotifyURL: URL) async throws -> MusicEntity {
@@ -221,11 +288,11 @@ class MusicURLWrangler {
     private func fetchSpotifyPlaylist(withID id: String) async throws -> SpotifyPlaylist {
         
         let countryCode = Locale.autoupdatingCurrent.region?.identifier ?? ""
-
+        
         guard let requestURL = URL(string: "https://api.spotify.com/v1/playlists/\(id)\(countryCode.isEmpty ? "" : "?market=\(countryCode)")") else {
             throw SpotifyAPIError.badURL
         }
-       
+        
         var request = URLRequest(url: requestURL)
         let accessToken = try await SpotifyAPIWrangler().getAccessToken()
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
@@ -238,11 +305,11 @@ class MusicURLWrangler {
         }
         
         let playlist = try JSONDecoder().decode(SpotifyPlaylist.self, from: data)
-
+        
         return playlist
     }
     
-
+    
     
     private func determineSpotifyType(fromURL url: URL) throws -> EntityType {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let subsequence = components.path.split(separator: "/").first else {

@@ -115,7 +115,7 @@ class AppleMusicSearchWrangler {
             
             isLoading = false
             
-            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, isrc: song.isrc ?? "", appleMusicURLString: song.url?.absoluteString ?? "", appleMusicID: song.id.rawValue)
+            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, recordLabel: song.albums?.first?.recordLabelName ?? "", isrc: song.isrc ?? "", appleMusicURLString: song.url?.absoluteString ?? "", appleMusicID: song.id.rawValue)
         } else if let album = item as? Album {
             let tracks = await getTracksForAlbum(album)
             var dontTrustTheDuration = false
@@ -139,7 +139,7 @@ class AppleMusicSearchWrangler {
             print("^^ Album UPC: \(album.upc ?? "N/A")")
             
             isLoading = false
-            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", appleMusicID: album.id.rawValue)
+            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, recordLabel: album.recordLabelName ?? "", upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", appleMusicID: album.id.rawValue)
         } else if let playlist = item as? Playlist {
             let tracks = await getTracksForPlaylist(playlist)
             var dontTrustTheDuration = false
