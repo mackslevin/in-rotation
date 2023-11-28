@@ -108,8 +108,6 @@ class MusicURLWrangler {
         let songDurations = album.tracks.items.map { $0.duration }
         let albumDuration = Double(songDurations.reduce(0, +) / 1000)
         
-        
-        
         var imgData: Data? = nil
         if let imgURLString = album.images.first?.url, let url = URL(string: imgURLString) {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -189,9 +187,10 @@ class MusicURLWrangler {
             throw SpotifyAPIError.badResponseStatus
         }
         
-        let track = try JSONDecoder().decode(SpotifyTrack.self, from: data)
+        print("^^ track info \(String(data: data, encoding: .utf8)!)")
         
-        print("^^ track data: \(String(data: data, encoding: .utf8)!)")
+        
+        let track = try JSONDecoder().decode(SpotifyTrack.self, from: data)
         
         return track
     }
@@ -213,8 +212,6 @@ class MusicURLWrangler {
             print("^^ Non-200 response: \(response)")
             throw SpotifyAPIError.badResponseStatus
         }
-        
-        print("^^ album data \(String(data: data, encoding: .utf8)!)")
         
         let album = try JSONDecoder().decode(SpotifyAlbum.self, from: data)
         

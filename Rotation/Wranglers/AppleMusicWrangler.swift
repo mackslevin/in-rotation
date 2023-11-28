@@ -9,8 +9,12 @@ import SwiftUI
 import Observation
 import MusicKit
 
-enum AppleMusicWranglerError: Error, Equatable {
-    case noMatch, noRequest, badURL
+enum AppleMusicWranglerError: String, Error, Equatable {
+    case noMatch = "Unable to find a matching item on Apple Music"
+    case noRequest = "Request failed"
+    case badURL = "Unable to resolve URL"
+    case noMatchISRC = "Unable to find a matching song on Apple Music"
+    case noMatchUPC = "Unable to find a matching album on Apple Music"
 }
 
 @Observable
@@ -34,16 +38,24 @@ class AppleMusicWrangler {
             
             switch musicEntity.type {
                 case .song:
-                    // TODO: Factor in song's ISRC code
-                    request = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self])
+                    if !musicEntity.isrc.isEmpty {
+                        try await openFromISRC(musicEntity.isrc, forMusicEntity: musicEntity)
+                        return
+                    } else {
+                        request = MusicCatalogSearchRequest(term: searchTerm, types: [Song.self])
+                    }
                 case .album:
-                    // TODO: Factor in album's UPC code
-                    request = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
+                    if !musicEntity.upc.isEmpty {
+                        try await openFromUPC(musicEntity.upc, forMusicEntity: musicEntity)
+                        return 
+                    } else {
+                        request = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
+                    }
                 case .playlist:
                     request = MusicCatalogSearchRequest(term: searchTerm, types: [Playlist.self])
             }
             
-            print("^^ request \(request)")
+            print("^^ request \(request as Any)")
             
             guard var request else { throw AppleMusicWranglerError.noRequest }
             
@@ -64,6 +76,43 @@ class AppleMusicWrangler {
             if let url {
                 await UIApplication.shared.open(url)
             }
+        }
+    }
+    
+    @MainActor
+    private func openFromISRC(_ isrc: String, forMusicEntity musicEntity: MusicEntity) async throws {
+        let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
+        let response = try await request.response()
+        if let song = response.items.first {
+            if let url = song.url {
+                // Add Apple Music data to the model while we're at it. (If we're in this function, the MusicEntity object was almost certainly created from Spotify API data.)
+                musicEntity.appleMusicURLString = url.absoluteString
+                musicEntity.appleMusicID = song.id.rawValue
+                
+                await UIApplication.shared.open(url)
+            } else {
+                throw AppleMusicWranglerError.noMatch
+            }
+        } else {
+            throw AppleMusicWranglerError.noMatchISRC
+        }
+    }
+    
+    @MainActor
+    private func openFromUPC(_ upc: String, forMusicEntity musicEntity: MusicEntity) async throws {
+        let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: upc)
+        let response = try await request.response()
+        
+        if let album = response.items.first {
+            if let url = album.url {
+                musicEntity.appleMusicURLString = url.absoluteString
+                musicEntity.appleMusicID = album.id.rawValue
+                await UIApplication.shared.open(url)
+            } else {
+                throw AppleMusicWranglerError.noMatch
+            }
+        } else {
+            throw AppleMusicWranglerError.noMatchUPC
         }
     }
     
@@ -97,9 +146,7 @@ class AppleMusicWrangler {
             let artistMatch = album.artistName.lowercased().trimmingCharacters(in: .whitespaces) == musicEntity.artistName.lowercased().trimmingCharacters(in: .whitespaces)
             print("^^ \(artistMatch)")
             
-            
             let trackCountMatch = album.trackCount == musicEntity.numberOfTracks
-            
             
             return titleMatch && artistMatch && trackCountMatch
         }
