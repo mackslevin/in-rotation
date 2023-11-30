@@ -337,9 +337,17 @@ class MusicURLWrangler {
             throw MusicURLWranglerError.urlParsing
         }
         
-        if host == "open.spotify.com" {
+//        if host == "open.spotify.com" {
+//            return .spotify
+//        } else if host == "music.apple.com" {
+//            return .appleMusic
+//        } else {
+//            throw MusicURLWranglerError.unknownSource
+//        }
+        
+        if host.contains("spotify.com") {
             return .spotify
-        } else if host == "music.apple.com" {
+        } else if host.contains("apple.com") {
             return .appleMusic
         } else {
             throw MusicURLWranglerError.unknownSource

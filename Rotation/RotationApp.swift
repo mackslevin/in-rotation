@@ -15,12 +15,13 @@ struct RotationApp: App {
             MusicEntity.self,
             Tag.self
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, groupContainer: .identifier("group.com.johnslevin.Rotation"), cloudKitDatabase: .private("iCloud.com.johnslevin.Rotation"))
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-
             fatalError("^^ Could not create ModelContainer: \(error)")
         }
     }()
