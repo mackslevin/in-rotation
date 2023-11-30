@@ -53,14 +53,30 @@ class SpotifyAPIWrangler {
         if !musicEntity.spotifyURLString.isEmpty {
             let urlString = musicEntity.spotifyURLString
             await MainActor.run {
-                UIApplication.shared.open(URL(string: urlString)!)
+
+//                    UIApplication.shared.open(URL(string: urlString)!)
+                
+                open(URL(string: urlString)!)
+
             }
         } else {
             let urlString = try await findMatch(forMusicEntity: musicEntity)
             await MainActor.run {
-                UIApplication.shared.open(URL(string: urlString)!)
+                
+//                UIApplication.shared.open(URL(string: urlString)!)
+                open(URL(string: urlString)!)
+                
             }
         }
+    }
+    
+    
+    private func open(_ url: URL) {
+        #if ACTIONEXTENSION
+        print("It's the actionextension")
+        #else
+        UIApplication.shared.open(url)
+        #endif
     }
     
     private func findMatch(forMusicEntity musicEntity: MusicEntity) async throws -> String {

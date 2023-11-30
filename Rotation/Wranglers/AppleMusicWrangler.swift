@@ -19,6 +19,14 @@ enum AppleMusicWranglerError: String, Error, Equatable {
 
 @Observable
 class AppleMusicWrangler {
+    private func open(_ url: URL) {
+        #if ACTIONEXTENSION
+        print("It's the actionextension")
+        #else
+        UIApplication.shared.open(url)
+        #endif
+    }
+    
     @MainActor
     func openInAppleMusic(_ musicEntity: MusicEntity) async throws {
         
@@ -26,7 +34,8 @@ class AppleMusicWrangler {
         
         if !musicEntity.appleMusicURLString.isEmpty {
             if let url = URL(string: musicEntity.appleMusicURLString) {
-                await UIApplication.shared.open(url)
+//                await UIApplication.shared.open(url)
+                open(url)
             } else {
                 throw AppleMusicWranglerError.badURL
             }
@@ -69,7 +78,8 @@ class AppleMusicWrangler {
             }
             
             if let url {
-                await UIApplication.shared.open(url)
+//                await UIApplication.shared.open(url)
+                open(url)
             }
         }
     }
@@ -84,7 +94,8 @@ class AppleMusicWrangler {
                 musicEntity.appleMusicURLString = url.absoluteString
                 musicEntity.appleMusicID = song.id.rawValue
                 
-                await UIApplication.shared.open(url)
+//                await UIApplication.shared.open(url)
+                open(url)
             } else {
                 throw AppleMusicWranglerError.noMatch
             }
@@ -102,7 +113,8 @@ class AppleMusicWrangler {
             if let url = album.url {
                 musicEntity.appleMusicURLString = url.absoluteString
                 musicEntity.appleMusicID = album.id.rawValue
-                await UIApplication.shared.open(url)
+//                await UIApplication.shared.open(url)
+                open(url)
             } else {
                 throw AppleMusicWranglerError.noMatch
             }

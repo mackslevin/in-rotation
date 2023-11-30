@@ -35,6 +35,8 @@
 		017AA6A02B041EC2005E43D8 /* MusicSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA69F2B041EC2005E43D8 /* MusicSearchView.swift */; };
 		017AA6A22B0430D8005E43D8 /* CollectionViewListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6A12B0430D8005E43D8 /* CollectionViewListRow.swift */; };
 		017AA6A42B043D72005E43D8 /* MusicEntityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6A32B043D72005E43D8 /* MusicEntityDetailView.swift */; };
+		017E66102B19221E0096C9D8 /* PPPierSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */; };
+		017E66112B19222B0096C9D8 /* Font-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E42B05808400C13BDA /* Font-Ext.swift */; };
 		018811912B0801F0003EF47A /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811902B0801F0003EF47A /* CollectionViewModel.swift */; };
 		018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811922B080233003EF47A /* CollectionSortCriteria.swift */; };
 		018811952B08048B003EF47A /* CollectionSortOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811942B08048B003EF47A /* CollectionSortOptionsView.swift */; };
@@ -47,12 +49,57 @@
 		01ACB8E12B05740700C13BDA /* EditTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E02B05740700C13BDA /* EditTagView.swift */; };
 		01ACB8E32B05803800C13BDA /* PPPierSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */; };
 		01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E42B05808400C13BDA /* Font-Ext.swift */; };
+		01B206452B1809CD001265FC /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B206442B1809CD001265FC /* UniformTypeIdentifiers.framework */; };
+		01B206482B1809CD001265FC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01B206472B1809CD001265FC /* Media.xcassets */; };
+		01B2064A2B1809CD001265FC /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206492B1809CD001265FC /* ActionViewController.swift */; };
+		01B2064D2B1809CD001265FC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01B2064B2B1809CD001265FC /* MainInterface.storyboard */; };
+		01B206512B1809CD001265FC /* Rotation-iOSActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01B206422B1809CD001265FC /* Rotation-iOSActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01B206572B1809F5001265FC /* UIHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206562B1809F5001265FC /* UIHostingView.swift */; };
+		01B206582B180A18001265FC /* UIHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206562B1809F5001265FC /* UIHostingView.swift */; };
+		01B2065A2B180A3B001265FC /* EnvironmentValues-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */; };
+		01B2065B2B180BCC001265FC /* MusicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E62AFC2E2600D53903 /* MusicEntity.swift */; };
+		01B2065C2B180BD2001265FC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6922B0404A0005E43D8 /* Tag.swift */; };
+		01B2065E2B180C4E001265FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B2065D2B180C4E001265FC /* ContentView.swift */; };
+		01B2065F2B180C89001265FC /* EnvironmentValues-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */; };
+		01B206602B180D8C001265FC /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393C12AFCA4B5000DF698 /* EntityType.swift */; };
+		01B206622B1815CD001265FC /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
+		01B206652B1815D6001265FC /* MusicURLWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811962B084212003EF47A /* MusicURLWrangler.swift */; };
+		01B206662B1815EC001265FC /* SpotifyAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FB4422B0BF84E00CF1DB0 /* SpotifyAPIError.swift */; };
+		01B206672B1815F2001265FC /* Spotify Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016854CF2B0D50C000931CE6 /* Spotify Entities.swift */; };
+		01B206682B181600001265FC /* SpotifySearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */; };
+		01B206692B181605001265FC /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393BB2AFC67FD000DF698 /* SearchError.swift */; };
+		01B2066A2B181698001265FC /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
+		01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
 		01D544F22B06F26100B37D6A /* LittleTagGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D544F12B06F26100B37D6A /* LittleTagGrid.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
 		01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
 		01FC64E72AFC2E2600D53903 /* MusicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E62AFC2E2600D53903 /* MusicEntity.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01B2064F2B1809CD001265FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 012513A02AFB1C750064AA07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01B206412B1809CD001265FC;
+			remoteInfo = "Rotation-iOSActionExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		01B206522B1809CD001265FC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				01B206512B1809CD001265FC /* Rotation-iOSActionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		010393BB2AFC67FD000DF698 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
@@ -98,6 +145,16 @@
 		01ACB8E02B05740700C13BDA /* EditTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagView.swift; sourceTree = "<group>"; };
 		01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PPPierSans-Bold.otf"; sourceTree = "<group>"; };
 		01ACB8E42B05808400C13BDA /* Font-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font-Ext.swift"; sourceTree = "<group>"; };
+		01B206422B1809CD001265FC /* Rotation-iOSActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Rotation-iOSActionExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01B206442B1809CD001265FC /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		01B206472B1809CD001265FC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		01B206492B1809CD001265FC /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		01B2064C2B1809CD001265FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		01B2064E2B1809CD001265FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01B206562B1809F5001265FC /* UIHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingView.swift; sourceTree = "<group>"; };
+		01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues-Ext.swift"; sourceTree = "<group>"; };
+		01B2065D2B180C4E001265FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		01B206612B180FF3001265FC /* Rotation-iOSActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Rotation-iOSActionExtension.entitlements"; sourceTree = "<group>"; };
 		01D544F12B06F26100B37D6A /* LittleTagGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleTagGrid.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
@@ -113,6 +170,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01B2063F2B1809CD001265FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B206452B1809CD001265FC /* UniformTypeIdentifiers.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -120,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				012513AA2AFB1C750064AA07 /* Rotation */,
+				01B206462B1809CD001265FC /* Rotation-iOSActionExtension */,
+				01B206432B1809CD001265FC /* Frameworks */,
 				012513A92AFB1C750064AA07 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				012513A82AFB1C750064AA07 /* Rotation.app */,
+				01B206422B1809CD001265FC /* Rotation-iOSActionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -237,6 +305,8 @@
 				010393BF2AFC9B14000DF698 /* Utility.swift */,
 				01ACB8E42B05808400C13BDA /* Font-Ext.swift */,
 				018811902B0801F0003EF47A /* CollectionViewModel.swift */,
+				01B206562B1809F5001265FC /* UIHostingView.swift */,
+				01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -250,6 +320,27 @@
 			path = OLD;
 			sourceTree = "<group>";
 		};
+		01B206432B1809CD001265FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01B206442B1809CD001265FC /* UniformTypeIdentifiers.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		01B206462B1809CD001265FC /* Rotation-iOSActionExtension */ = {
+			isa = PBXGroup;
+			children = (
+				01B206612B180FF3001265FC /* Rotation-iOSActionExtension.entitlements */,
+				01B206472B1809CD001265FC /* Media.xcassets */,
+				01B206492B1809CD001265FC /* ActionViewController.swift */,
+				01B2064B2B1809CD001265FC /* MainInterface.storyboard */,
+				01B2064E2B1809CD001265FC /* Info.plist */,
+				01B2065D2B180C4E001265FC /* ContentView.swift */,
+			);
+			path = "Rotation-iOSActionExtension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,15 +351,34 @@
 				012513A42AFB1C750064AA07 /* Sources */,
 				012513A52AFB1C750064AA07 /* Frameworks */,
 				012513A62AFB1C750064AA07 /* Resources */,
+				01B206522B1809CD001265FC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				01B206502B1809CD001265FC /* PBXTargetDependency */,
 			);
 			name = Rotation;
 			productName = Rotation;
 			productReference = 012513A82AFB1C750064AA07 /* Rotation.app */;
 			productType = "com.apple.product-type.application";
+		};
+		01B206412B1809CD001265FC /* Rotation-iOSActionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01B206552B1809CD001265FC /* Build configuration list for PBXNativeTarget "Rotation-iOSActionExtension" */;
+			buildPhases = (
+				01B2063E2B1809CD001265FC /* Sources */,
+				01B2063F2B1809CD001265FC /* Frameworks */,
+				01B206402B1809CD001265FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rotation-iOSActionExtension";
+			productName = "Rotation-iOSActionExtension";
+			productReference = 01B206422B1809CD001265FC /* Rotation-iOSActionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -281,6 +391,9 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					012513A72AFB1C750064AA07 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					01B206412B1809CD001265FC = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 				};
@@ -299,6 +412,7 @@
 			projectRoot = "";
 			targets = (
 				012513A72AFB1C750064AA07 /* Rotation */,
+				01B206412B1809CD001265FC /* Rotation-iOSActionExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -311,6 +425,16 @@
 				012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */,
 				012513B22AFB1C770064AA07 /* Assets.xcassets in Resources */,
 				01ACB8E32B05803800C13BDA /* PPPierSans-Bold.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01B206402B1809CD001265FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B206482B1809CD001265FC /* Media.xcassets in Resources */,
+				01B2064D2B1809CD001265FC /* MainInterface.storyboard in Resources */,
+				017E66102B19221E0096C9D8 /* PPPierSans-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +474,8 @@
 				018811952B08048B003EF47A /* CollectionSortOptionsView.swift in Sources */,
 				019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */,
 				015FB0712B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift in Sources */,
+				01B2065A2B180A3B001265FC /* EnvironmentValues-Ext.swift in Sources */,
+				01B206572B1809F5001265FC /* UIHostingView.swift in Sources */,
 				010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */,
 				017AA69C2B041A54005E43D8 /* ExploreView.swift in Sources */,
 				01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */,
@@ -366,7 +492,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01B2063E2B1809CD001265FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01B2065C2B180BD2001265FC /* Tag.swift in Sources */,
+				01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */,
+				01B206662B1815EC001265FC /* SpotifyAPIError.swift in Sources */,
+				01B2065E2B180C4E001265FC /* ContentView.swift in Sources */,
+				01B2065B2B180BCC001265FC /* MusicEntity.swift in Sources */,
+				01B2064A2B1809CD001265FC /* ActionViewController.swift in Sources */,
+				01B206622B1815CD001265FC /* AppleMusicSearchWrangler.swift in Sources */,
+				01B206682B181600001265FC /* SpotifySearchResults.swift in Sources */,
+				01B206582B180A18001265FC /* UIHostingView.swift in Sources */,
+				01B206672B1815F2001265FC /* Spotify Entities.swift in Sources */,
+				01B2065F2B180C89001265FC /* EnvironmentValues-Ext.swift in Sources */,
+				01B2066A2B181698001265FC /* AppleMusicWrangler.swift in Sources */,
+				01B206692B181605001265FC /* SearchError.swift in Sources */,
+				01B206652B1815D6001265FC /* MusicURLWrangler.swift in Sources */,
+				017E66112B19222B0096C9D8 /* Font-Ext.swift in Sources */,
+				01B206602B180D8C001265FC /* EntityType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01B206502B1809CD001265FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01B206412B1809CD001265FC /* Rotation-iOSActionExtension */;
+			targetProxy = 01B2064F2B1809CD001265FC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		01B2064B2B1809CD001265FC /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01B2064C2B1809CD001265FC /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		012513B82AFB1C770064AA07 /* Debug */ = {
@@ -491,6 +659,7 @@
 		012513BB2AFB1C770064AA07 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Rotation/Rotation.entitlements;
@@ -523,6 +692,7 @@
 		012513BC2AFB1C770064AA07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Rotation/Rotation.entitlements;
@@ -552,6 +722,62 @@
 			};
 			name = Release;
 		};
+		01B206532B1809CD001265FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-ActionExtension";
+				CODE_SIGN_ENTITLEMENTS = "Rotation-iOSActionExtension/Rotation-iOSActionExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CCAQHTG68D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Add to Rotation...";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.johnslevin.Rotation.Rotation-iOSActionExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = ACTIONEXTENSION;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01B206542B1809CD001265FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-ActionExtension";
+				CODE_SIGN_ENTITLEMENTS = "Rotation-iOSActionExtension/Rotation-iOSActionExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CCAQHTG68D;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Add to Rotation...";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.johnslevin.Rotation.Rotation-iOSActionExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = ACTIONEXTENSION;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -569,6 +795,15 @@
 			buildConfigurations = (
 				012513BB2AFB1C770064AA07 /* Debug */,
 				012513BC2AFB1C770064AA07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01B206552B1809CD001265FC /* Build configuration list for PBXNativeTarget "Rotation-iOSActionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01B206532B1809CD001265FC /* Debug */,
+				01B206542B1809CD001265FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
