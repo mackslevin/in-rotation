@@ -20,63 +20,116 @@ struct ContentView: View {
     @State private var musicURLWrangler = MusicURLWrangler()
     @State private var musicEntity: MusicEntity? = nil
     @State private var thereWasAnError = false
-    @State private var notes = ""
+    @State private var notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu massa sed libero cursus porta. Integer scelerisque metus et sapien efficitur bibendum. Nunc ac orci malesuada, pellentesque augue eu, aliquet leo. Quisque vehicula dui et euismod condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse porta urna tempor tempor iaculis. Proin et dictum ligula."
+    @State private var selectedTags: [Tag] = []
+    @State private var isShowingTagToggler = false
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                if let musicEntity {
-                    HStack {
-                        if let imageData = musicEntity.imageData, let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage).resizable().scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .shadow(radius: 10)
-                                .frame(width: 120)
+            ScrollView {
+                VStack(spacing: 20) {
+                    if let musicEntity {
+                        
+                            if let imageData = musicEntity.imageData, let uiImage = UIImage(data: imageData) {
+                                Image(uiImage: uiImage).resizable().scaledToFit()
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .shadow(radius: 10)
+                            }
+                            
+                            VStack() {
+                                Text(musicEntity.title)
+                                    .font(Font.displayFont(ofSize: 18))
+                                Text(musicEntity.artistName)
+                                    .bold().foregroundStyle(.secondary)
+                            }
+                            .multilineTextAlignment(.center)
+                        
+                        
+                        Group {
+                            if selectedTags.isEmpty {
+                                Button("Add tags..."){ isShowingTagToggler = true }
+                            } else {
+                                VStack {
+                                    Text("Tags").fontWeight(.semibold)
+                                    
+                                    
+                                        HStack {
+                                            ForEach(selectedTags) { tag in
+                                                ZStack {
+                                                    Circle()
+                                                        .foregroundStyle(.tint)
+                                                        .frame(width: 30)
+                                                    Image(systemName: tag.symbolName)
+                                                        .resizable().scaledToFit()
+                                                        .foregroundStyle(.white)
+                                                        .frame(maxWidth: 20, maxHeight: 20)
+                                                }
+                                            }
+                                        }
+                                        .frame(maxWidth: 150)
+                                    
+                                    
+                                    
+                                    Button("Edit tags...") { isShowingTagToggler = true }
+                                }
+                                
+                            }
+                        }
+                        .padding(.vertical)
+                        
+                    } else if thereWasAnError {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Unable to import 😞")
+                                .font(Font.displayFont(ofSize: 32))
+                                .foregroundStyle(.orange)
+                            
+                            if let url {
+                                Text("The following URL could not be matched with a valid Apple Music or Spotify item:")
+                                Text(url.absoluteString)
+                                    .fontDesign(.monospaced)
+                                    .foregroundStyle(.secondary)
+                                
+                                
+                                Text("Please try again with a URL that looks more like one of these:")
+                                Text("\("https://open.spotify.com/album/6gWz09raxjmq1EMIPcbnFy?si=GOAEo3tfSWS01OH7yHAI2g")")
+                                    .fontDesign(.monospaced)
+                                    .foregroundStyle(.secondary)
+                                Text("\("https://music.apple.com/us/album/hard-to-be/718735084?i=718735089")")
+                                    .fontDesign(.monospaced)
+                                    .foregroundStyle(.secondary)
+                            }
+                            
                         }
                         
-                        VStack(alignment: .leading) {
-                            Text(musicEntity.title)
-                                .font(Font.displayFont(ofSize: 18))
-                            Text(musicEntity.artistName)
-                                .bold().foregroundStyle(.secondary)
+                    } else {
+                        HStack { Spacer(); ProgressView(); Spacer() }
+                    }
+                    
+                    Spacer()
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Cancel"){
+                            dismiss()
                         }
-                        .multilineTextAlignment(.leading)
-                        
-                        Spacer()
+                        .padding()
                     }
                     
-                } else if thereWasAnError {
-                    ContentUnavailableView("Cannot add to Rotation", systemImage: "eyes", description: Text("The cause is likely an invalid URL. Please try with a valid share link from Apple Music or Spotify."))
-                    
-                } else {
-                    HStack { Spacer(); ProgressView(); Spacer() }
-                }
-                
-                Spacer()
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel"){
-                        dismiss()
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Save") {
+                            save()
+                        }
+                        .bold()
+                        .disabled(musicEntity == nil)
+                        .padding()
                     }
-                    .padding()
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        save()
-                    }
-                    .bold()
-                    .disabled(musicEntity == nil)
-                    .padding()
-                }
+                .padding()
             }
-            .padding()
             .background {
                 Rectangle().ignoresSafeArea().foregroundStyle(colorScheme == .dark ? Color.clear : Color.orange)
                     .opacity(0.07)
             }
-            .tint(.orange)
             .navigationTitle("Add to Rotation")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
@@ -96,12 +149,18 @@ struct ContentView: View {
                     thereWasAnError = true
                 }
             }
+            .sheet(isPresented: $isShowingTagToggler) {
+                TagTogglerView(selectedTags: $selectedTags)
+            }
         }
         
     }
     
     func save() {
         if let musicEntity {
+            if !selectedTags.isEmpty {
+                musicEntity.tags = selectedTags
+            }
             modelContext.insert(musicEntity)
             dismiss()
         }

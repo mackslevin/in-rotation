@@ -37,6 +37,11 @@
 		017AA6A42B043D72005E43D8 /* MusicEntityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6A32B043D72005E43D8 /* MusicEntityDetailView.swift */; };
 		017E66102B19221E0096C9D8 /* PPPierSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 01ACB8E22B05803800C13BDA /* PPPierSans-Bold.otf */; };
 		017E66112B19222B0096C9D8 /* Font-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8E42B05808400C13BDA /* Font-Ext.swift */; };
+		017E66142B1946140096C9D8 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393BF2AFC9B14000DF698 /* Utility.swift */; };
+		017E66152B19464B0096C9D8 /* SymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */; };
+		017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019045AF2B06D240007F78C1 /* TagTogglerView.swift */; };
+		017E66172B1946680096C9D8 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BB8F12B044FE100F3609D /* AddTagView.swift */; };
+		017E66182B194C200096C9D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B12AFB1C770064AA07 /* Assets.xcassets */; };
 		018811912B0801F0003EF47A /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811902B0801F0003EF47A /* CollectionViewModel.swift */; };
 		018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811922B080233003EF47A /* CollectionSortCriteria.swift */; };
 		018811952B08048B003EF47A /* CollectionSortOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811942B08048B003EF47A /* CollectionSortOptionsView.swift */; };
@@ -434,6 +439,7 @@
 			files = (
 				01B206482B1809CD001265FC /* Media.xcassets in Resources */,
 				01B2064D2B1809CD001265FC /* MainInterface.storyboard in Resources */,
+				017E66182B194C200096C9D8 /* Assets.xcassets in Resources */,
 				017E66102B19221E0096C9D8 /* PPPierSans-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01B2065C2B180BD2001265FC /* Tag.swift in Sources */,
+				017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */,
 				01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */,
 				01B206662B1815EC001265FC /* SpotifyAPIError.swift in Sources */,
 				01B2065E2B180C4E001265FC /* ContentView.swift in Sources */,
@@ -511,7 +518,10 @@
 				01B206692B181605001265FC /* SearchError.swift in Sources */,
 				01B206652B1815D6001265FC /* MusicURLWrangler.swift in Sources */,
 				017E66112B19222B0096C9D8 /* Font-Ext.swift in Sources */,
+				017E66152B19464B0096C9D8 /* SymbolPicker.swift in Sources */,
 				01B206602B180D8C001265FC /* EntityType.swift in Sources */,
+				017E66142B1946140096C9D8 /* Utility.swift in Sources */,
+				017E66172B1946680096C9D8 /* AddTagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

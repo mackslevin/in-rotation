@@ -17,7 +17,9 @@ struct Utility {
     
     @MainActor
     static func dismissKeyboard() {
+        #if !ACTIONEXTENSION
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+        #endif
     }
     
     static func formattedTimeInterval(_ timeInterval: TimeInterval) -> String {
