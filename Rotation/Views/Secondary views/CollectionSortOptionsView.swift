@@ -14,12 +14,10 @@ struct CollectionSortOptionsView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var useGrid = false
-    @State private var selectedSortOption: CollectionSortCriteria = .byArtist
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                
                 Text("View")
                     .padding(.bottom, 6)
                     .padding(.horizontal)
@@ -45,11 +43,10 @@ struct CollectionSortOptionsView: View {
                 VStack(spacing: 0) {
                     ForEach(CollectionSortCriteria.allCases, id: \.rawValue) { criteria in
                         Button {
-
-                            selectedSortOption = criteria
-                            dismiss()
-
-                            
+                            withAnimation {
+                                viewModel.sortCriteria = criteria
+                                dismiss()
+                            }
                         } label: {
                             VStack(spacing: 0) {
                                 HStack {
@@ -88,29 +85,6 @@ struct CollectionSortOptionsView: View {
         .background {
             Utility.customBackground(withColorScheme: colorScheme)
         }
-        .onAppear {
-            useGrid = viewModel.useGridView
-            selectedSortOption = viewModel.sortCriteria
-        }
-        .onDisappear {
-            Task {
-                await MainActor.run {
-                    
-                    // For some reason the animation can cause crashes when grid mode is enabled, so we only animate in list mode
-                    if useGrid {
-                        viewModel.useGridView = useGrid
-                        viewModel.sortCriteria = selectedSortOption
-                    } else {
-                        withAnimation {
-                            viewModel.useGridView = useGrid
-                            viewModel.sortCriteria = selectedSortOption
-                        }
-                    }
-                    
-                }
-            }
-        }
-        
     }
 }
 
