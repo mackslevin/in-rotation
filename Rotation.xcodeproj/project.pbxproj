@@ -42,6 +42,7 @@
 		017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019045AF2B06D240007F78C1 /* TagTogglerView.swift */; };
 		017E66172B1946680096C9D8 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BB8F12B044FE100F3609D /* AddTagView.swift */; };
 		017E66182B194C200096C9D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B12AFB1C770064AA07 /* Assets.xcassets */; };
+		017E66192B1969FF0096C9D8 /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C052B05CDDD00789AE3 /* NotesEditorView.swift */; };
 		018811912B0801F0003EF47A /* CollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811902B0801F0003EF47A /* CollectionViewModel.swift */; };
 		018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811922B080233003EF47A /* CollectionSortCriteria.swift */; };
 		018811952B08048B003EF47A /* CollectionSortOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018811942B08048B003EF47A /* CollectionSortOptionsView.swift */; };
@@ -502,6 +503,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				017E66192B1969FF0096C9D8 /* NotesEditorView.swift in Sources */,
 				01B2065C2B180BD2001265FC /* Tag.swift in Sources */,
 				017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */,
 				01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */,

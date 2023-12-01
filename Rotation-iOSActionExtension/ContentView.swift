@@ -20,9 +20,10 @@ struct ContentView: View {
     @State private var musicURLWrangler = MusicURLWrangler()
     @State private var musicEntity: MusicEntity? = nil
     @State private var thereWasAnError = false
-    @State private var notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu massa sed libero cursus porta. Integer scelerisque metus et sapien efficitur bibendum. Nunc ac orci malesuada, pellentesque augue eu, aliquet leo. Quisque vehicula dui et euismod condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse porta urna tempor tempor iaculis. Proin et dictum ligula."
+    @State private var notes = ""
     @State private var selectedTags: [Tag] = []
     @State private var isShowingTagToggler = false
+    @State private var isShowingNotesEditor = false
     
     var body: some View {
         NavigationStack {
@@ -52,23 +53,20 @@ struct ContentView: View {
                                 VStack {
                                     Text("Tags").fontWeight(.semibold)
                                     
-                                    
-                                        HStack {
-                                            ForEach(selectedTags) { tag in
-                                                ZStack {
-                                                    Circle()
-                                                        .foregroundStyle(.tint)
-                                                        .frame(width: 30)
-                                                    Image(systemName: tag.symbolName)
-                                                        .resizable().scaledToFit()
-                                                        .foregroundStyle(.white)
-                                                        .frame(maxWidth: 20, maxHeight: 20)
-                                                }
+                                    HStack {
+                                        ForEach(selectedTags) { tag in
+                                            ZStack {
+                                                Circle()
+                                                    .foregroundStyle(.tint)
+                                                    .frame(width: 30)
+                                                Image(systemName: tag.symbolName)
+                                                    .resizable().scaledToFit()
+                                                    .foregroundStyle(.white)
+                                                    .frame(maxWidth: 20, maxHeight: 20)
                                             }
                                         }
-                                        .frame(maxWidth: 150)
-                                    
-                                    
+                                    }
+                                    .frame(maxWidth: 150)
                                     
                                     Button("Edit tags...") { isShowingTagToggler = true }
                                 }
@@ -77,11 +75,27 @@ struct ContentView: View {
                         }
                         .padding(.vertical)
                         
+                        Group {
+                            if !notes.isEmpty {
+                                VStack {
+                                    Text("Notes").fontWeight(.semibold)
+                                    Text(notes)
+                                        .foregroundStyle(.secondary)
+                                        .italic()
+                                    
+                                    Button("Edit notes...") { isShowingNotesEditor = true }
+                                }
+                            } else {
+                                Button("Add notes...") { isShowingNotesEditor = true }
+                            }
+                        }
+                        .padding(.vertical)
+                        
                     } else if thereWasAnError {
                         VStack(alignment: .leading, spacing: 20) {
                             Text("Unable to import 😞")
                                 .font(Font.displayFont(ofSize: 32))
-                                .foregroundStyle(.orange)
+                                .foregroundStyle(.tint)
                             
                             if let url {
                                 Text("The following URL could not be matched with a valid Apple Music or Spotify item:")
@@ -127,8 +141,7 @@ struct ContentView: View {
                 .padding()
             }
             .background {
-                Rectangle().ignoresSafeArea().foregroundStyle(colorScheme == .dark ? Color.clear : Color.orange)
-                    .opacity(0.07)
+                Utility.customBackground(withColorScheme: colorScheme)
             }
             .navigationTitle("Add to Rotation")
             .navigationBarTitleDisplayMode(.inline)
@@ -151,6 +164,11 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isShowingTagToggler) {
                 TagTogglerView(selectedTags: $selectedTags)
+            }
+            .sheet(isPresented: $isShowingNotesEditor) {
+                if let musicEntity {
+                    NotesEditorView(notesText: $notes, musicEntity: musicEntity)
+                }
             }
         }
         
