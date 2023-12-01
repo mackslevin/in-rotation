@@ -12,12 +12,13 @@ struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     
-    @Query(sort: \MusicEntity.dateAdded, order: .reverse) var musicEntities: [MusicEntity]
-    
-    @State private var isShowingSortingOptions = false
     @State private var viewModel = CollectionViewModel()
+    @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
+    @State private var searchText = ""
     
+    @State private var isShowingSearch = false
     
+    // something
     var body: some View {
         NavigationStack {
             VStack {
@@ -28,16 +29,39 @@ struct CollectionView: View {
                     
                     Spacer()
                     
-                    Button {
-                        isShowingSortingOptions = true
+                    Menu {
+                        Button {
+                            isShowingSearch = true
+                        } label: {
+                            Label("Search...", systemImage: "magnifyingglass")
+                        }
+                        
+                        Menu("Sort") {
+                            Picker("Sort & Filter", selection: $sortOrder) {
+                                Label("Title", systemImage: "text.quote")
+                                    .tag(SortDescriptor(\MusicEntity.title))
+
+                                Label("Artist Name", systemImage: "person.3")
+                                    .tag(SortDescriptor(\MusicEntity.artistName))
+                                
+                                Label("Date Added", systemImage: "calendar.circle")
+                                    .tag(SortDescriptor(\MusicEntity.dateAdded, order: .reverse))
+                                
+                                Label("Release Date", systemImage: "calendar.circle.fill")
+                                    .tag(SortDescriptor(\MusicEntity.releaseDate, order: .reverse))
+                            }
+                            .pickerStyle(.inline)
+                        }
+                        
+                        Menu("Filter") {
+                            
+                        }
+                        
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
+                            .frame(width: 30)
+                            .padding([.trailing])
                     }
-                    .frame(width: 30)
-                    .padding([.trailing])
-                    .popover(isPresented: $isShowingSortingOptions, content: {
-                        CollectionSortOptionsView(viewModel: viewModel)
-                    })
                     
                     NavigationLink(destination: MusicSearchView()) {
                         Image(systemName: "plus.circle").resizable().scaledToFit()
@@ -46,28 +70,17 @@ struct CollectionView: View {
                 }
                 .padding()
                 
-                if viewModel.useGridView {
-                    ScrollView {
-                        RecordCoverGridView(musicEntities: viewModel.sortedEntities(musicEntities))
-                            .padding()
-                    }
-                    
-                } else {
-                    List {
-                        Section {
-                            ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
-                                CollectionViewListRow(musicEntity: musicEntity, viewModel: viewModel)
-                            }
-                        }
-                    }
-                    .listStyle(.plain)
+                VStack {
+                    CollectionListingView(sort: sortOrder, searchText: searchText)
                 }
-                
                 
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
+            .sheet(isPresented: $isShowingSearch, content: {
+                SearchboxView(searchText: $searchText)
+            })
         }
         
     }
