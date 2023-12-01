@@ -11,6 +11,8 @@ import SwiftData
 struct HomeView: View {
     @State private var selectedTab = 1
     
+    @State private var appleMusicAuthWrangler = AppleMusicAuthWrangler()
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             CollectionView()
@@ -29,7 +31,9 @@ struct HomeView: View {
                 .tag(4)
                 .tabItem { Label("Settings", systemImage: "gear") }
         }
-        
+        .task {
+            await appleMusicAuthWrangler.requestMusicAuth()
+        }
     }
 }
 
