@@ -12,13 +12,15 @@ struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var viewModel = CollectionViewModel()
+//    @State private var viewModel = CollectionViewModel()
     @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
+    
     @State private var searchText = ""
+    @State private var searchTextIntermediary = ""
     
     @State private var isShowingSearch = false
     
-    // something
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -58,9 +60,9 @@ struct CollectionView: View {
                         }
                         
                     } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
+                        Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
-                            .padding([.trailing])
+                            .padding([.trailing], 10)
                     }
                     
                     NavigationLink(destination: MusicSearchView()) {
@@ -70,16 +72,31 @@ struct CollectionView: View {
                 }
                 .padding()
                 
-                VStack {
-                    CollectionListingView(sort: sortOrder, searchText: searchText)
+                if !searchText.isEmpty {
+                    HStack {
+                        Text("Search results for \"\(searchText)\"")
+                            .italic().foregroundStyle(.secondary)
+                        Spacer()
+                        Button {
+                            searchText = ""
+                        } label: {
+                            Text("Clear")
+                        }.buttonStyle(.bordered)
+                    }
+                    .font(.caption)
+                    .padding()
+                    
                 }
+                
+                CollectionListingView(sort: sortOrder, searchText: $searchText)
+                
                 
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
             .sheet(isPresented: $isShowingSearch, content: {
-                SearchboxView(searchText: $searchText)
+                SearchboxView(searchText: $searchText, searchTextIntermediary: $searchTextIntermediary)
             })
         }
         
