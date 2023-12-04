@@ -63,11 +63,8 @@ struct MusicEntityDetailView: View {
                     }
                     
                     MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
-                    
                     MusicEntityDetailsBlock(musicEntity: musicEntity)
-                    
                     MusicEntityTagsBlock(musicEntity: musicEntity)
-                    
                     MusicEntityNotesBlock(musicEntity: musicEntity)
                 }
                 .padding([.horizontal, .bottom])

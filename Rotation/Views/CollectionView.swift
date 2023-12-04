@@ -12,14 +12,15 @@ struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     
-//    @State private var viewModel = CollectionViewModel()
-    @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
-    
     @State private var searchText = ""
     @State private var searchTextIntermediary = ""
-    
     @State private var isShowingSearch = false
     
+    @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
+    @State private var showOnlyUnplayed = false
+    
+    @State private var tagsForFiltering: [Tag] = []
+    @Query var allTags: [Tag]
     
     var body: some View {
         NavigationStack {
@@ -38,6 +39,8 @@ struct CollectionView: View {
                             Label("Search...", systemImage: "magnifyingglass")
                         }
                         
+                        Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
+                        
                         Menu("Sort") {
                             Picker("Sort & Filter", selection: $sortOrder) {
                                 Label("Title", systemImage: "text.quote")
@@ -55,8 +58,25 @@ struct CollectionView: View {
                             .pickerStyle(.inline)
                         }
                         
-                        Menu("Filter") {
-                            
+                        Menu("Filter Tags...") {
+                            ForEach(allTags) { tag in
+                                Button {
+                                    if tagsForFiltering.contains(tag) {
+                                        tagsForFiltering.removeAll(where: {$0.id == tag.id})
+                                    } else {
+                                        tagsForFiltering.append(tag)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text(tag.title)
+                                        
+                                        if tagsForFiltering.contains(tag) {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                    
+                                }
+                            }
                         }
                         
                     } label: {
@@ -88,9 +108,7 @@ struct CollectionView: View {
                     
                 }
                 
-                CollectionListingView(sort: sortOrder, searchText: $searchText)
-                
-                
+                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering)
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)

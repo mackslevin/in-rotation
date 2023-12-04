@@ -171,7 +171,6 @@ struct ContentView: View {
                 }
             }
         }
-        
     }
     
     func save() {
