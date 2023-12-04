@@ -10,7 +10,6 @@ import SwiftUI
 struct MusicEntityNotesBlock: View {
     @Bindable var musicEntity: MusicEntity
     
-    @State private var noteText = ""
     @State private var isShowingEditor = false
     
     var body: some View {
@@ -50,17 +49,8 @@ struct MusicEntityNotesBlock: View {
             RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
                 .foregroundStyle(.regularMaterial)
         }
-        .onAppear {
-            noteText = musicEntity.notes
-        }
-//        .onChange(of: noteText) { _, newValue in
-//            musicEntity.notes = newValue
-//        }
-        .onChange(of: musicEntity.notes, { oldValue, newValue in
-            noteText = newValue
-        })
         .sheet(isPresented: $isShowingEditor, content: {
-            NotesEditorView(notesText: $noteText, musicEntity: musicEntity)
+            NotesEditorView(musicEntity: musicEntity)
         })
     }
 }

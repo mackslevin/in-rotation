@@ -11,12 +11,8 @@ struct NotesEditorView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     
-    
-    @Binding var notesText: String // Using this as an intermediate rather than manipulating musicEntity.notes directly, as that seems to cause performance issues
-    
+    @State private var notesText: String = ""
     @Bindable var musicEntity: MusicEntity
-    
-    
     
     var body: some View {
         NavigationStack {
@@ -41,22 +37,24 @@ struct NotesEditorView: View {
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
+            .onAppear {
+                notesText = musicEntity.notes
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         musicEntity.notes = notesText
-                        
                         dismiss()
                     }
                     .bold()
                 }
                 
-//                ToolbarItem(placement: .topBarLeading) {
-//                    Button("Clear") {
-//                        notesText = ""
-//                    }
-//                    .disabled(notesText.isEmpty)
-//                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .disabled(notesText.isEmpty)
+                }
             }
             .navigationTitle("Notes")
             .navigationBarTitleDisplayMode(.inline)

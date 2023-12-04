@@ -19,7 +19,7 @@ class CollectionViewModel {
         sortCriteria = .dateAddedNewest
     }
     
-    @MainActor
+    
     func sortedEntities(_ musicEntities: [MusicEntity]) -> [MusicEntity] {
         var output: [MusicEntity] = []
         

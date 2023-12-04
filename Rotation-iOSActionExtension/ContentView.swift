@@ -167,11 +167,10 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isShowingNotesEditor) {
                 if let musicEntity {
-                    NotesEditorView(notesText: $notes, musicEntity: musicEntity)
+                    NotesEditorView(musicEntity: musicEntity)
                 }
             }
         }
-        
     }
     
     func save() {

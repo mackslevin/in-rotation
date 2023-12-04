@@ -12,11 +12,15 @@ struct CollectionView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     
-    @Query(sort: \MusicEntity.dateAdded, order: .reverse) var musicEntities: [MusicEntity]
+    @State private var searchText = ""
+    @State private var searchTextIntermediary = ""
+    @State private var isShowingSearch = false
     
-    @State private var isShowingSortingOptions = false
-    @State private var viewModel = CollectionViewModel()
+    @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
+    @State private var showOnlyUnplayed = false
     
+    @State private var tagsForFiltering: [Tag] = []
+    @Query var allTags: [Tag]
     
     var body: some View {
         NavigationStack {
@@ -28,16 +32,58 @@ struct CollectionView: View {
                     
                     Spacer()
                     
-                    Button {
-                        isShowingSortingOptions = true
+                    Menu {
+                        Button {
+                            isShowingSearch = true
+                        } label: {
+                            Label("Search...", systemImage: "magnifyingglass")
+                        }
+                        
+                        Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
+                        
+                        Menu("Sort") {
+                            Picker("Sort & Filter", selection: $sortOrder) {
+                                Label("Title", systemImage: "text.quote")
+                                    .tag(SortDescriptor(\MusicEntity.title))
+
+                                Label("Artist Name", systemImage: "person.3")
+                                    .tag(SortDescriptor(\MusicEntity.artistName))
+                                
+                                Label("Date Added", systemImage: "calendar.circle")
+                                    .tag(SortDescriptor(\MusicEntity.dateAdded, order: .reverse))
+                                
+                                Label("Release Date", systemImage: "calendar.circle.fill")
+                                    .tag(SortDescriptor(\MusicEntity.releaseDate, order: .reverse))
+                            }
+                            .pickerStyle(.inline)
+                        }
+                        
+                        Menu("Filter Tags...") {
+                            ForEach(allTags) { tag in
+                                Button {
+                                    if tagsForFiltering.contains(tag) {
+                                        tagsForFiltering.removeAll(where: {$0.id == tag.id})
+                                    } else {
+                                        tagsForFiltering.append(tag)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text(tag.title)
+                                        
+                                        if tagsForFiltering.contains(tag) {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
                     } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
+                        Image(systemName: "ellipsis.circle").resizable().scaledToFit()
+                            .frame(width: 30)
+                            .padding([.trailing], 10)
                     }
-                    .frame(width: 30)
-                    .padding([.trailing])
-                    .popover(isPresented: $isShowingSortingOptions, content: {
-                        CollectionSortOptionsView(viewModel: viewModel)
-                    })
                     
                     NavigationLink(destination: MusicSearchView()) {
                         Image(systemName: "plus.circle").resizable().scaledToFit()
@@ -46,28 +92,30 @@ struct CollectionView: View {
                 }
                 .padding()
                 
-                if viewModel.useGridView {
-                    ScrollView {
-                        RecordCoverGridView(musicEntities: viewModel.sortedEntities(musicEntities))
-                            .padding()
+                if !searchText.isEmpty {
+                    HStack {
+                        Text("Search results for \"\(searchText)\"")
+                            .italic().foregroundStyle(.secondary)
+                        Spacer()
+                        Button {
+                            searchText = ""
+                        } label: {
+                            Text("Clear")
+                        }.buttonStyle(.bordered)
                     }
+                    .font(.caption)
+                    .padding()
                     
-                } else {
-                    List {
-                        Section {
-                            ForEach(viewModel.sortedEntities(musicEntities)) { musicEntity in
-                                CollectionViewListRow(musicEntity: musicEntity, viewModel: viewModel)
-                            }
-                        }
-                    }
-                    .listStyle(.plain)
                 }
                 
-                
+                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering)
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
+            .sheet(isPresented: $isShowingSearch, content: {
+                SearchboxView(searchText: $searchText, searchTextIntermediary: $searchTextIntermediary)
+            })
         }
         
     }
