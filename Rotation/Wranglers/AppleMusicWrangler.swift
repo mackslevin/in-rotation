@@ -15,6 +15,8 @@ enum AppleMusicWranglerError: String, Error, Equatable {
     case badURL = "Unable to resolve URL"
     case noMatchISRC = "Unable to find a matching song on Apple Music"
     case noMatchUPC = "Unable to find a matching album on Apple Music"
+    case noAppleMusicID = "No valid Apple Music ID"
+    case incompatiblePlaylist = "Unable to play non-Apple Music playlist in Apple Music"
 }
 
 @Observable
@@ -34,7 +36,6 @@ class AppleMusicWrangler {
         
         if !musicEntity.appleMusicURLString.isEmpty {
             if let url = URL(string: musicEntity.appleMusicURLString) {
-//                await UIApplication.shared.open(url)
                 open(url)
             } else {
                 throw AppleMusicWranglerError.badURL
@@ -78,7 +79,6 @@ class AppleMusicWrangler {
             }
             
             if let url {
-//                await UIApplication.shared.open(url)
                 open(url)
             }
         }
@@ -94,7 +94,6 @@ class AppleMusicWrangler {
                 musicEntity.appleMusicURLString = url.absoluteString
                 musicEntity.appleMusicID = song.id.rawValue
                 
-//                await UIApplication.shared.open(url)
                 open(url)
             } else {
                 throw AppleMusicWranglerError.noMatch
@@ -185,6 +184,42 @@ class AppleMusicWrangler {
         if let match {
             musicEntity.appleMusicURLString = match.url?.absoluteString ?? ""
             return match
+        } else {
+            throw AppleMusicWranglerError.noMatch
+        }
+    }
+    
+    func playInAppleMusicApp(_ musicEntity: MusicEntity) async throws {
+        var queue: MusicPlayer.Queue? = nil
+        
+        switch musicEntity.type {
+            case .song:
+                guard !musicEntity.isrc.isEmpty else { throw AppleMusicWranglerError.noMatchISRC }
+                let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: musicEntity.isrc)
+                let response = try await request.response()
+                guard let song = response.items.first else {
+                    throw AppleMusicWranglerError.noMatchISRC
+                }
+                queue = [song]
+            
+            case .album:
+                guard !musicEntity.upc.isEmpty else { throw AppleMusicWranglerError.noMatchUPC }
+                let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: musicEntity.upc)
+                let response = try await request.response()
+                guard let album = try await response.items.first?.with([.tracks]) else { throw AppleMusicWranglerError.noMatchUPC }
+                queue = [album]
+            
+            case .playlist:
+                guard !musicEntity.appleMusicID.isEmpty else { throw AppleMusicWranglerError.incompatiblePlaylist }
+                let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: MusicItemID(musicEntity.appleMusicID))
+                let response = try await request.response()
+                guard let playlist = try await response.items.first?.with([.tracks]) else { throw AppleMusicWranglerError.noMatch }
+                queue = [playlist]
+        }
+        
+        if let queue {
+            SystemMusicPlayer.shared.queue = queue
+            try await SystemMusicPlayer.shared.play()
         } else {
             throw AppleMusicWranglerError.noMatch
         }

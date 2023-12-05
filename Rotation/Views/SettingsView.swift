@@ -14,11 +14,10 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section("Apple Music") {
-                    Picker("The Apple Music Button Should...", selection: $shouldPlayInAppleMusicApp) {
+                    Picker("The Apple Music button should...", selection: $shouldPlayInAppleMusicApp) {
                         Text("Open in app").tag(false)
                         Text("Start playback").tag(true)
                     }
-                    .pickerStyle(.segmented)
                 }
             }
             .navigationTitle("Settings")

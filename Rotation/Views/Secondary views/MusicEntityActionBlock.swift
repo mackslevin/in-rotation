@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import MediaPlayer
+import MusicKit
 
 struct MusicEntityActionBlock: View {
     @Bindable var musicEntity: MusicEntity
@@ -16,6 +18,8 @@ struct MusicEntityActionBlock: View {
     
     @State private var played = false
     
+    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = false
+    
     let buttonBGOpacity: Double = 1
     let buttonVerticalSpacing: CGFloat = 8
     
@@ -24,11 +28,15 @@ struct MusicEntityActionBlock: View {
             HStack {
                 Button {
                     Task {
-                        do {
-                            try await amWrangler.openInAppleMusic(musicEntity)
-                        } catch {
-                            print(error)
-                            isShowingErrorAlert = true
+                        if shouldPlayInAppleMusicApp {
+                            playInAppleMusicApp()
+                        } else {
+                            do {
+                                try await amWrangler.openInAppleMusic(musicEntity)
+                            } catch {
+                                print(error)
+                                isShowingErrorAlert = true
+                            }
                         }
                     }
                 } label: {
@@ -39,7 +47,7 @@ struct MusicEntityActionBlock: View {
                                 .opacity(buttonBGOpacity)
                                 .shadow(radius: 3, x: 1, y: 3)
                             
-                            Image(systemName: "arrow.up.right.square").resizable().scaledToFit()
+                            Image(systemName: shouldPlayInAppleMusicApp ? "play.fill" : "arrow.up.right.square").resizable().scaledToFit()
                                 .padding(16)
                                 .foregroundStyle(.white)
                         }
@@ -120,6 +128,17 @@ struct MusicEntityActionBlock: View {
             musicEntity.played = newValue
         }
         
+    }
+    
+    func playInAppleMusicApp() {
+        Task {
+            do {
+                try await amWrangler.playInAppleMusicApp(musicEntity)
+            } catch {
+                print("^^ playback error")
+                isShowingErrorAlert = true
+            }
+        }
     }
 }
 
