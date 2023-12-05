@@ -58,27 +58,28 @@ struct CollectionView: View {
                             .pickerStyle(.inline)
                         }
                         
-                        Menu("Filter Tags...") {
-                            ForEach(allTags) { tag in
-                                Button {
-                                    if tagsForFiltering.contains(tag) {
-                                        tagsForFiltering.removeAll(where: {$0.id == tag.id})
-                                    } else {
-                                        tagsForFiltering.append(tag)
-                                    }
-                                } label: {
-                                    HStack {
-                                        Text(tag.title)
-                                        
+                        if !allTags.isEmpty {
+                            Menu("Filter Tags...") {
+                                ForEach(allTags) { tag in
+                                    Button {
                                         if tagsForFiltering.contains(tag) {
-                                            Image(systemName: "checkmark")
+                                            tagsForFiltering.removeAll(where: {$0.id == tag.id})
+                                        } else {
+                                            tagsForFiltering.append(tag)
                                         }
+                                    } label: {
+                                        HStack {
+                                            Text(tag.title)
+                                            
+                                            if tagsForFiltering.contains(tag) {
+                                                Image(systemName: "checkmark")
+                                            }
+                                        }
+                                        
                                     }
-                                    
                                 }
                             }
                         }
-                        
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
@@ -91,6 +92,21 @@ struct CollectionView: View {
                     }
                 }
                 .padding()
+                
+                if !tagsForFiltering.isEmpty {
+                    HStack {
+                        Text("Including tags: \(tagsForFiltering.map({$0.title}).joined(separator: ", "))")
+                            .foregroundStyle(.secondary).italic()
+                        Spacer()
+                        Button {
+                            tagsForFiltering = []
+                        } label: {
+                            Text("Clear")
+                        }.buttonStyle(.bordered)
+                    }
+                    .font(.caption)
+                    .padding()
+                }
                 
                 if !searchText.isEmpty {
                     HStack {
@@ -105,7 +121,6 @@ struct CollectionView: View {
                     }
                     .font(.caption)
                     .padding()
-                    
                 }
                 
                 CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering)
