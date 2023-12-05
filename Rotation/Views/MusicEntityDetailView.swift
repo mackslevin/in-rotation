@@ -17,55 +17,14 @@ struct MusicEntityDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    VStack(spacing: 20) {
-                        if musicEntity.imageData != nil { // We're not gonna show the placeholder image
-                            musicEntity.image.resizable().scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
-                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15) , radius: 5, x: 1, y: 5)
-                        }
-                        
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(musicEntity.title)
-                                    .font(.displayFont(ofSize: 28))
-                                    
-                                HStack(alignment: .bottom) {
-                                    Text("by \(musicEntity.artistName)")
-                                        .multilineTextAlignment(.leading)
-                                    
-                                    if let tags = musicEntity.tags, !tags.isEmpty {
-                                        
-                                        Spacer()
-                                        Group {
-                                            let last = tags.count < 4 ? tags.count - 1 : 3
-                                            
-                                            ForEach(tags[0...last]) { tag in
-                                                Image(systemName: tag.symbolName)
-                                                    .font(.caption)
-                                            }
-                                            
-                                            if tags.count > 4 {
-                                                let howManyMoreTags = tags.count - 4
-                                                Text("+\(howManyMoreTags)")
-                                                    .font(.caption)
-                                            }
-                                        }
-                                        .foregroundStyle(.secondary)
-                                    } else {
-                                        Spacer()
-                                    }
-                                }
-                                
-                            }
-                            
-                        }
-                        .padding()
-                        .background {
-                            RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
-                                .foregroundStyle(.regularMaterial)
-                        }
+                    
+                    if musicEntity.imageData != nil { // We're not gonna show the placeholder image
+                        musicEntity.image.resizable().scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                            .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15) , radius: 5, x: 1, y: 5)
                     }
                     
+                    MusicEntityHeadlineBlock(musicEntity: musicEntity)    
                     MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
                     MusicEntityDetailsBlock(musicEntity: musicEntity)
                     MusicEntityTagsBlock(musicEntity: musicEntity)

@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = false
+    
     var body: some View {
-        Text("Settings view")
+        NavigationStack {
+            Form {
+                Section("Apple Music") {
+                    Picker("The Apple Music Button Should...", selection: $shouldPlayInAppleMusicApp) {
+                        Text("Open in app").tag(false)
+                        Text("Start playback").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                }
+            }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 

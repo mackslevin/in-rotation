@@ -28,6 +28,7 @@
 		016854D02B0D50C000931CE6 /* Spotify Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016854CF2B0D50C000931CE6 /* Spotify Entities.swift */; };
 		0168F76A2B1A6703004E780E /* CollectionListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168F7692B1A6703004E780E /* CollectionListingView.swift */; };
 		0168F76C2B1A878F004E780E /* SearchboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168F76B2B1A878F004E780E /* SearchboxView.swift */; };
+		016A63202B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A631F2B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift */; };
 		017AA6932B0404A0005E43D8 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6922B0404A0005E43D8 /* Tag.swift */; };
 		017AA6962B040E7D005E43D8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6952B040E7D005E43D8 /* HomeView.swift */; };
 		017AA6982B041726005E43D8 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6972B041726005E43D8 /* CollectionView.swift */; };
@@ -134,6 +135,7 @@
 		016854CF2B0D50C000931CE6 /* Spotify Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Spotify Entities.swift"; sourceTree = "<group>"; };
 		0168F7692B1A6703004E780E /* CollectionListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListingView.swift; sourceTree = "<group>"; };
 		0168F76B2B1A878F004E780E /* SearchboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchboxView.swift; sourceTree = "<group>"; };
+		016A631F2B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntityHeadlineBlock.swift; sourceTree = "<group>"; };
 		017AA6922B0404A0005E43D8 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		017AA6952B040E7D005E43D8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		017AA6972B041726005E43D8 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				015FB0702B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift */,
 				015FB0722B05B3F700BAC1BC /* MusicEntityTagsBlock.swift */,
 				01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */,
+				016A631F2B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift */,
 				011BB8F32B045AA900F3609D /* TagManagerView.swift */,
 				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
 				019045AF2B06D240007F78C1 /* TagTogglerView.swift */,
@@ -473,6 +476,7 @@
 				011BB8F42B045AA900F3609D /* TagManagerView.swift in Sources */,
 				01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */,
 				017AA6962B040E7D005E43D8 /* HomeView.swift in Sources */,
+				016A63202B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift in Sources */,
 				015FB06F2B059BC200BAC1BC /* MusicEntityActionBlock.swift in Sources */,
 				0168F76C2B1A878F004E780E /* SearchboxView.swift in Sources */,
 				010393BE2AFC81A3000DF698 /* ExternalMusicSearchView.swift in Sources */,
