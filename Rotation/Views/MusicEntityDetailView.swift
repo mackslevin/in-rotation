@@ -17,7 +17,6 @@ struct MusicEntityDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    
                     if musicEntity.imageData != nil { // We're not gonna show the placeholder image
                         musicEntity.image.resizable().scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
@@ -48,11 +47,34 @@ struct MusicEntityDetailView: View {
                 Alert(title: Text("Something went wrong"))
             })
             .toolbar {
-                ToolbarItem {
-                    Button {
-                       // Trigger options to share via AM or SP
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
+                if !musicEntity.appleMusicURLString.isEmpty || !musicEntity.spotifyURLString.isEmpty {
+                    ToolbarItem {
+                        Menu {
+                            if let amURL = URL(string: musicEntity.appleMusicURLString) {
+                                ShareLink("Share Apple Music Link", item: amURL)
+                            }
+                            
+                            if let spURL = URL(string: musicEntity.spotifyURLString) {
+                                ShareLink("Share Spotify Link", item: spURL)
+                            }
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                    }
+                }
+            }
+            .onAppear {
+                if musicEntity.appleMusicURLString.isEmpty {
+                    Task {
+                        try? await amWrangler.fillInAppleMusicInfo(musicEntity)
+                    }
+                }
+                
+                if musicEntity.spotifyURLString.isEmpty {
+                    Task {
+                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: musicEntity) {
+                            musicEntity.spotifyURLString = urlStr
+                        }
                     }
                 }
             }

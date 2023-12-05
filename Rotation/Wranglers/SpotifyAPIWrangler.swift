@@ -53,19 +53,13 @@ class SpotifyAPIWrangler {
         if !musicEntity.spotifyURLString.isEmpty {
             let urlString = musicEntity.spotifyURLString
             await MainActor.run {
-
-//                    UIApplication.shared.open(URL(string: urlString)!)
-                
                 open(URL(string: urlString)!)
-
             }
         } else {
             let urlString = try await findMatch(forMusicEntity: musicEntity)
+            musicEntity.spotifyURLString = urlString
             await MainActor.run {
-                
-//                UIApplication.shared.open(URL(string: urlString)!)
                 open(URL(string: urlString)!)
-                
             }
         }
     }
@@ -79,7 +73,7 @@ class SpotifyAPIWrangler {
         #endif
     }
     
-    private func findMatch(forMusicEntity musicEntity: MusicEntity) async throws -> String {
+    func findMatch(forMusicEntity musicEntity: MusicEntity) async throws -> String {
         // The string returned by this function will be the URL of a Spotify catalog item
         var urlComponents = URLComponents(string: "https://api.spotify.com/v1/search")
         let resultsLimit = "1"

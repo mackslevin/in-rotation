@@ -224,4 +224,27 @@ class AppleMusicWrangler {
             throw AppleMusicWranglerError.noMatch
         }
     }
+    
+    func fillInAppleMusicInfo(_ musicEntity: MusicEntity) async throws {
+        switch musicEntity.type {
+            case .song:
+                guard !musicEntity.isrc.isEmpty else { return }
+                let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: musicEntity.isrc)
+                let response = try await request.response()
+                if let song = response.items.first {
+                    musicEntity.appleMusicID = song.id.rawValue
+                    musicEntity.appleMusicURLString = song.url?.absoluteString ?? ""
+                }
+            case .album:
+                guard !musicEntity.upc.isEmpty else { return }
+                let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: musicEntity.upc)
+                let response = try await request.response()
+                if let album = response.items.first {
+                    musicEntity.appleMusicID = album.id.rawValue
+                    musicEntity.appleMusicURLString = album.url?.absoluteString ?? ""
+                }
+            case .playlist:
+                return
+        }
+    }
 }
