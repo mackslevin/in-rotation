@@ -18,7 +18,7 @@ class MusicEntity {
     var numberOfTracks: Int = 0
     var songTitles: [String] = []
     var duration: TimeInterval = TimeInterval.zero
-    var imageData: Data? = nil
+    @Attribute(.externalStorage) var imageData: Data? = nil
     var played: Bool = false
     var type: EntityType = EntityType.album
     var recordLabel: String = ""

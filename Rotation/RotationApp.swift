@@ -15,7 +15,6 @@ struct RotationApp: App {
             MusicEntity.self,
             Tag.self
         ])
-//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, groupContainer: .identifier("group.com.johnslevin.Rotation"), cloudKitDatabase: .private("iCloud.com.johnslevin.Rotation"))
 

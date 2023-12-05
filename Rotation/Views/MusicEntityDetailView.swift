@@ -50,11 +50,11 @@ struct MusicEntityDetailView: View {
                 if !musicEntity.appleMusicURLString.isEmpty || !musicEntity.spotifyURLString.isEmpty {
                     ToolbarItem {
                         Menu {
-                            if let amURL = URL(string: musicEntity.appleMusicURLString) {
+                            if !musicEntity.appleMusicURLString.isEmpty, let amURL = URL(string: musicEntity.appleMusicURLString) {
                                 ShareLink("Share Apple Music Link", item: amURL)
                             }
                             
-                            if let spURL = URL(string: musicEntity.spotifyURLString) {
+                            if !musicEntity.spotifyURLString.isEmpty, let spURL = URL(string: musicEntity.spotifyURLString) {
                                 ShareLink("Share Spotify Link", item: spURL)
                             }
                         } label: {
