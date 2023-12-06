@@ -7,13 +7,9 @@
 
 import Foundation
 
-enum CollectionSortCriteria: String, CaseIterable {
-    case unplayedFirst = "Unplayed First"
-    case unplayedOnly = "Unplayed Only"
+enum CollectionSortCriteria: String, CaseIterable, Codable {
     case byTitle = "By Title"
     case byArtist = "By Artist"
-    case dateAddedNewest = "Date Added (Newest First)"
-    case dateAddedOldest = "Date Added (Oldest First)"
-    case byType = "By Type"
-    case playedOnly = "Played Only"
+    case dateAdded = "Date Added"
+    case releaseDate = "Release Date"
 }

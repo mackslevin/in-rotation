@@ -18,6 +18,7 @@ struct CollectionView: View {
     
     @State private var sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
     @State private var showOnlyUnplayed = false
+    @AppStorage("collectionSortCriteria") var collectionSortCriteria: CollectionSortCriteria = .dateAdded
     
     @State private var tagsForFiltering: [Tag] = []
     @Query var allTags: [Tag]
@@ -42,18 +43,33 @@ struct CollectionView: View {
                         Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
                         
                         Menu("Sort") {
-                            Picker("Sort & Filter", selection: $sortOrder) {
+//                            Picker("Sort", selection: $sortOrder) {
+//                                Label("Title", systemImage: "text.quote")
+//                                    .tag(SortDescriptor(\MusicEntity.title))
+//
+//                                Label("Artist Name", systemImage: "person.3")
+//                                    .tag(SortDescriptor(\MusicEntity.artistName))
+//
+//                                Label("Date Added", systemImage: "calendar.circle")
+//                                    .tag(SortDescriptor(\MusicEntity.dateAdded, order: .reverse))
+//
+//                                Label("Release Date", systemImage: "calendar.circle.fill")
+//                                    .tag(SortDescriptor(\MusicEntity.releaseDate, order: .reverse))
+//                            }
+//                            .pickerStyle(.inline)
+                            
+                            Picker("Sort", selection: $collectionSortCriteria) {
                                 Label("Title", systemImage: "text.quote")
-                                    .tag(SortDescriptor(\MusicEntity.title))
+                                    .tag(CollectionSortCriteria.byTitle)
 
                                 Label("Artist Name", systemImage: "person.3")
-                                    .tag(SortDescriptor(\MusicEntity.artistName))
-                                
+                                    .tag(CollectionSortCriteria.byArtist)
+
                                 Label("Date Added", systemImage: "calendar.circle")
-                                    .tag(SortDescriptor(\MusicEntity.dateAdded, order: .reverse))
-                                
+                                    .tag(CollectionSortCriteria.dateAdded)
+
                                 Label("Release Date", systemImage: "calendar.circle.fill")
-                                    .tag(SortDescriptor(\MusicEntity.releaseDate, order: .reverse))
+                                    .tag(CollectionSortCriteria.releaseDate)
                             }
                             .pickerStyle(.inline)
                         }
@@ -131,8 +147,26 @@ struct CollectionView: View {
             .sheet(isPresented: $isShowingSearch, content: {
                 SearchboxView(searchText: $searchText, searchTextIntermediary: $searchTextIntermediary)
             })
+            .onAppear {
+                applySortCriterion(collectionSortCriteria)
+            }
+            .onChange(of: collectionSortCriteria) { _, newValue in
+                applySortCriterion(newValue)
+            }
         }
-        
+    }
+    
+    func applySortCriterion(_ criterion: CollectionSortCriteria) {
+        switch criterion {
+            case .dateAdded:
+                sortOrder = SortDescriptor(\MusicEntity.dateAdded, order: .reverse)
+            case .releaseDate:
+                sortOrder = SortDescriptor(\MusicEntity.releaseDate, order: .reverse)
+            case .byTitle:
+                sortOrder = SortDescriptor(\MusicEntity.title)
+            case .byArtist:
+                sortOrder = SortDescriptor(\MusicEntity.artistName)
+        }
     }
 }
 
