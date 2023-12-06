@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Observation
 
 // This is used for injecting the extension context from ActionViewController into a SwiftUI view. See ActionViewController.viewDidLoad.
 extension EnvironmentValues {
@@ -20,4 +21,13 @@ extension EnvironmentValues {
             self[ExtensionContext.self] = newValue
         }
     }
+    
+    var appleMusicAuthWrangler: AppleMusicAuthWrangler {
+        get { self[AppleMusicAuthWranglerKey.self] }
+        set { self[AppleMusicAuthWranglerKey.self] = newValue }
+    }
+}
+
+struct AppleMusicAuthWranglerKey: EnvironmentKey {
+    static let defaultValue: AppleMusicAuthWrangler = .init() // Provide a default value
 }

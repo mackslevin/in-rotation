@@ -24,12 +24,14 @@ struct RotationApp: App {
             fatalError("^^ Could not create ModelContainer: \(error)")
         }
     }()
+    
+    var appleMusicAuthWrangler = AppleMusicAuthWrangler()
 
     var body: some Scene {
         WindowGroup {
             HomeView()
         }
         .modelContainer(sharedModelContainer)
-        
+        .environment(\.appleMusicAuthWrangler, appleMusicAuthWrangler)
     }
 }

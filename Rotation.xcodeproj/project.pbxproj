@@ -20,6 +20,7 @@
 		012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B42AFB1C770064AA07 /* Preview Assets.xcassets */; };
 		012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
 		01447F832B1FD0390084E23F /* CollectionListingViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */; };
+		01447F842B1FFEBD0084E23F /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
 		014FB4432B0BF84E00CF1DB0 /* SpotifyAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FB4422B0BF84E00CF1DB0 /* SpotifyAPIError.swift */; };
 		015FB06F2B059BC200BAC1BC /* MusicEntityActionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015FB06E2B059BC200BAC1BC /* MusicEntityActionBlock.swift */; };
 		015FB0712B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015FB0702B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift */; };
@@ -501,6 +502,7 @@
 				01B2064A2B1809CD001265FC /* ActionViewController.swift in Sources */,
 				01B206622B1815CD001265FC /* AppleMusicSearchWrangler.swift in Sources */,
 				01B206682B181600001265FC /* SpotifySearchResults.swift in Sources */,
+				01447F842B1FFEBD0084E23F /* AppleMusicAuthWrangler.swift in Sources */,
 				01B206582B180A18001265FC /* UIHostingView.swift in Sources */,
 				01B206672B1815F2001265FC /* Spotify Entities.swift in Sources */,
 				01B2065F2B180C89001265FC /* EnvironmentValues-Ext.swift in Sources */,

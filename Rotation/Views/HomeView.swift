@@ -11,7 +11,8 @@ import SwiftData
 struct HomeView: View {
     @State private var selectedTab = 1
     
-    @State private var appleMusicAuthWrangler = AppleMusicAuthWrangler()
+//    @State private var appleMusicAuthWrangler = AppleMusicAuthWrangler()
+    @Environment(\.appleMusicAuthWrangler) var appleMusicAuthWrangler
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -33,6 +34,7 @@ struct HomeView: View {
         }
         .task {
             await appleMusicAuthWrangler.requestMusicAuth()
+            await appleMusicAuthWrangler.getMusicSubscriptionUpdates()
         }
     }
 }

@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import MusicKit
 
 struct MusicEntityDetailView: View {
     @Bindable var musicEntity: MusicEntity
     @State private var amWrangler = AppleMusicWrangler()
     @State private var isShowingErrorAlert = false
+    @State private var alertMessage: String? = nil
     @State private var spotifyWrangler = SpotifyAPIWrangler()
+    @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
+    @State private var isShowingAddedToLibrarySuccessAlert = false
     
     var body: some View {
         NavigationStack {
@@ -44,7 +48,14 @@ struct MusicEntityDetailView: View {
             .navigationTitle(Utility.stringForType(musicEntity.type))
             .navigationBarTitleDisplayMode(.inline)
             .alert(isPresented: $isShowingErrorAlert, content: {
-                Alert(title: Text("Something went wrong"))
+                if let alertMessage {
+                    Alert(title: Text("Something Went Wrong"), message: Text(alertMessage))
+                } else {
+                    Alert(title: Text("Something went wrong"))
+                }
+            })
+            .alert(isPresented: $isShowingAddedToLibrarySuccessAlert, content: {
+                Alert(title: Text("Added!"), message: Text("The item has been successfully added to your Apple Music Library"))
             })
             .toolbar {
                 if !musicEntity.appleMusicURLString.isEmpty || !musicEntity.spotifyURLString.isEmpty {
@@ -57,8 +68,16 @@ struct MusicEntityDetailView: View {
                             if !musicEntity.spotifyURLString.isEmpty, let spURL = URL(string: musicEntity.spotifyURLString) {
                                 ShareLink("Share Spotify Link", item: spURL)
                             }
+                            
+                            if let amSubscription = amAuthWrangler.musicSubscription, amSubscription.canPlayCatalogContent == true, amSubscription.hasCloudLibraryEnabled == true {
+                                Button {
+                                    addToLibrary()
+                                } label: {
+                                    Label("Add to Apple Music Library", systemImage: "plus")
+                                }
+                            }
                         } label: {
-                            Image(systemName: "square.and.arrow.up")
+                            Image(systemName: "ellipsis.circle.fill")
                         }
                     }
                 }
@@ -81,7 +100,32 @@ struct MusicEntityDetailView: View {
         }
     }
     
+    func addToLibrary() {
+        Task {
+            do {
+                if let musicItem = try await amWrangler.appleMusicItemFromMusicEntity(musicEntity) {
+                    if let item = musicItem as? MusicLibraryAddable {
+                        try? await MusicLibrary.shared.add(item)
+                        isShowingAddedToLibrarySuccessAlert = true
+                    } else {
+                        showLibraryFailureAlert()
+                    }
+                } else {
+                    showLibraryFailureAlert()
+                }
+            } catch {
+                showLibraryFailureAlert()
+            }
+        }
+        
+        
+    }
     
+    func showLibraryFailureAlert() {
+        alertMessage = "The item could not be added to your library"
+        isShowingErrorAlert = true
+        alertMessage = nil
+    }
 }
 
 #Preview {

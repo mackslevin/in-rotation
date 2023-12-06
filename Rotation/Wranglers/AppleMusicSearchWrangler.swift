@@ -167,4 +167,6 @@ class AppleMusicSearchWrangler {
         isLoading = false
         return nil
     }
+    
+    
 }

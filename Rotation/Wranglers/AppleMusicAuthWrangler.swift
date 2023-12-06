@@ -23,6 +23,7 @@ class AppleMusicAuthWrangler {
         for await subscriptionType in MusicSubscription.subscriptionUpdates {
             await MainActor.run {
                 musicSubscription = subscriptionType
+                print("^^ sub type \(subscriptionType)")
             }
         }
     }
