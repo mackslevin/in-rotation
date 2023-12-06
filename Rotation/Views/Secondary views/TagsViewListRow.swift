@@ -18,13 +18,20 @@ struct TagsViewListRow: View {
             TagDetailView(tag: tag)
         } label: {
             VStack(alignment: .leading) {
-                HStack {
+                HStack(alignment: .center, spacing: 12) {
 
-                    Image(systemName: tag.symbolName).resizable().scaledToFit()
-                        .frame(width: 50)
-                        .frame(maxHeight: 50)
-                        .padding(5)
-                        .fontWeight(.light)
+                    Image(systemName: tag.symbolName)/*.resizable().scaledToFit()*/
+                        .font(.body)
+                        .frame(width: 30, height: 30)
+                        .padding(8)
+                        .fontWeight(.medium)
+                        .background {
+                            Circle()
+                                .foregroundStyle(.secondary)
+                                .opacity(0.5)
+                        }
+                        .foregroundStyle(.tint)
+                        
 
                     
                     VStack(alignment: .leading) {
@@ -55,6 +62,10 @@ struct TagsViewListRow: View {
                     }
                     
                     Spacer()
+                    
+                    
+                    
+                    
                 }
             }
             .padding(.vertical)
