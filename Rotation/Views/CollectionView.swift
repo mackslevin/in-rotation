@@ -43,21 +43,6 @@ struct CollectionView: View {
                         Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
                         
                         Menu("Sort") {
-//                            Picker("Sort", selection: $sortOrder) {
-//                                Label("Title", systemImage: "text.quote")
-//                                    .tag(SortDescriptor(\MusicEntity.title))
-//
-//                                Label("Artist Name", systemImage: "person.3")
-//                                    .tag(SortDescriptor(\MusicEntity.artistName))
-//
-//                                Label("Date Added", systemImage: "calendar.circle")
-//                                    .tag(SortDescriptor(\MusicEntity.dateAdded, order: .reverse))
-//
-//                                Label("Release Date", systemImage: "calendar.circle.fill")
-//                                    .tag(SortDescriptor(\MusicEntity.releaseDate, order: .reverse))
-//                            }
-//                            .pickerStyle(.inline)
-                            
                             Picker("Sort", selection: $collectionSortCriteria) {
                                 Label("Title", systemImage: "text.quote")
                                     .tag(CollectionSortCriteria.byTitle)

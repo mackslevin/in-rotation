@@ -79,6 +79,8 @@
 		01D544F22B06F26100B37D6A /* LittleTagGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D544F12B06F26100B37D6A /* LittleTagGrid.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
+		01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */; };
+		01F4A7512B22430000773AC5 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F4A7502B22430000773AC5 /* ExploreViewModel.swift */; };
 		01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
 		01FC64E72AFC2E2600D53903 /* MusicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E62AFC2E2600D53903 /* MusicEntity.swift */; };
 /* End PBXBuildFile section */
@@ -163,6 +165,8 @@
 		01D544F12B06F26100B37D6A /* LittleTagGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleTagGrid.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
+		01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEntity.swift; sourceTree = "<group>"; };
+		01F4A7502B22430000773AC5 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicSearchWrangler.swift; sourceTree = "<group>"; };
 		01FC64E62AFC2E2600D53903 /* MusicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,6 +304,7 @@
 				018811922B080233003EF47A /* CollectionSortCriteria.swift */,
 				014FB4422B0BF84E00CF1DB0 /* SpotifyAPIError.swift */,
 				016854CF2B0D50C000931CE6 /* Spotify Entities.swift */,
+				01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -312,6 +317,7 @@
 				01ACB8E42B05808400C13BDA /* Font-Ext.swift */,
 				01B206562B1809F5001265FC /* UIHostingView.swift */,
 				01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */,
+				01F4A7502B22430000773AC5 /* ExploreViewModel.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 				011BB8F42B045AA900F3609D /* TagManagerView.swift in Sources */,
 				01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */,
 				017AA6962B040E7D005E43D8 /* HomeView.swift in Sources */,
+				01F4A7512B22430000773AC5 /* ExploreViewModel.swift in Sources */,
 				016A63202B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift in Sources */,
 				015FB06F2B059BC200BAC1BC /* MusicEntityActionBlock.swift in Sources */,
 				0168F76C2B1A878F004E780E /* SearchboxView.swift in Sources */,
@@ -477,6 +484,7 @@
 				017AA69C2B041A54005E43D8 /* ExploreView.swift in Sources */,
 				01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */,
 				018811972B084212003EF47A /* MusicURLWrangler.swift in Sources */,
+				01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */,
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				019045B02B06D240007F78C1 /* TagTogglerView.swift in Sources */,
 				011BB8F02B044F7B00F3609D /* TagDetailView.swift in Sources */,

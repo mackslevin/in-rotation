@@ -261,7 +261,7 @@ class AppleMusicWrangler {
         return musicItem
     }
     
-    private func findByAppleMusicID(_ musicEntity: MusicEntity) async throws -> MusicItem? {
+    func findByAppleMusicID(_ musicEntity: MusicEntity) async throws -> MusicItem? {
         switch musicEntity.type {
             case .song:
                 let request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: MusicItemID(musicEntity.appleMusicID))
@@ -278,13 +278,13 @@ class AppleMusicWrangler {
         }
     }
     
-    private func findAlbumByUPC(_ upc: String) async throws -> Album? {
+    func findAlbumByUPC(_ upc: String) async throws -> Album? {
         let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: upc)
         let response = try await request.response()
         return response.items.first
     }
     
-    private func findSongByISRC(_ isrc: String) async throws -> Song? {
+    func findSongByISRC(_ isrc: String) async throws -> Song? {
         let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
         let response = try await request.response()
         return response.items.first
