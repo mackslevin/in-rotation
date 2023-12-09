@@ -20,7 +20,8 @@ class ExploreViewModel {
     
     let amWrangler = AppleMusicWrangler()
     let amSearchWrangler = AppleMusicSearchWrangler()
-    var recommendationsAreLoading = true
+    let spotifyWrangler = SpotifyAPIWrangler()
+    var recommendationsAreLoading = false
     
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {
         guard !sources.isEmpty else {
@@ -30,11 +31,10 @@ class ExploreViewModel {
         
         recommendationEntities = []
         recommendationsAreLoading = true
-        var recsToReturn: [RecommendationEntity] = []
         
         var attempts = 0
         
-        while attempts < 50 && recsToReturn.count < 10 {
+        while attempts < 50 && recommendationEntities.count < 10 {
             attempts += 1
             let randomSource = sources.randomElement()!
             
@@ -42,17 +42,15 @@ class ExploreViewModel {
                !matchExists(forAlbum: relatedAlbum, inCollection: sources),
                 let recommendationEntity = await recommendationEntityFromAlbum(relatedAlbum, withSource: randomSource)
             {
-                recsToReturn.append(recommendationEntity)
+                recommendationEntities.append(recommendationEntity)
             }
         }
         
         recommendationsAreLoading = false
         
-        if recsToReturn.count < 10 {
+        if recommendationEntities.count < 10 {
             print("^^ ran out of attempts: \(attempts)")
             throw ExploreError.unableToFillRecommendations
-        } else {
-            recommendationEntities = recsToReturn
         }
     }
     

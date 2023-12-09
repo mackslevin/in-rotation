@@ -12,8 +12,7 @@ struct Utility {
     
     
     static let exampleEntity = MusicEntity(title: "Cool Title", artistName: "Great Artist", numberOfTracks: 15, songTitles: [], type: .album)
-    static let exampleTag = Tag(title: "Cool Tag", symbolName: "photo.fill", musicEntities: [])
-    
+    static let exampleTag = Tag(title: "Cool Tag", symbolName: "photo.fill", musicEntities: []) 
     
     @MainActor
     static func dismissKeyboard() {

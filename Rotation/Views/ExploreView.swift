@@ -10,6 +10,7 @@ import SwiftData
 
 struct ExploreView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.modelContext) var modelContext
     @Query var musicEntities: [MusicEntity]
     @State private var viewModel = ExploreViewModel()
     @State private var isInitialLoad = true
@@ -29,11 +30,11 @@ struct ExploreView: View {
             Spacer()
             
             if viewModel.recommendationsAreLoading {
-                VStack(spacing: 40) {
+                VStack(alignment: .leading, spacing: 40) {
                     Spacer()
-                    ProgressView()
-//                        .tint(.accentColor)
+                    ProgressView(value: Double(viewModel.recommendationEntities.count), total: 10)
                         .progressViewStyle(.linear)
+                        .tint(.accentColor)
                     Text("Loading your recommendations. This will take a moment.")
                         .font(.displayFont(ofSize: 20))
                         .foregroundStyle(.tint)
@@ -71,17 +72,12 @@ struct ExploreView: View {
                     Label("Load More Recommendations", systemImage: "arrow.circlepath")
                 }
                 .bold()
-            } else if viewModel.recommendationEntities.count >= 10 {
-                VStack {
+            } else {
+                ZStack {
                     ForEach(viewModel.recommendationEntities) { rec in
-                        VStack(alignment: .leading) {
-                            Text(rec.musicEntity.title)
-                            Text(rec.musicEntity.artistName)
-                                .bold()
-                            Text("Recommended based on \(rec.recommendationSource.title)")
-                                .font(.caption)
+                        RecommendationCardView(recEntity: rec, viewModel: viewModel) { liked in
+                            handleRecommendation(rec, liked: liked)
                         }
-                        
                     }
                 }
                 
@@ -91,6 +87,14 @@ struct ExploreView: View {
         }
         .padding()
         .background { Utility.customBackground(withColorScheme: colorScheme) }
+    }
+    
+    func handleRecommendation(_ rec: RecommendationEntity, liked: Bool) {
+        viewModel.recommendationEntities.removeAll(where: {$0.id == rec.id})
+        if liked {
+            modelContext.insert(rec.musicEntity)
+        }
+        
     }
     
     func generateRecommendations() {
