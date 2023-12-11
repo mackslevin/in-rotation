@@ -19,6 +19,10 @@ struct RecommendationCardView: View {
     @State private var cardStatus = CardStatus.neutral
     @State private var snapPoint: CGFloat = 200
     @State private var isShowingOpenChooser = false
+    
+    // Image intermediaries given values on appear. For performance.
+    @State private var coverThumbnail: Image? = nil
+    @State private var sourceThumbnail: Image? = nil
      
     enum CardStatus {
         case disliked
@@ -30,8 +34,8 @@ struct RecommendationCardView: View {
         ZStack {
             VStack(spacing: 20) {
                 HStack(alignment: .top) {
-                    if let imgData = recEntity.musicEntity.imageData, let uiImage = UIImage(data: imgData) {
-                        Image(uiImage: uiImage).resizable().scaledToFill()
+                    if let coverThumbnail {
+                        coverThumbnail.resizable().scaledToFill()
                             .frame(width: 120, height: 120)
                             .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                     }
@@ -104,8 +108,8 @@ struct RecommendationCardView: View {
                 Spacer()
                 
                 HStack {
-                    if let imgData = recEntity.recommendationSource.imageData, let uiImage = UIImage(data: imgData) {
-                        Image(uiImage: uiImage).resizable().scaledToFill()
+                    if let sourceThumbnail {
+                        sourceThumbnail.resizable().scaledToFill()
                             .frame(width: 60, height: 60)
                             .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                     }
@@ -166,6 +170,15 @@ struct RecommendationCardView: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
         .padding()
+        .onAppear {
+            if let coverData = recEntity.musicEntity.imageData, let coverUIImage = UIImage(data: coverData) {
+                coverThumbnail = Image(uiImage: coverUIImage)
+            }
+            
+            if let sourceImageData = recEntity.recommendationSource.imageData, let sourceUIImage = UIImage(data: sourceImageData) {
+                sourceThumbnail = Image(uiImage: sourceUIImage)
+            }
+        }
         .offset(offset)
         .gesture(
             DragGesture()
