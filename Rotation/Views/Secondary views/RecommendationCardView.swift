@@ -77,33 +77,35 @@ struct RecommendationCardView: View {
                 
                 Spacer()
                 
-                VStack(spacing: 16) {
-                    Button {
-                        isShowingOpenChooser = true
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Label("Open...", systemImage: "arrow.up.right.square")
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.secondary)
-                    .bold()
-                    Button {
-                        playInAppleMusicApp()
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Label("Play in Apple Music", systemImage: "play")
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .bold()
-                }
-                .frame(width: 235)
+//                VStack(spacing: 16) {
+//                    Button {
+//                        isShowingOpenChooser = true
+//                    } label: {
+//                        HStack {
+//                            Spacer()
+//                            Label("Open...", systemImage: "arrow.up.right.square")
+//                            Spacer()
+//                        }
+//                    }
+//                    .buttonStyle(.borderedProminent)
+//                    .tint(.secondary)
+//                    .bold()
+//                    Button {
+//                        playInAppleMusicApp()
+//                    } label: {
+//                        HStack {
+//                            Spacer()
+//                            Label("Play in Apple Music", systemImage: "play")
+//                            Spacer()
+//                        }
+//                    }
+//                    .buttonStyle(.borderedProminent)
+//                    .bold()
+//                }
+//                .frame(width: 235)
                 
+                
+                CardActionBlock(recEntity: recEntity, isShowingOpenChooser: $isShowingOpenChooser, viewModel: viewModel)
                 
                 Spacer()
                 

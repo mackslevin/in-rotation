@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import MusicKit
 
 struct ExploreView: View {
     @Environment(\.colorScheme) var colorScheme
