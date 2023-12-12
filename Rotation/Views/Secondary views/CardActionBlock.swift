@@ -32,8 +32,8 @@ struct CardActionBlock: View {
             Button {
                 isShowingOpenChooser = true
             } label: {
-                Image(systemName: "arrow.up.right.square")
-                    .font(.system(size: 46, weight: .bold))
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 36, weight: .bold))
             }
                 
             if let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
@@ -52,20 +52,10 @@ struct CardActionBlock: View {
                     
                     isInitialState = false
                 } label: {
-                    Image(systemName: isInitialState ? "play.circle" : isPlaying ? "pause.circle" : "play.circle")
-                        .font(.system(size: 46, weight: .bold))
+                    Image(systemName: isInitialState ? "play.fill" : isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 36, weight: .bold))
                 }
             }
-            
-            
-//            Button {
-//                Task {
-//                    await grabSpotifyURL()
-//                }
-//            } label: {
-//                Image(systemName: "square.and.arrow.up.circle")
-//                    .font(.system(size: 46, weight: .bold))
-//            }
             
             Menu {
                 if !recEntity.musicEntity.appleMusicURLString.isEmpty {
@@ -80,8 +70,8 @@ struct CardActionBlock: View {
                     }
                 }
             } label: {
-                Image(systemName: "square.and.arrow.up.circle")
-                    .font(.system(size: 46, weight: .bold))
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 36, weight: .bold))
             }
             .onAppear {
                 Task {

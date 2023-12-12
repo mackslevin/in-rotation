@@ -34,81 +34,86 @@ struct RecommendationCardView: View {
     }
      
     var body: some View {
-        ZStack {
-            VStack(spacing: 20) {
-                HStack(alignment: .top) {
-                    if let coverThumbnail {
-                        coverThumbnail.resizable().scaledToFill()
-                            .frame(width: 120, height: 120)
-                            .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        Text(recEntity.musicEntity.title)
-                            .font(.displayFont(ofSize: 18))
-                            .lineLimit(3)
-                        Spacer()
-                        HStack {
-                            if let imgURL = recEntity.artist.artwork?.url(width: 30, height: 30) {
-                                Group {
-                                    AsyncImage(url: imgURL) { image in
-                                        image.resizable().scaledToFill()
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                }
-                                .frame(width: 30, height: 30)
+        VStack {
+            HStack {
+                if let imgURL = recEntity.artist.artwork?.url(width: 60, height: 60) {
+                    AsyncImage(url: imgURL) { artistImage in
+                        ZStack {
+                            Circle().foregroundStyle(.thickMaterial)
+                            artistImage.resizable().scaledToFill()
                                 .clipShape(Circle())
-                                
-                            }
-                            Text(recEntity.musicEntity.artistName)
-                                .font(.caption)
+                                .padding(2)
                         }
+                        .frame(width: 44, height: 44)
+//                        .shadow(radius: 8)
+                        
+                    } placeholder: {
+                        ProgressView()
+                            .frame(width: 44, height: 44)
                     }
-                    
-                    Spacer()
                 }
-                .frame(maxHeight: 120)
+                
+                Text("\(recEntity.musicEntity.title) by \(recEntity.musicEntity.artistName)")
+                    .font(.displayFont(ofSize: 16))
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(3)
                 
                 Spacer()
-                
-                if let blurb = recEntity.blurb {
-                    VStack(spacing: 12) {
-                        Text("\(blurb)")
-                            .lineLimit(4)
-                            .italic()
-                        Link("–Apple Music Editorial", destination: URL(string:recEntity.musicEntity.appleMusicURLString)!)
-                            .fontWeight(.semibold)
-                    }
+            }
+            
+            
+            if let coverThumbnail {
+                coverThumbnail.resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
+//                    .overlay {
+//                        VStack {
+//                            HStack {
+//                                Spacer()
+//                                
+//                                // image
+//                                if let imgURL = recEntity.artist.artwork?.url(width: 60, height: 60) {
+//                                    AsyncImage(url: imgURL) { artistImage in
+//                                        ZStack {
+//                                            Circle().foregroundStyle(.thickMaterial)
+//                                            artistImage.resizable().scaledToFill()
+//                                                .clipShape(Circle())
+//                                                .padding(4)
+//                                        }
+//                                        .frame(width: 44, height: 44)
+//                                        .shadow(radius: 8)
+//                                        
+//                                    } placeholder: {
+//                                        ProgressView()
+//                                            .frame(width: 44, height: 44)
+//                                    }
+//                                }
+//                            }
+//                            Spacer()
+//                        }
+//                        .padding()
+//                    }
+            }
+            
+            Spacer()
+            CardActionBlock(recEntity: recEntity, isShowingOpenChooser: $isShowingOpenChooser, viewModel: viewModel)
+            Spacer()
+            
+            HStack {
+                if let sourceThumbnail {
+                    sourceThumbnail.resizable().scaledToFill()
+                        .frame(width: 60, height: 60)
+                        .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                 }
                 
-                CardActionBlock(recEntity: recEntity, isShowingOpenChooser: $isShowingOpenChooser, viewModel: viewModel)
+                Text("Recommended based on \(recEntity.recommendationSource.title) by \(recEntity.recommendationSource.artistName)")
+                    .font(.caption)
                 
                 Spacer()
-                
-                HStack {
-                    if let sourceThumbnail {
-                        sourceThumbnail.resizable().scaledToFill()
-                            .frame(width: 60, height: 60)
-                            .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
-                    }
-                    
-                    Text("Recommended based on \(recEntity.recommendationSource.title) by \(recEntity.recommendationSource.artistName)")
-                        .font(.caption)
-                        .lineLimit(3)
-                        .multilineTextAlignment(.leading)
-                    
-                    Spacer()
-                }
-                .padding()
-                .background {
-                    RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true))
-                        .foregroundStyle(.regularMaterial)
-                }
             }
             .padding()
+            .background { RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)).foregroundStyle(.regularMaterial) }
         }
-        .frame(height: 540)
+        .padding()
+        .frame(height: 560)
         .background {
             if colorScheme == .light {
                 ZStack {
