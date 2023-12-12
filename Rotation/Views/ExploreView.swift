@@ -33,15 +33,15 @@ struct ExploreView: View {
             if viewModel.recommendationsAreLoading {
                 VStack(alignment: .center, spacing: 40) {
                     Spacer()
-                    ProgressView(value: Double(viewModel.recommendationEntities.count), total: 10)
-                        .progressViewStyle(.linear)
-                        .tint(.accentColor)
                     VStack(spacing: 12) {
                         Text("Loading your recommendations.")
                         Text("This will take a moment.")
                     }
                     .font(.displayFont(ofSize: 20))
                     .foregroundStyle(.tint)
+                    ProgressView(value: Double(viewModel.recommendationEntities.count), total: 10)
+                        .progressViewStyle(.linear)
+                        .tint(.accentColor)
                     Spacer()
                 }
                 .listRowBackground(Color.clear)

@@ -23,6 +23,9 @@ struct RecommendationCardView: View {
     // Image intermediaries given values on appear. For performance.
     @State private var coverThumbnail: Image? = nil
     @State private var sourceThumbnail: Image? = nil
+    
+    @State private var isShowingSpotifyOpenError = false
+    @State private var isShowingAppleMusicOpenError = false
      
     enum CardStatus {
         case disliked
@@ -67,43 +70,17 @@ struct RecommendationCardView: View {
                 }
                 .frame(maxHeight: 120)
                 
-                if let blurb = recEntity.blurb {
-                    VStack {
-                        Text("\(blurb)")
-                            .italic()
-                        Link("Apple Music Editorial", destination: URL(string:recEntity.musicEntity.appleMusicURLString)!)
-                    }
-                }
-                
                 Spacer()
                 
-//                VStack(spacing: 16) {
-//                    Button {
-//                        isShowingOpenChooser = true
-//                    } label: {
-//                        HStack {
-//                            Spacer()
-//                            Label("Open...", systemImage: "arrow.up.right.square")
-//                            Spacer()
-//                        }
-//                    }
-//                    .buttonStyle(.borderedProminent)
-//                    .tint(.secondary)
-//                    .bold()
-//                    Button {
-//                        playInAppleMusicApp()
-//                    } label: {
-//                        HStack {
-//                            Spacer()
-//                            Label("Play in Apple Music", systemImage: "play")
-//                            Spacer()
-//                        }
-//                    }
-//                    .buttonStyle(.borderedProminent)
-//                    .bold()
-//                }
-//                .frame(width: 235)
-                
+                if let blurb = recEntity.blurb {
+                    VStack(spacing: 12) {
+                        Text("\(blurb)")
+                            .lineLimit(4)
+                            .italic()
+                        Link("–Apple Music Editorial", destination: URL(string:recEntity.musicEntity.appleMusicURLString)!)
+                            .fontWeight(.semibold)
+                    }
+                }
                 
                 CardActionBlock(recEntity: recEntity, isShowingOpenChooser: $isShowingOpenChooser, viewModel: viewModel)
                 
@@ -243,9 +220,16 @@ struct RecommendationCardView: View {
                         try await viewModel.spotifyWrangler.openInSpotify(recEntity.musicEntity)
                     } catch {
                         print(error)
+                        isShowingSpotifyOpenError = true
                     }
                 }
             }
+        }
+        .alert("Unable to find matching album on Spotify", isPresented: $isShowingSpotifyOpenError) {
+            Button("OK"){}
+        }
+        .alert("Unable to open album in Apple Music", isPresented: $isShowingAppleMusicOpenError) {
+            Button("OK"){}
         }
     }
     

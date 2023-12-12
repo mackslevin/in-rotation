@@ -67,7 +67,10 @@ class ExploreViewModel {
     func recommendationEntityFromAlbum(_ album: Album, withSource source: MusicEntity) async -> RecommendationEntity? {
         guard let populatedAlbum = try? await album.with([.artists]) else { return nil }
         
-        let blurb = populatedAlbum.editorialNotes?.short
+        var blurb = populatedAlbum.editorialNotes?.short
+        if blurb == nil {
+            blurb = populatedAlbum.editorialNotes?.standard
+        }
         guard let artist = populatedAlbum.artists?.first else { return nil }
         guard let musicEntity = await amSearchWrangler.makeMusicEntity(from: populatedAlbum) else { return nil }
         

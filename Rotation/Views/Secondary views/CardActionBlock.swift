@@ -13,43 +13,81 @@ struct CardActionBlock: View {
     @Binding var isShowingOpenChooser: Bool
     let viewModel: ExploreViewModel
     
+    @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
+    
     @State private var isShowingPlaybackError = false
     
     @State var player = SystemMusicPlayer.shared
     @State private var isPlaying = false
+    
+    @State private var isShowingShareOptions = false
     
     // In the case that there happens to be something else already playing in the system player, make sure we still present a "play" button on initial load, rather than a "pause" button.
     @State private var isInitialState = true
     
     var body: some View {
         
-        VStack {
-                
+        HStack(spacing: 50) {
+            
             Button {
-                if isPlaying && !isInitialState {
-                    player.pause()
-                } else {
-                    Task {
-                        do {
-                            try await viewModel.amWrangler.playInAppleMusicApp(recEntity.musicEntity)
-                        } catch {
-                            isShowingPlaybackError = true
+                isShowingOpenChooser = true
+            } label: {
+                Image(systemName: "arrow.up.right.square")
+                    .font(.system(size: 46, weight: .bold))
+            }
+                
+            if let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
+                Button {
+                    if isPlaying && !isInitialState {
+                        player.pause()
+                    } else {
+                        Task {
+                            do {
+                                try await viewModel.amWrangler.playInAppleMusicApp(recEntity.musicEntity)
+                            } catch {
+                                isShowingPlaybackError = true
+                            }
                         }
                     }
+                    
+                    isInitialState = false
+                } label: {
+                    Image(systemName: isInitialState ? "play.circle" : isPlaying ? "pause.circle" : "play.circle")
+                        .font(.system(size: 46, weight: .bold))
                 }
-                
-                isInitialState = false
-            } label: {
-                Image(systemName: isInitialState ? "play" : isPlaying ? "pause" : "play")
-                    .font(.largeTitle)
             }
             
             
-        }
-        .padding()
-        .background {
-            RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true))
-                .foregroundStyle(.regularMaterial)
+//            Button {
+//                Task {
+//                    await grabSpotifyURL()
+//                }
+//            } label: {
+//                Image(systemName: "square.and.arrow.up.circle")
+//                    .font(.system(size: 46, weight: .bold))
+//            }
+            
+            Menu {
+                if !recEntity.musicEntity.appleMusicURLString.isEmpty {
+                    ShareLink(item: URL(string: recEntity.musicEntity.appleMusicURLString)!) {
+                        Label("Share Apple Music Link", systemImage: "square.and.arrow.up")
+                    }
+                }
+                
+                if !recEntity.musicEntity.spotifyURLString.isEmpty {
+                    ShareLink(item: URL(string: recEntity.musicEntity.spotifyURLString)!) {
+                        Label("Share Spotify Link", systemImage: "square.and.arrow.up")
+                    }
+                }
+            } label: {
+                Image(systemName: "square.and.arrow.up.circle")
+                    .font(.system(size: 46, weight: .bold))
+            }
+            .onAppear {
+                Task {
+                    await grabSpotifyURL()
+                }
+            }
         }
         .alert("PlaybackError", isPresented: $isShowingPlaybackError) {
             Button("OK"){}
@@ -71,6 +109,16 @@ struct CardActionBlock: View {
                 self.isPlaying = false
             }
             print("^^ System playback state changed: \(self.isPlaying ? "playing" : "not playing")")
+        }
+    }
+    
+    func grabSpotifyURL() async {
+        if recEntity.musicEntity.spotifyURLString.isEmpty {
+            Task {
+                if let urlStr = try? await SpotifyAPIWrangler().findMatch(forMusicEntity: recEntity.musicEntity) {
+                    recEntity.musicEntity.spotifyURLString = urlStr
+                }
+            }
         }
     }
     
