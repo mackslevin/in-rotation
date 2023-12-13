@@ -84,7 +84,7 @@ struct CollectionView: View {
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
-                            .padding([.trailing], 10)
+                            .padding([.trailing])
                     }
                     
                     NavigationLink(destination: MusicSearchView()) {

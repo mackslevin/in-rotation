@@ -10,10 +10,11 @@ import SwiftData
 
 struct TagsView: View {
     @Query var tags: [Tag]
-    @State private var selectedTag: Tag?
+//    @State private var selectedTag: Tag?
     @Environment(\.modelContext) var modelContext
     @State private var isShowingAddTag = false
     @Environment(\.colorScheme) var colorScheme
+    @State private var sortOrder = SortDescriptor(\Tag.dateCreated, order: .reverse)
     
     var body: some View {
         NavigationStack {
@@ -27,8 +28,15 @@ struct TagsView: View {
                     
                     Spacer()
                     
-                    Button {
-                        
+                    Menu {
+                        Picker("Sort Tags", selection: $sortOrder) {
+                            Label("Date Added", systemImage: "calendar.circle")
+                                .tag(SortDescriptor<Tag>(\Tag.dateCreated, order: .reverse))
+                            Label("Name, A-Z", systemImage: "a.circle")
+                                .tag(SortDescriptor<Tag>(\Tag.title, order: .forward))
+                            Label("Name, Z-A", systemImage: "z.circle")
+                                .tag(SortDescriptor<Tag>(\Tag.title, order: .reverse))
+                        }
                     } label: {
                         Image(systemName: "line.3.horizontal.decrease.circle").resizable().scaledToFit()
                     }
@@ -44,26 +52,15 @@ struct TagsView: View {
                 }
                 .padding()
                 
-                List(selection: $selectedTag, content: {
-                    ForEach(tags) { tag in
-                        TagsViewListRow(tag: tag)
-                    }
-                    .onDelete(perform: { indexSet in
-                        if let index = indexSet.first {
-                            withAnimation {
-                                modelContext.delete(tags[index])
-                            }
-                        }
-                    })
-                })
-                .listStyle(.plain)
-                .sheet(isPresented: $isShowingAddTag, content: {
-                    AddTagView()
-                })
+                TagsListingView(sort: sortOrder)
+                
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
+            .sheet(isPresented: $isShowingAddTag, content: {
+                AddTagView()
+            })
             
         }
 
