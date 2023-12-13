@@ -19,7 +19,8 @@ struct RecommendationCardView: View {
     @State private var cardOverlayOpacity: Double = 0
     @State private var cardStatus = CardStatus.neutral
     @State private var snapPoint: CGFloat = 200
-    @State private var isShowingOpenChooser = false
+    @State private var rotation: Double = 0.0
+    
     
     // Image intermediaries given values on appear. For performance.
     @State private var coverThumbnail: Image? = nil
@@ -27,6 +28,7 @@ struct RecommendationCardView: View {
     
     @State private var isShowingSpotifyOpenError = false
     @State private var isShowingAppleMusicOpenError = false
+    @State private var isShowingOpenChooser = false
      
     var body: some View {
         VStack {
@@ -141,11 +143,19 @@ struct RecommendationCardView: View {
                 sourceThumbnail = Image(uiImage: sourceUIImage)
             }
         }
+        .rotationEffect(Angle(degrees: rotation))
         .offset(offset)
         .gesture(
             DragGesture()
                 .onChanged { gesture in
                     offset = gesture.translation
+                    
+                    // Calculate rotation amount
+                    let sampledOffset = offset.width / 15
+                    let rotationLimit: Double = 15
+                    withAnimation {
+                        rotation = sampledOffset > rotationLimit ? rotationLimit : sampledOffset < (rotationLimit * -1) ? (rotationLimit * -1) : sampledOffset
+                    }
                     
                     if offset.width > snapPoint - 100 {
                         cardStatus = .liked
@@ -167,6 +177,12 @@ struct RecommendationCardView: View {
                             cardStatus = .neutral
                         }
                         
+                    }
+                    
+                    if offset.width == 0 {
+                        withAnimation(.bouncy) {
+                            rotation = 0
+                        }
                     }
                 }
         )

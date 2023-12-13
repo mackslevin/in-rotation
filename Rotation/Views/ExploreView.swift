@@ -97,10 +97,7 @@ struct ExploreView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(currentCardStatus == .disliked ? Color.primary : Color.gray)
                     
-                        
-                    
                     HStack {
-                        
                         Text("Save")
                         Image(systemName: currentCardStatus == .liked ? "arrowshape.turn.up.right.fill" : "arrowshape.turn.up.right")
                     }
