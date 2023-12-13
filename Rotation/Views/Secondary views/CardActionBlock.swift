@@ -98,7 +98,6 @@ struct CardActionBlock: View {
             } else {
                 self.isPlaying = false
             }
-            print("^^ System playback state changed: \(self.isPlaying ? "playing" : "not playing")")
         }
     }
     

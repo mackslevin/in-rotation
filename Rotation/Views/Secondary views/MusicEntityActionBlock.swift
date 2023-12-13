@@ -20,17 +20,20 @@ struct MusicEntityActionBlock: View {
     
     @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = false
     
+    @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
+    
     let buttonBGOpacity: Double = 1
     let buttonVerticalSpacing: CGFloat = 8
     
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    Task {
-                        if shouldPlayInAppleMusicApp {
-                            playInAppleMusicApp()
-                        } else {
+                
+                if shouldPlayInAppleMusicApp, let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
+                    AppleMusicPlayButton(musicEntity: musicEntity)
+                } else {
+                    Button {
+                        Task {
                             do {
                                 try await amWrangler.openInAppleMusic(musicEntity)
                             } catch {
@@ -38,26 +41,27 @@ struct MusicEntityActionBlock: View {
                                 isShowingErrorAlert = true
                             }
                         }
-                    }
-                } label: {
-                    VStack(spacing: buttonVerticalSpacing) {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(Color.secondary)
-                                .opacity(buttonBGOpacity)
-                                .shadow(radius: 3, x: 1, y: 3)
+                    } label: {
+                        VStack(spacing: buttonVerticalSpacing) {
+                            ZStack {
+                                Circle()
+                                    .foregroundStyle(Color.secondary)
+                                    .opacity(buttonBGOpacity)
+                                    .shadow(radius: 3, x: 1, y: 3)
+                                
+                                Image(systemName: shouldPlayInAppleMusicApp ? "play.fill" : "arrow.up.right.square").resizable().scaledToFit()
+                                    .padding(16)
+                                    .foregroundStyle(.white)
+                            }
+                            .frame(width: 60)
                             
-                            Image(systemName: shouldPlayInAppleMusicApp ? "play.fill" : "arrow.up.right.square").resizable().scaledToFit()
-                                .padding(16)
-                                .foregroundStyle(.white)
+                            Text("Apple Music")
+                                .font(.caption)
+                                .fontWeight(.semibold)
                         }
-                        .frame(width: 60)
-                        
-                        Text("Apple Music")
-                            .font(.caption)
-                            .fontWeight(.semibold)
                     }
                 }
+                
                 
                 Spacer()
                 

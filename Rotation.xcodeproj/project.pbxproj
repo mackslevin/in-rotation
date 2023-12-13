@@ -51,6 +51,7 @@
 		0198F45F2B22D7540051F428 /* RecommendationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0198F45E2B22D7540051F428 /* RecommendationCardView.swift */; };
 		019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */; };
 		01A803E22B2A358700777251 /* DefaultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E12B2A358700777251 /* DefaultScreen.swift */; };
+		01A803E42B2A456100777251 /* AppleMusicPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */; };
 		01ACB8DB2B05455A00C13BDA /* TagsViewListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */; };
 		01ACB8DD2B05536100C13BDA /* RecordCoverGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */; };
 		01ACB8DF2B0570FD00C13BDA /* SymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */; };
@@ -153,6 +154,7 @@
 		0198F45E2B22D7540051F428 /* RecommendationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationCardView.swift; sourceTree = "<group>"; };
 		019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySearchResults.swift; sourceTree = "<group>"; };
 		01A803E12B2A358700777251 /* DefaultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScreen.swift; sourceTree = "<group>"; };
+		01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicPlayButton.swift; sourceTree = "<group>"; };
 		01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewListRow.swift; sourceTree = "<group>"; };
 		01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoverGridView.swift; sourceTree = "<group>"; };
 		01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPicker.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				0198F45E2B22D7540051F428 /* RecommendationCardView.swift */,
 				01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */,
 				01B3986A2B293B050015E5D2 /* TagsListingView.swift */,
+				01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				017AA69E2B041A6A005E43D8 /* SettingsView.swift in Sources */,
 				017AA69A2B041A3C005E43D8 /* TagsView.swift in Sources */,
 				01FC64E72AFC2E2600D53903 /* MusicEntity.swift in Sources */,
+				01A803E42B2A456100777251 /* AppleMusicPlayButton.swift in Sources */,
 				017AA6A02B041EC2005E43D8 /* MusicSearchView.swift in Sources */,
 				010393BC2AFC67FD000DF698 /* SearchError.swift in Sources */,
 				010393C02AFC9B14000DF698 /* Utility.swift in Sources */,
