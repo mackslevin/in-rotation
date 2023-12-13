@@ -87,6 +87,7 @@ struct ExploreView: View {
                         }
                     }
                 }
+                .zIndex(100)
                 
                 HStack(spacing: 50) {
                     HStack {

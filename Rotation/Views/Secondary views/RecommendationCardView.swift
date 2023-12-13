@@ -90,12 +90,12 @@ struct RecommendationCardView: View {
         .background {
             if colorScheme == .light {
                 ZStack {
-                    Color.accentColor
-                    Color.white.opacity(0.8)
+                    Rectangle().foregroundStyle(Color.accentColor.gradient)
+                    Color.white.opacity(0.7)
                 }
             } else {
                 ZStack {
-                    Color.black
+                    Rectangle().foregroundStyle(Color.black.gradient)
                     Color.white.opacity(0.3)
                 }
             }
