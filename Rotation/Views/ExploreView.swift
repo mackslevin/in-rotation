@@ -16,6 +16,8 @@ struct ExploreView: View {
     @State private var viewModel = ExploreViewModel()
     @State private var isInitialLoad = true
     
+    @State private var currentCardStatus = CardStatus.neutral
+    
     var body: some View {
         VStack {
             HStack {
@@ -79,12 +81,35 @@ struct ExploreView: View {
             } else {
                 ZStack {
                     ForEach(viewModel.recommendationEntities) { rec in
-                        RecommendationCardView(recEntity: rec, viewModel: viewModel) { liked in
+                        RecommendationCardView(recEntity: rec, viewModel: viewModel, hostingViewCardStatus: $currentCardStatus) { liked in
                             handleRecommendation(rec, liked: liked)
+                            currentCardStatus = .neutral
                         }
                     }
                 }
                 
+                HStack(spacing: 50) {
+                    HStack {
+                        Image(systemName: currentCardStatus == .disliked ? "arrowshape.turn.up.left.fill" : "arrowshape.turn.up.left")
+                        Text("Skip")
+                    }
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(currentCardStatus == .disliked ? Color.primary : Color.gray)
+                    
+                        
+                    
+                    HStack {
+                        
+                        Text("Save")
+                        Image(systemName: currentCardStatus == .liked ? "arrowshape.turn.up.right.fill" : "arrowshape.turn.up.right")
+                    }
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(currentCardStatus == .liked ? Color.accentColor : Color.gray)
+                        
+                }
+                .bold()
             }
             
             Spacer()

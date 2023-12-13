@@ -10,6 +10,7 @@ import SwiftUI
 struct RecommendationCardView: View {
     let recEntity: RecommendationEntity
     let viewModel: ExploreViewModel
+    @Binding var hostingViewCardStatus: CardStatus
     let completion: (Bool) -> Void
     
     @Environment(\.colorScheme) var colorScheme
@@ -27,12 +28,6 @@ struct RecommendationCardView: View {
     @State private var isShowingSpotifyOpenError = false
     @State private var isShowingAppleMusicOpenError = false
      
-    enum CardStatus {
-        case disliked
-        case liked
-        case neutral
-    }
-     
     var body: some View {
         VStack {
             HStack {
@@ -45,7 +40,6 @@ struct RecommendationCardView: View {
                                 .padding(2)
                         }
                         .frame(width: 44, height: 44)
-//                        .shadow(radius: 8)
                         
                     } placeholder: {
                         ProgressView()
@@ -64,38 +58,13 @@ struct RecommendationCardView: View {
             
             if let coverThumbnail {
                 coverThumbnail.resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
-//                    .overlay {
-//                        VStack {
-//                            HStack {
-//                                Spacer()
-//                                
-//                                // image
-//                                if let imgURL = recEntity.artist.artwork?.url(width: 60, height: 60) {
-//                                    AsyncImage(url: imgURL) { artistImage in
-//                                        ZStack {
-//                                            Circle().foregroundStyle(.thickMaterial)
-//                                            artistImage.resizable().scaledToFill()
-//                                                .clipShape(Circle())
-//                                                .padding(4)
-//                                        }
-//                                        .frame(width: 44, height: 44)
-//                                        .shadow(radius: 8)
-//                                        
-//                                    } placeholder: {
-//                                        ProgressView()
-//                                            .frame(width: 44, height: 44)
-//                                    }
-//                                }
-//                            }
-//                            Spacer()
-//                        }
-//                        .padding()
-//                    }
             }
+            
             
             Spacer()
             CardActionBlock(recEntity: recEntity, isShowingOpenChooser: $isShowingOpenChooser, viewModel: viewModel)
             Spacer()
+            
             
             HStack {
                 if let sourceThumbnail {
@@ -111,6 +80,8 @@ struct RecommendationCardView: View {
             }
             .padding()
             .background { RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)).foregroundStyle(.regularMaterial) }
+            
+            
         }
         .padding()
         .frame(height: 560)
@@ -132,22 +103,29 @@ struct RecommendationCardView: View {
                 cardOverlayColor
                 VStack {
                     if cardStatus == .liked {
-                        Image(systemName: "plus.circle")
-                            .resizable().scaledToFit()
-                            .frame(width: 50)
-                        
-                        Text("Add to Collection")
-                            .bold()
-                    } else if cardStatus == .disliked {
-                        Group {
-                            Image(systemName: "arrowshape.turn.up.left")
+                        HStack {
+                            Image(systemName: "plus.circle")
                                 .resizable().scaledToFit()
                                 .frame(width: 50)
+                            Spacer()
+                        }.padding()
+                        
+                        
+
+                    } else if cardStatus == .disliked {
+                        HStack {
+                            Spacer()
                             
-                            Text("Skip")
-                                .bold()
-                        }.foregroundStyle(.white)
+                            Image(systemName: "xmark.circle")
+                                .resizable().scaledToFit()
+                                .frame(width: 50)
+                                .foregroundStyle(.white)
+                            
+                        }.padding()
+                        
                     }
+                    
+                    Spacer()
                 }
             }
             .opacity(cardOverlayOpacity)
@@ -205,6 +183,8 @@ struct RecommendationCardView: View {
                         cardOverlayColor = .clear
                         cardOverlayOpacity = 0
                 }
+                
+                hostingViewCardStatus = newValue
             }
             
         }
