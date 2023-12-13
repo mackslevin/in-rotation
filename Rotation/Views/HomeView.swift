@@ -13,6 +13,7 @@ struct HomeView: View {
     
 //    @State private var appleMusicAuthWrangler = AppleMusicAuthWrangler()
     @Environment(\.appleMusicAuthWrangler) var appleMusicAuthWrangler
+    @AppStorage("defaultScreen") var defaultScreen = DefaultScreen.collection
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -35,6 +36,16 @@ struct HomeView: View {
         .task {
             await appleMusicAuthWrangler.requestMusicAuth()
             await appleMusicAuthWrangler.getMusicSubscriptionUpdates()
+        }
+        .onAppear {
+            switch defaultScreen {
+                case .collection:
+                    selectedTab = 1
+                case .tags:
+                    selectedTab = 2
+                case .explore:
+                    selectedTab = 3
+            }
         }
     }
 }

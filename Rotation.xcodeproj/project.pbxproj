@@ -50,6 +50,7 @@
 		019045B02B06D240007F78C1 /* TagTogglerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019045AF2B06D240007F78C1 /* TagTogglerView.swift */; };
 		0198F45F2B22D7540051F428 /* RecommendationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0198F45E2B22D7540051F428 /* RecommendationCardView.swift */; };
 		019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */; };
+		01A803E22B2A358700777251 /* DefaultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E12B2A358700777251 /* DefaultScreen.swift */; };
 		01ACB8DB2B05455A00C13BDA /* TagsViewListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */; };
 		01ACB8DD2B05536100C13BDA /* RecordCoverGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */; };
 		01ACB8DF2B0570FD00C13BDA /* SymbolPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */; };
@@ -151,6 +152,7 @@
 		019045AF2B06D240007F78C1 /* TagTogglerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTogglerView.swift; sourceTree = "<group>"; };
 		0198F45E2B22D7540051F428 /* RecommendationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationCardView.swift; sourceTree = "<group>"; };
 		019F26B72AFEF72200AE9EC4 /* SpotifySearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifySearchResults.swift; sourceTree = "<group>"; };
+		01A803E12B2A358700777251 /* DefaultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScreen.swift; sourceTree = "<group>"; };
 		01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewListRow.swift; sourceTree = "<group>"; };
 		01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoverGridView.swift; sourceTree = "<group>"; };
 		01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPicker.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				016854CF2B0D50C000931CE6 /* Spotify Entities.swift */,
 				01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */,
 				01B398682B29284D0015E5D2 /* CardStatus.swift */,
+				01A803E12B2A358700777251 /* DefaultScreen.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */,
 				01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */,
 				01ACB8DB2B05455A00C13BDA /* TagsViewListRow.swift in Sources */,
+				01A803E22B2A358700777251 /* DefaultScreen.swift in Sources */,
 				014FB4432B0BF84E00CF1DB0 /* SpotifyAPIError.swift in Sources */,
 				019F26B82AFEF72200AE9EC4 /* SpotifySearchResults.swift in Sources */,
 				015FB0712B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift in Sources */,
