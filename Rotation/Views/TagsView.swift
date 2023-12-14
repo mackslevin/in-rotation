@@ -52,7 +52,27 @@ struct TagsView: View {
                 }
                 .padding()
                 
-                TagsListingView(sort: sortOrder)
+                if tags.isEmpty {
+                    VStack(spacing: 40) {
+                        Spacer()
+                        VStack(spacing: 40) {
+                            Image(systemName: "tag.slash")
+                                .resizable().scaledToFit()
+                                .frame(width: 100)
+                            Text("No tags yet...")
+                                .font(.displayFont(ofSize: 28))
+                        }
+                        .foregroundStyle(.secondary)
+                        
+                        Button("Create a tag") {
+                            isShowingAddTag = true
+                        }
+                        .buttonStyle(.borderedProminent).bold()
+                        Spacer()
+                    }
+                } else {
+                    TagsListingView(sort: sortOrder)
+                }
                 
             }
             .background {

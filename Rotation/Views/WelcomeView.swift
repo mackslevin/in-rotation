@@ -90,7 +90,7 @@ struct WelcomeView: View {
                     
                     
                     VStack(alignment: .center, spacing: 20) {
-                        Text("Once in the app, music can be easily marked as listened/unlistened and quickly open in either Apple Music or Spotify. Apple Music subscribers can also trigger playback directly from the app, as well as easily add items to their Apple Music Library.")
+                        Text("Once in the app, music can be easily marked as listened/unlistened and quickly opened in either Apple Music or Spotify. Apple Music subscribers can also trigger playback directly from the app, as well as easily add items to their Apple Music Library.")
                     }
                     .multilineTextAlignment(.center)
                     

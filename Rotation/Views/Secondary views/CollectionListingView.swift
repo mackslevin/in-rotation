@@ -17,20 +17,40 @@ struct CollectionListingView: View {
     @Binding var tagsForFiltering: [Tag]
     
     var body: some View {
-        List {
-            ForEach(musicEntities) { musicEntity in
-                if musicEntity.title.localizedStandardContains(searchText) || 
-                    musicEntity.artistName.localizedStandardContains(searchText) ||
-                    searchText.isEmpty 
-                {
-                    if handleUnplayedFilter(forMusicEntity: musicEntity) && handleTagFiltering(forMusicEntity: musicEntity) {
-                        CollectionListingViewRow(musicEntity: musicEntity)
-                        
+        if musicEntities.isEmpty {
+            VStack(spacing: 40) {
+                Spacer()
+                VStack(spacing: 40) {
+                    Image(systemName: "eyes")
+                        .resizable().scaledToFit()
+                        .frame(width: 100)
+                    Text("Nothing here yet...")
+                        .font(.displayFont(ofSize: 28))
+                }
+                .foregroundStyle(.secondary)
+                
+                NavigationLink("Add some music to get started", destination: MusicSearchView())
+                    .buttonStyle(.borderedProminent).bold()
+                Spacer()
+            }
+            
+        } else {
+            List {
+                ForEach(musicEntities) { musicEntity in
+                    if musicEntity.title.localizedStandardContains(searchText) ||
+                        musicEntity.artistName.localizedStandardContains(searchText) ||
+                        searchText.isEmpty
+                    {
+                        if handleUnplayedFilter(forMusicEntity: musicEntity) && handleTagFiltering(forMusicEntity: musicEntity) {
+                            CollectionListingViewRow(musicEntity: musicEntity)
+                            
+                        }
                     }
                 }
             }
+            .listStyle(.plain)
         }
-        .listStyle(.plain)
+        
     }
     
     
@@ -65,7 +85,7 @@ struct CollectionListingView: View {
         return true
     }
 }
-//
+
 //#Preview {
 //    CollectionListingView(sort: SortDescriptor(\MusicEntity.dateAdded), searchText: "")
 //}
