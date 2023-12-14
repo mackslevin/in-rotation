@@ -19,7 +19,6 @@ struct AppleMusicPlayButton: View {
     @State private var isPlaying = false
     @State private var isInitialState = true
     @State private var amWrangler = AppleMusicWrangler()
-    @State private var didStartPlayingThisRecord = false
     
     @State private var buttonSymbolName = "play.fill"
     
@@ -29,6 +28,15 @@ struct AppleMusicPlayButton: View {
                 isShowingPlaybackError = true
                 return
             }
+            
+//            guard thisRecordIsCurrentlyPlaying() else {
+//                playFromTheTop()
+//                isInitialState = false
+//                return
+//            }
+            
+            print("^^ this record is currently queued")
+            
             
             if isInitialState {
                 playFromTheTop()
@@ -53,7 +61,6 @@ struct AppleMusicPlayButton: View {
             isInitialState = false
         } label: {
             Image(systemName: buttonSymbolName)
-                .font(.system(size: 36, weight: .bold))
         }
         .alert("PlaybackError", isPresented: $isShowingPlaybackError) {
             Button("OK"){}
@@ -63,19 +70,24 @@ struct AppleMusicPlayButton: View {
         .task {
             await getPlaybackStateNotifications()
         }
-        .onChange(of: player.state.playbackStatus) { _, newValue in
-            if newValue == .playing {
-                buttonSymbolName = "pause.fill"
-            } else {
-                buttonSymbolName = "play.fill"
-            }
+//        .onChange(of: player.state.playbackStatus) { _, newValue in
+//            if !isInitialState {
+//                if newValue == .playing {
+//                    buttonSymbolName = "pause.fill"
+//                } else {
+//                    buttonSymbolName = "play.fill"
+//                }
+//            }
+//        }
+        .onChange(of: isInitialState) { oldValue, newValue in
+            print("^^ initial state \(newValue)")
         }
     }
     
     func getPlaybackStateNotifications() async {
         NotificationCenter.default.addObserver(forName: .MPMusicPlayerControllerPlaybackStateDidChange, object: nil, queue: .main) { notification in
             
-            if let playerController = notification.object as? MPMusicPlayerController {
+            if let playerController = notification.object as? MPMusicPlayerController, !isInitialState {
                 if playerController.playbackState == .playing {
                     buttonSymbolName = "pause.fill"
                 } else {
@@ -89,12 +101,38 @@ struct AppleMusicPlayButton: View {
         Task {
             do {
                 try await amWrangler.playInAppleMusicApp(musicEntity)
-                didStartPlayingThisRecord = true
             } catch {
                 isShowingPlaybackError = true
             }
         }
     }
+    
+//    func thisRecordIsCurrentlyPlaying() -> Bool {
+//        guard let currentlyQueuedSong = player.queue.currentEntry?.item as? Song else {
+//            print("^^ no currently queued song")
+//            print("^^ uhh \(player.queue.currentEntry?.item)")
+//            return false
+//        }
+//        
+//        currentlyQueuedSong
+//
+//        switch musicEntity.type {
+//            case .song:
+//                if let isrc = currentlyQueuedSong.isrc, isrc == musicEntity.isrc {
+//                    print("^^ isrc match ")
+//                    return true
+//                } else {
+//                    print("^^ NO isrc match ")
+//                }
+//            default:
+//                if musicEntity.songTitles.contains(currentlyQueuedSong.title) {
+//                    print("^^ first song match")
+//                    return true
+//                }
+//        }
+//        
+//        return false
+//    }
 }
 
 #Preview {

@@ -37,24 +37,27 @@ struct CardActionBlock: View {
             }
                 
             if let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
-                Button {
-                    if isPlaying && !isInitialState {
-                        player.pause()
-                    } else {
-                        Task {
-                            do {
-                                try await viewModel.amWrangler.playInAppleMusicApp(recEntity.musicEntity)
-                            } catch {
-                                isShowingPlaybackError = true
-                            }
-                        }
-                    }
-                    
-                    isInitialState = false
-                } label: {
-                    Image(systemName: isInitialState ? "play.fill" : isPlaying ? "pause.fill" : "play.fill")
-                        .font(.system(size: 36, weight: .bold))
-                }
+//                Button {
+//                    if isPlaying && !isInitialState {
+//                        player.pause()
+//                    } else {
+//                        Task {
+//                            do {
+//                                try await viewModel.amWrangler.playInAppleMusicApp(recEntity.musicEntity)
+//                            } catch {
+//                                isShowingPlaybackError = true
+//                            }
+//                        }
+//                    }
+//                    
+//                    isInitialState = false
+//                } label: {
+//                    Image(systemName: isInitialState ? "play.fill" : isPlaying ? "pause.fill" : "play.fill")
+//                        .font(.system(size: 36, weight: .bold))
+//                }
+                
+                AppleMusicPlayButton(musicEntity: recEntity.musicEntity)
+                    .font(.system(size: 36, weight: .bold))
             }
             
             Menu {
@@ -85,7 +88,7 @@ struct CardActionBlock: View {
             Text("Unable to play this item from Apple Music.")
         }
         .task {
-            await getPlaybackStateNotifications()
+//            await getPlaybackStateNotifications()
         }
 
     }
