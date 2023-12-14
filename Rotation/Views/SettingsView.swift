@@ -13,6 +13,8 @@ struct SettingsView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var isShowingWelcomView = false
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -29,6 +31,12 @@ struct SettingsView: View {
                         Text("Start playback").tag(true)
                     }
                 }
+                
+                Section {
+                    Button("Show welcome screen again") {
+                        isShowingWelcomView = true
+                    }
+                }
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
@@ -36,6 +44,9 @@ struct SettingsView: View {
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
+            .sheet(isPresented: $isShowingWelcomView, content: {
+                WelcomeView(){}
+            })
         }
         
     }
