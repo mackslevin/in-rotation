@@ -11,6 +11,7 @@ import SwiftData
 struct AddTagView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var title = ""
     @State private var symbolName = "tag.fill"
@@ -34,6 +35,9 @@ struct AddTagView: View {
                 .ignoresSafeArea(.container, edges: .bottom)
             }
             .padding([.top, .horizontal])
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {

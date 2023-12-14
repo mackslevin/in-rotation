@@ -112,7 +112,7 @@ struct WelcomeView: View {
                         .padding()
                     
                     VStack(alignment: .center, spacing: 20) {
-                        Text("You can also easily share link for either Apple Muisc or Spotify so you can recommend to friends on either platform.")
+                        Text("You can also easily share links for either Apple Music or Spotify so you can recommend to friends on either platform.")
                     }
                     .multilineTextAlignment(.center)
                     

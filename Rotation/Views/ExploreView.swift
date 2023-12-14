@@ -63,11 +63,21 @@ struct ExploreView: View {
                     
                     Text("Swipe right to add an album to your library. Swipe left to skip.")
                     
-                    Button("Generate Recommendations") {
-                        generateRecommendations()
-                        isInitialLoad = false
+                    VStack {
+                        Button("Generate Recommendations") {
+                            generateRecommendations()
+                            isInitialLoad = false
+                        }
+                        .bold().buttonStyle(.borderedProminent)
+                        .disabled(musicEntities.count < 3)
+                        
+                        if musicEntities.count < 3 {
+                            Text("Recommendations work best with more music to go off of. Please add at least three albums to your collection to get started.")
+                                .italic()
+                                .fontWeight(.regular)
+                                .foregroundStyle(.accent)
+                        }
                     }
-                    .bold().buttonStyle(.borderedProminent)
                 }
                 .multilineTextAlignment(.center)
                 
