@@ -9,7 +9,6 @@ import SwiftUI
 import MusicKit
 import MediaPlayer
 
-
 struct AppleMusicPlayButton: View {
     let musicEntity: MusicEntity
     
@@ -29,27 +28,16 @@ struct AppleMusicPlayButton: View {
                 return
             }
             
-//            guard thisRecordIsCurrentlyPlaying() else {
-//                playFromTheTop()
-//                isInitialState = false
-//                return
-//            }
-            
-            print("^^ this record is currently queued")
-            
-            
             if isInitialState {
                 playFromTheTop()
             } else {
                 if player.state.playbackStatus == .playing {
-                    print("^^ is playing")
                     player.pause()
                 } else {
-                    print("^^ is NOT playing")
                     Task {
                         do {
                             try await player.play()
-                            buttonSymbolName = "pause.fill" // Workaround for playback state notification not firing on time in some cases
+                            buttonSymbolName = "pause.fill" // Workaround for playback state notification apparently not firing on time in some cases
                         } catch {
                             print(error)
                             isShowingPlaybackError = true
@@ -69,18 +57,6 @@ struct AppleMusicPlayButton: View {
         }
         .task {
             await getPlaybackStateNotifications()
-        }
-//        .onChange(of: player.state.playbackStatus) { _, newValue in
-//            if !isInitialState {
-//                if newValue == .playing {
-//                    buttonSymbolName = "pause.fill"
-//                } else {
-//                    buttonSymbolName = "play.fill"
-//                }
-//            }
-//        }
-        .onChange(of: isInitialState) { oldValue, newValue in
-            print("^^ initial state \(newValue)")
         }
     }
     
@@ -106,33 +82,6 @@ struct AppleMusicPlayButton: View {
             }
         }
     }
-    
-//    func thisRecordIsCurrentlyPlaying() -> Bool {
-//        guard let currentlyQueuedSong = player.queue.currentEntry?.item as? Song else {
-//            print("^^ no currently queued song")
-//            print("^^ uhh \(player.queue.currentEntry?.item)")
-//            return false
-//        }
-//        
-//        currentlyQueuedSong
-//
-//        switch musicEntity.type {
-//            case .song:
-//                if let isrc = currentlyQueuedSong.isrc, isrc == musicEntity.isrc {
-//                    print("^^ isrc match ")
-//                    return true
-//                } else {
-//                    print("^^ NO isrc match ")
-//                }
-//            default:
-//                if musicEntity.songTitles.contains(currentlyQueuedSong.title) {
-//                    print("^^ first song match")
-//                    return true
-//                }
-//        }
-//        
-//        return false
-//    }
 }
 
 #Preview {
