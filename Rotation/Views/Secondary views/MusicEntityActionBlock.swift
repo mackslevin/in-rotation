@@ -22,15 +22,24 @@ struct MusicEntityActionBlock: View {
     
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
-    let buttonBGOpacity: Double = 1
-    let buttonVerticalSpacing: CGFloat = 8
+    let actionIconSize: CGFloat = 36
+    
+//    let buttonBGOpacity: Double = 1
+//    let buttonVerticalSpacing: CGFloat = 8
     
     var body: some View {
         VStack {
             HStack {
                 
                 if shouldPlayInAppleMusicApp, let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
-                    AppleMusicPlayButton(musicEntity: musicEntity)
+                    VStack {
+                        AppleMusicPlayButton(musicEntity: musicEntity)
+                            .font(.system(size: actionIconSize, weight: .bold))
+                        Text("Apple Music")
+                            .font(.system(size: 12))
+                            .fontWeight(.semibold)
+                    }
+                    .frame(width: 75)
                 } else {
                     Button {
                         Task {
@@ -42,24 +51,16 @@ struct MusicEntityActionBlock: View {
                             }
                         }
                     } label: {
-                        VStack(spacing: buttonVerticalSpacing) {
-                            ZStack {
-                                Circle()
-                                    .foregroundStyle(Color.secondary)
-                                    .opacity(buttonBGOpacity)
-                                    .shadow(radius: 3, x: 1, y: 3)
-                                
-                                Image(systemName: shouldPlayInAppleMusicApp ? "play.fill" : "arrow.up.right.square").resizable().scaledToFit()
-                                    .padding(16)
-                                    .foregroundStyle(.white)
-                            }
-                            .frame(width: 60)
+                        VStack() {
+                            Image(systemName: "arrow.up.right.square")
+                                .font(.system(size: actionIconSize, weight: .bold))
                             
                             Text("Apple Music")
-                                .font(.caption)
+                                .font(.system(size: 12))
                                 .fontWeight(.semibold)
                         }
                     }
+                    .frame(width: 75)
                 }
                 
                 
@@ -76,42 +77,28 @@ struct MusicEntityActionBlock: View {
                         
                     }
                 } label: {
-                    VStack(spacing: buttonVerticalSpacing) {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(Color.secondary)
-                                .opacity(buttonBGOpacity)
-                                .shadow(radius: 3, x: 1, y: 3)
-                            Image(systemName: "arrow.up.right.square").resizable().scaledToFit()
-                                .padding(16)
-                                .foregroundStyle(.white)
-                        }
-                        .frame(width: 60)
+                    VStack() {
+                        Image(systemName: "arrow.up.right.square")
+                            .font(.system(size: actionIconSize, weight: .bold))
                         
                         Text("Spotify")
-                            .font(.caption)
+                            .font(.system(size: 12))
                             .fontWeight(.semibold)
                     }
                 }
+                .frame(width: 75)
                 
                 Spacer()
-                
-                
-                VStack(spacing: buttonVerticalSpacing) {
-                    ZStack {
-                        Circle()
-                            .foregroundStyle(played ? Color.secondary : Color.accentColor)
-                            .opacity(buttonBGOpacity)
-                            .shadow(radius: 3, x: 1, y: 3)
-                        Image(systemName: played ? "circle.fill" : "circle").resizable().scaledToFit()
-                            .padding(16)
-                            .foregroundStyle(.white)
-                    }
-                    .frame(width: 60)
+                    
+                VStack {
+                    Image(systemName: played ? "circle.fill" : "circle")
+                        .font(.system(size: actionIconSize, weight: .bold))
+                        .foregroundStyle(played ? Color.primary : Color.accentColor)
                     Text(played ? "Played" : "Unplayed")
-                        .font(.caption)
+                        .font(.system(size: 12))
                         .fontWeight(.semibold)
                 }
+                .frame(width: 75)
                 .onTapGesture {
                     withAnimation {
                         played.toggle()
