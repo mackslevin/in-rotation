@@ -59,7 +59,7 @@ struct ExploreView: View {
                         .resizable().scaledToFit().padding([.horizontal], 50)
                         .foregroundColor(.accentColor)
                     
-                    Text("In Rotation can collect album recommendations based on songs & albums in your Library.")
+                    Text("In Rotation can fetch album recommendations based on songs & albums in your collection.")
                     
                     Text("Swipe right to add an album to your library. Swipe left to skip.")
                     
