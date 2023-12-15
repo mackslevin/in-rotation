@@ -23,7 +23,7 @@ struct TagDetailView: View {
                         .foregroundStyle(.tint)
                 }
                 
-                if let musicEntities = tag.musicEntities, !musicEntities.isEmpty {
+                if let musicEntities = tag.musicEntities?.filter({$0.archived == false}), !musicEntities.isEmpty {
                     ScrollView {
                         RecordCoverGridView(musicEntities: musicEntities)
                     }

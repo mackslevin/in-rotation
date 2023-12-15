@@ -39,7 +39,7 @@ struct TagsViewListRow: View {
                             .font(.displayFont(ofSize: 18))
                         
                         HStack {
-                            if let musicEntities = tag.musicEntities, !musicEntities.isEmpty {
+                            if let musicEntities = tag.musicEntities?.filter({$0.archived == false}), !musicEntities.isEmpty {
                                 let last = if musicEntities.count < 5 {
                                     musicEntities.count - 1
                                 } else {
