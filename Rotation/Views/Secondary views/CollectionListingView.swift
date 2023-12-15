@@ -15,6 +15,7 @@ struct CollectionListingView: View {
     @Binding var searchText: String
     @Binding var showOnlyUnplayed: Bool
     @Binding var tagsForFiltering: [Tag]
+//    let isArchiveView: Bool 
     
     var body: some View {
         if musicEntities.isEmpty {
@@ -41,9 +42,8 @@ struct CollectionListingView: View {
                         musicEntity.artistName.localizedStandardContains(searchText) ||
                         searchText.isEmpty
                     {
-                        if handleUnplayedFilter(forMusicEntity: musicEntity) && handleTagFiltering(forMusicEntity: musicEntity) {
+                        if handleUnplayedFilter(forMusicEntity: musicEntity) && handleTagFiltering(forMusicEntity: musicEntity)  {
                             CollectionListingViewRow(musicEntity: musicEntity)
-                            
                         }
                     }
                 }
@@ -54,8 +54,14 @@ struct CollectionListingView: View {
     }
     
     
-    init(sort: SortDescriptor<MusicEntity>, searchText: Binding<String>, showOnlyUnplayed: Binding<Bool>, tagsForFiltering: Binding<[Tag]>) {
-        _musicEntities = Query(sort: [sort])
+    init(sort: SortDescriptor<MusicEntity>, searchText: Binding<String>, showOnlyUnplayed: Binding<Bool>, tagsForFiltering: Binding<[Tag]>, isArchiveView: Bool) {
+        
+        if isArchiveView {
+            _musicEntities = Query(filter: #Predicate {$0.archived == true}, sort: [sort])
+        } else {
+            _musicEntities = Query(filter: #Predicate {$0.archived == false}, sort: [sort])
+        }
+        
         _searchText = searchText
         _showOnlyUnplayed = showOnlyUnplayed
         _tagsForFiltering = tagsForFiltering

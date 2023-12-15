@@ -124,7 +124,7 @@ struct CollectionView: View {
                     .padding()
                 }
                 
-                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering)
+                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering, isArchiveView: false)
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)

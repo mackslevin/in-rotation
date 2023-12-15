@@ -34,6 +34,8 @@ class MusicEntity {
     var tags: [Tag]?
     var notes: String = ""
     
+    var archived = false
+    
     var image: Image {
         if let data = self.imageData, let uiImage = UIImage(data: data) {
             return Image(uiImage: uiImage)
@@ -62,6 +64,8 @@ class MusicEntity {
         self.appleMusicID = appleMusicID
         self.tags = tags
         self.notes = notes
+        
+        self.archived = false
     }
     
     func releaseYear() -> Int? {

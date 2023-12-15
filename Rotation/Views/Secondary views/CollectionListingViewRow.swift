@@ -63,6 +63,15 @@ struct CollectionListingViewRow: View {
             } label: {
                 Label("Delete", systemImage: "trash")
             }
+            
+            Button {
+                withAnimation {
+                    musicEntity.archived.toggle()
+                    print("^^ \(musicEntity.archived ? "just archived" : "just unarchived")")
+                }
+            } label: {
+                Label("\(musicEntity.archived ? "Un-archive" : "Archive")", systemImage: "archivebox")
+            }
         }
         
     }
