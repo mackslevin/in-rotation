@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01010F002B2CFF2C00B764CB /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01010EFF2B2CFF2C00B764CB /* ArchiveView.swift */; };
 		010393BC2AFC67FD000DF698 /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393BB2AFC67FD000DF698 /* SearchError.swift */; };
 		010393C02AFC9B14000DF698 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393BF2AFC9B14000DF698 /* Utility.swift */; };
 		010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393C12AFCA4B5000DF698 /* EntityType.swift */; };
@@ -116,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01010EFF2B2CFF2C00B764CB /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		010393BB2AFC67FD000DF698 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
 		010393BF2AFC9B14000DF698 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		010393C12AFCA4B5000DF698 /* EntityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				017AA6A32B043D72005E43D8 /* MusicEntityDetailView.swift */,
 				011BB8EF2B044F7B00F3609D /* TagDetailView.swift */,
 				01641CC62B2B974F009F2A47 /* WelcomeView.swift */,
+				01010EFF2B2CFF2C00B764CB /* ArchiveView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				01B398692B29284D0015E5D2 /* CardStatus.swift in Sources */,
 				01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */,
 				01ACB8DF2B0570FD00C13BDA /* SymbolPicker.swift in Sources */,
+				01010F002B2CFF2C00B764CB /* ArchiveView.swift in Sources */,
 				016854D02B0D50C000931CE6 /* Spotify Entities.swift in Sources */,
 				011BB8F22B044FE100F3609D /* AddTagView.swift in Sources */,
 				017AA6932B0404A0005E43D8 /* Tag.swift in Sources */,

@@ -15,23 +15,31 @@ struct CollectionListingView: View {
     @Binding var searchText: String
     @Binding var showOnlyUnplayed: Bool
     @Binding var tagsForFiltering: [Tag]
-//    let isArchiveView: Bool 
+    var isArchiveView: Bool = false
     
     var body: some View {
         if musicEntities.isEmpty {
             VStack(spacing: 40) {
                 Spacer()
-                VStack(spacing: 40) {
-                    Image(systemName: "eyes")
-                        .resizable().scaledToFit()
-                        .frame(width: 100)
-                    Text("Nothing here yet...")
-                        .font(.displayFont(ofSize: 28))
-                }
-                .foregroundStyle(.secondary)
                 
-                NavigationLink("Add some music to get started", destination: MusicSearchView())
-                    .buttonStyle(.borderedProminent).bold()
+                if isArchiveView {
+                    Text("No archived items")
+                        .italic()
+                        .foregroundStyle(.secondary)
+                } else {
+                    VStack(spacing: 40) {
+                        Image(systemName: "eyes")
+                            .resizable().scaledToFit()
+                            .frame(width: 100)
+                        Text("Nothing here yet...")
+                            .font(.displayFont(ofSize: 28))
+                    }
+                    .foregroundStyle(.secondary)
+                    
+                    NavigationLink("Add some music to get started", destination: MusicSearchView())
+                        .buttonStyle(.borderedProminent).bold()
+                }
+                
                 Spacer()
             }
             
@@ -58,6 +66,7 @@ struct CollectionListingView: View {
         
         if isArchiveView {
             _musicEntities = Query(filter: #Predicate {$0.archived == true}, sort: [sort])
+            self.isArchiveView = true
         } else {
             _musicEntities = Query(filter: #Predicate {$0.archived == false}, sort: [sort])
         }

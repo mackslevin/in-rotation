@@ -1,16 +1,17 @@
 //
-//  CollectionView.swift
+//  ArchiveView.swift
 //  Rotation
 //
-//  Created by Mack Slevin on 11/14/23.
+//  Created by Mack Slevin on 12/15/23.
 //
 
 import SwiftUI
 import SwiftData
 
-struct CollectionView: View {
+struct ArchiveView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
     
     @State private var searchText = ""
     @State private var searchTextIntermediary = ""
@@ -23,13 +24,12 @@ struct CollectionView: View {
     @State private var tagsForFiltering: [Tag] = []
     @Query var allTags: [Tag]
     
-    @State private var isShowingArchive = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text("Collection")
+                    Text("Archive")
                         .font(Font.displayFont(ofSize: 32))
                         .foregroundStyle(.tint)
                     
@@ -83,22 +83,15 @@ struct CollectionView: View {
                                 }
                             }
                         }
-                        
-                        Button {
-                            isShowingArchive = true
-                        } label: {
-                            Label("View archived items...", systemImage: "archivebox")
-                        }
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
                             .padding([.trailing])
                     }
                     
-                    NavigationLink(destination: MusicSearchView()) {
-                        Image(systemName: "plus.circle").resizable().scaledToFit()
-                            .frame(width: 30)
-                    }
+                    Button("Close") {
+                        dismiss()
+                    }.bold().buttonStyle(.bordered)
                 }
                 .padding()
                 
@@ -132,7 +125,9 @@ struct CollectionView: View {
                     .padding()
                 }
                 
-                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering, isArchiveView: false)
+                CollectionListingView(sort: sortOrder, searchText: $searchText, showOnlyUnplayed: $showOnlyUnplayed, tagsForFiltering: $tagsForFiltering, isArchiveView: true)
+                
+                Spacer()
             }
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
@@ -146,10 +141,8 @@ struct CollectionView: View {
             .onChange(of: collectionSortCriteria) { _, newValue in
                 applySortCriterion(newValue)
             }
-            .sheet(isPresented: $isShowingArchive) {
-                ArchiveView()
-            }
         }
+        
     }
     
     func applySortCriterion(_ criterion: CollectionSortCriteria) {
@@ -167,5 +160,5 @@ struct CollectionView: View {
 }
 
 #Preview {
-    CollectionView()
+    ArchiveView()
 }
