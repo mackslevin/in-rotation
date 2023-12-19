@@ -64,7 +64,7 @@ struct MusicSearchView: View {
                         
                         
                         // MARK: Search results
-                        if amSearchWrangler.resultsExist() {
+                        if amSearchWrangler.resultsExist(), !amSearchWrangler.isLoading {
                             ScrollView(showsIndicators: true) {
                                 VStack(alignment: .leading, spacing: 12) {
                                     if !amSearchWrangler.albumResults.isEmpty {
