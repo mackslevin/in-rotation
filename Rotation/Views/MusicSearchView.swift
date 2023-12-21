@@ -173,6 +173,7 @@ struct MusicSearchView: View {
                             
                             
                             Button {
+                                // TODO: Check IAP status 
                                 modelContext.insert(musicEntity)
                                 
                                 musicEntity.tags = selectedTags

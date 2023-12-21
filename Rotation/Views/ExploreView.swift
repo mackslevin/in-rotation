@@ -129,6 +129,7 @@ struct ExploreView: View {
     func handleRecommendation(_ rec: RecommendationEntity, liked: Bool) {
         viewModel.recommendationEntities.removeAll(where: {$0.id == rec.id})
         if liked {
+            // TODO: Check IAP status 
             modelContext.insert(rec.musicEntity)
         }
         

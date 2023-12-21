@@ -10,6 +10,9 @@ import SwiftUI
 
 struct Utility {
     
+    static let premiumUnlockProductID = "com.johnslevin.Rotation.basicUnlock"
+    
+    static let maximumFreeEntities = 15
     
     static let exampleEntity = MusicEntity(title: "Cool Title", artistName: "Great Artist", numberOfTracks: 15, songTitles: [], type: .album)
     static let exampleTag = Tag(title: "Cool Tag", symbolName: "photo.fill", musicEntities: []) 

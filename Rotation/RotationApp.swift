@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct RotationApp: App {
+    @StateObject private var iapWrangler = IAPWrangler()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             MusicEntity.self,
@@ -33,5 +35,6 @@ struct RotationApp: App {
         }
         .modelContainer(sharedModelContainer)
         .environment(\.appleMusicAuthWrangler, appleMusicAuthWrangler)
+        .environmentObject(iapWrangler)
     }
 }
