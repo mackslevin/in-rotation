@@ -58,6 +58,9 @@ struct PremiumUnlockProductView: View {
                         entitlementError = error
                         isShowingError = true
                     case .success(let transaction):
+                        
+                        print("^^ entitlement exists but transaction is nil")
+                        
                         isLoading = false
                         alreadyPurchased = transaction != nil
                     @unknown default:

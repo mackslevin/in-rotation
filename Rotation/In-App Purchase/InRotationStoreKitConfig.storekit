@@ -21,6 +21,8 @@
     }
   ],
   "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingIssuesEnabled" : false,
     "_failTransactionsEnabled" : false,
     "_locale" : "en_US",
     "_storefront" : "USA",
@@ -57,7 +59,10 @@
         "name" : "Subscription Status"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 3,
+          "type" : "generic"
+        },
         "enabled" : false,
         "name" : "App Transaction"
       },
@@ -67,7 +72,10 @@
         "name" : "Manage Subscriptions Sheet"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 0,
+          "type" : "refund request"
+        },
         "enabled" : false,
         "name" : "Refund Request Sheet"
       },

@@ -3,6 +3,7 @@ import Foundation
 enum IAPError: LocalizedError, Equatable {
     case unverified
     case unknownPurchaseState
+    case purchasePending
     case system(Error)
     
     var errorDescription: String? {
@@ -11,6 +12,8 @@ enum IAPError: LocalizedError, Equatable {
                 "The transaction could not be verified"
             case .unknownPurchaseState:
                 "The purchase could not be completed"
+            case .purchasePending:
+                "The purchase is pending. Further action is required before it can be completed."
             case .system(let error):
                 error.localizedDescription
         }
@@ -21,6 +24,8 @@ enum IAPError: LocalizedError, Equatable {
             case (.unverified, .unverified):
                 return true
             case (.unknownPurchaseState, .unknownPurchaseState):
+                return true
+            case (.purchasePending, .purchasePending):
                 return true
             case (let .system(lhsError), let .system(rhsError)):
                 return lhsError.localizedDescription == rhsError.localizedDescription

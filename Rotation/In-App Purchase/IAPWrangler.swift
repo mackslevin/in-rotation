@@ -33,6 +33,7 @@ final class IAPWrangler: ObservableObject {
                 switch state {
                     case .pending:
                         print("^^ pending")
+                        iapError = .purchasePending
                     case .success(let verification):
                         switch verification {
                             case .verified(let transaction):
