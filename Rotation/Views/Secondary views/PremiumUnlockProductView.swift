@@ -42,8 +42,6 @@ struct PremiumUnlockProductView: View {
                     .symbolRenderingMode(.hierarchical)
                     .resizable().scaledToFit()
                     .foregroundStyle(Color.accentColor)
-//                    .padding()
-                    
             }
             .onInAppPurchaseCompletion { product, result in
                 Task {

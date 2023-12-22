@@ -12,6 +12,7 @@ struct TagTogglerView: View {
     @Binding var selectedTags: [Tag]
     @Query var allTags: [Tag]
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @State private var isShowingAddTag = false
     
@@ -60,6 +61,9 @@ struct TagTogglerView: View {
                 .padding()
             }
             .navigationTitle("Tags")
+            .background {
+                Utility.customBackground(withColorScheme: colorScheme)
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar() {
                 ToolbarItem(placement: .navigationBarTrailing) {

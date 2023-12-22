@@ -18,6 +18,9 @@ struct ExploreView: View {
     
     @State private var currentCardStatus = CardStatus.neutral
     
+    @State private var userHasPremiumAccess = false
+    @State private var canSave = true
+    
     var body: some View {
         VStack {
             HStack {
@@ -91,7 +94,7 @@ struct ExploreView: View {
             } else {
                 ZStack {
                     ForEach(viewModel.recommendationEntities) { rec in
-                        RecommendationCardView(recEntity: rec, viewModel: viewModel, hostingViewCardStatus: $currentCardStatus) { liked in
+                        RecommendationCardView(recEntity: rec, viewModel: viewModel, hostingViewCardStatus: $currentCardStatus, userCanSaveToCollection: $canSave) { liked in
                             handleRecommendation(rec, liked: liked)
                             currentCardStatus = .neutral
                         }
@@ -124,6 +127,23 @@ struct ExploreView: View {
         }
         .padding()
         .background { Utility.customBackground(withColorScheme: colorScheme) }
+        .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
+            switch state {
+                case .loading:
+                    print("^^ state is loading")
+                case .failure(let error):
+                    print("^^ state failed, error is \(error)")
+                case .success(let transaction):
+                    print("^^ state is success")
+                    userHasPremiumAccess = transaction != nil
+                    canSave = userHasPremiumAccess || musicEntities.count < Utility.maximumFreeEntities
+                @unknown default:
+                    fatalError()
+            }
+        }
+        .onChange(of: canSave) { oldValue, newValue in
+            print("can save? \(newValue)")
+        }
     }
     
     func handleRecommendation(_ rec: RecommendationEntity, liked: Bool) {

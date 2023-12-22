@@ -49,7 +49,7 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
                         
                         
-                        if musicEntities.count >= 10 && !userHasPremiumAccess {
+                        if musicEntities.count >= Utility.maximumFreeEntities && !userHasPremiumAccess {
                             EntityLimitReachedView()
                         } else {
                             Group {
@@ -143,7 +143,7 @@ struct ContentView: View {
                             save()
                         }
                         .bold()
-                        .disabled(musicEntity == nil || (musicEntities.count >= 10 && !userHasPremiumAccess))
+                        .disabled(musicEntity == nil || (musicEntities.count >= Utility.maximumFreeEntities && !userHasPremiumAccess))
                         .padding()
                     }
                 }

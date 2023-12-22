@@ -12,7 +12,7 @@ struct EntityLimitReachedView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            Image(systemName: "exclamationmark.octagon.fill")
+            Image(systemName: "exclamationmark.lock.fill")
                 .resizable().scaledToFit().frame(width: 80)
                 .foregroundStyle(Color.accentColor)
             

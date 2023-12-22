@@ -177,7 +177,7 @@ struct MusicSearchView: View {
                             
                             
                             Button {
-                                if allMusicEntites.count >= 10 && !userHasPremiumAccess {
+                                if allMusicEntites.count >= Utility.maximumFreeEntities && !userHasPremiumAccess {
                                     isShowingIAPSheet = true
                                 } else {
                                     modelContext.insert(musicEntity)

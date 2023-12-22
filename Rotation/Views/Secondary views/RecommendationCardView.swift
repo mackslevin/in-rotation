@@ -11,6 +11,7 @@ struct RecommendationCardView: View {
     let recEntity: RecommendationEntity
     let viewModel: ExploreViewModel
     @Binding var hostingViewCardStatus: CardStatus
+    @Binding var userCanSaveToCollection: Bool
     let completion: (Bool) -> Void
     
     @Environment(\.colorScheme) var colorScheme
@@ -29,6 +30,9 @@ struct RecommendationCardView: View {
     @State private var isShowingSpotifyOpenError = false
     @State private var isShowingAppleMusicOpenError = false
     @State private var isShowingOpenChooser = false
+    @State private var isShowingIAPPaywall = false
+    
+    let rightSwipeLimitWhenWeCantSave: CGFloat = 150
      
     var body: some View {
         VStack {
@@ -112,8 +116,6 @@ struct RecommendationCardView: View {
                             Spacer()
                         }.padding()
                         
-                        
-
                     } else if cardStatus == .disliked {
                         HStack {
                             Spacer()
@@ -148,7 +150,21 @@ struct RecommendationCardView: View {
         .gesture(
             DragGesture()
                 .onChanged { gesture in
-                    offset = gesture.translation
+                    
+                    if userCanSaveToCollection || gesture.translation.width <= rightSwipeLimitWhenWeCantSave {
+                        offset = gesture.translation
+                    }
+                    
+                    // If the user can't save (i.e. their collection is at the limit and they haven't made the IAP) and they're in the general range of non-saveable right swipe limit, show the IAP paywall/offer view
+                    if !userCanSaveToCollection && gesture.translation.width > (rightSwipeLimitWhenWeCantSave - 20) {
+                        isShowingIAPPaywall = true
+                        withAnimation {
+                            offset = .zero
+                            rotation = 0
+                            cardStatus = .neutral
+                        }
+                        return
+                    }
                     
                     // Calculate rotation amount
                     let sampledOffset = offset.width / 15
@@ -176,7 +192,6 @@ struct RecommendationCardView: View {
                             offset = .zero
                             cardStatus = .neutral
                         }
-                        
                     }
                     
                     if offset.width == 0 {
@@ -184,6 +199,8 @@ struct RecommendationCardView: View {
                             rotation = 0
                         }
                     }
+                    
+                    
                 }
         )
         .onChange(of: cardStatus) { _, newValue in
@@ -231,6 +248,9 @@ struct RecommendationCardView: View {
         }
         .alert("Unable to open album in Apple Music", isPresented: $isShowingAppleMusicOpenError) {
             Button("OK"){}
+        }
+        .sheet(isPresented: $isShowingIAPPaywall) {
+            IAPPaywallView()
         }
     }
     
