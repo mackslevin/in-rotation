@@ -34,6 +34,10 @@ struct MusicSearchView: View {
     @State private var selectedTags: [Tag] = []
     @State private var isShowingTagToggler = false
     
+    @State private var isShowingIAPSheet = false
+    @State private var userHasPremiumAccess = false
+    @Query var allMusicEntites: [MusicEntity]
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -173,12 +177,14 @@ struct MusicSearchView: View {
                             
                             
                             Button {
-                                // TODO: Check IAP status 
-                                modelContext.insert(musicEntity)
-                                
-                                musicEntity.tags = selectedTags
-                                
-                                dismiss()
+                                // TODO: Check IAP status
+                                if allMusicEntites.count >= 10 && !userHasPremiumAccess {
+                                    isShowingIAPSheet = true
+                                } else {
+                                    modelContext.insert(musicEntity)
+                                    musicEntity.tags = selectedTags
+                                    dismiss()
+                                }
                             } label: {
                                 Label("Save to Collection", systemImage: "plus")
                             }
@@ -213,6 +219,22 @@ struct MusicSearchView: View {
         }
         .sheet(isPresented: $isShowingTagToggler) {
             TagTogglerView(selectedTags: $selectedTags)
+        }
+        .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
+            switch state {
+                case .loading:
+                    print("^^ state is loading")
+                case .failure(let error):
+                    print("^^ state failed, error is \(error)")
+                case .success(let transaction):
+                    print("^^ state is success")
+                    userHasPremiumAccess = transaction != nil
+                @unknown default:
+                    fatalError()
+            }
+        }
+        .sheet(isPresented: $isShowingIAPSheet) {
+            IAPPaywallView()
         }
     }
     

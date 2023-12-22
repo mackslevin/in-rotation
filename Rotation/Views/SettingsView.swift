@@ -18,6 +18,11 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section("In-App Purchase") {
+                    PremiumUnlockProductView()
+                        .padding()
+                }
+                
                 Section("Defaults") {
                     Picker("Default screen", selection: $defaultScreen) {
                         ForEach(DefaultScreen.allCases, id: \.rawValue) { screen in

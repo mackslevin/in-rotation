@@ -22,6 +22,8 @@
   ],
   "settings" : {
     "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -29,12 +31,18 @@
         "name" : "Load Products"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 2,
+          "type" : "purchase"
+        },
         "enabled" : false,
         "name" : "Purchase"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 4,
+          "type" : "verification"
+        },
         "enabled" : false,
         "name" : "Verification"
       },

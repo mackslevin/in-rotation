@@ -25,7 +25,7 @@ struct EntityLimitReachedView: View {
                 .fontWeight(.medium)
         }
         .padding()
-        .background { Utility.customBackground(withColorScheme: colorScheme) }
+//        .background { Utility.customBackground(withColorScheme: colorScheme) }
     }
 }
 
