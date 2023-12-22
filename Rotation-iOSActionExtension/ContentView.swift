@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
+import StoreKit
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
@@ -25,71 +26,79 @@ struct ContentView: View {
     @State private var isShowingTagToggler = false
     @State private var isShowingNotesEditor = false
     
+    @State private var userHasPremiumAccess = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     if let musicEntity {
                         
-                            if let imageData = musicEntity.imageData, let uiImage = UIImage(data: imageData) {
-                                Image(uiImage: uiImage).resizable().scaledToFit()
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .shadow(radius: 10)
-                            }
-                            
-                            VStack() {
-                                Text(musicEntity.title)
-                                    .font(Font.displayFont(ofSize: 18))
-                                Text(musicEntity.artistName)
-                                    .bold().foregroundStyle(.secondary)
-                            }
-                            .multilineTextAlignment(.center)
+                        if let imageData = musicEntity.imageData, let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage).resizable().scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .shadow(radius: 10)
+                        }
+                        
+                        VStack() {
+                            Text(musicEntity.title)
+                                .font(Font.displayFont(ofSize: 18))
+                            Text(musicEntity.artistName)
+                                .bold().foregroundStyle(.secondary)
+                        }
+                        .multilineTextAlignment(.center)
                         
                         
-                        Group {
-                            if selectedTags.isEmpty {
-                                Button("Add tags..."){ isShowingTagToggler = true }
-                            } else {
-                                VStack {
-                                    Text("Tags").fontWeight(.semibold)
-                                    
-                                    HStack {
-                                        ForEach(selectedTags) { tag in
-                                            ZStack {
-                                                Circle()
-                                                    .foregroundStyle(.tint)
-                                                    .frame(width: 30)
-                                                Image(systemName: tag.symbolName)
-                                                    .resizable().scaledToFit()
-                                                    .foregroundStyle(.white)
-                                                    .frame(maxWidth: 20, maxHeight: 20)
+                        if musicEntities.count >= 10 && !userHasPremiumAccess {
+                            EntityLimitReachedView()
+                        } else {
+                            Group {
+                                if selectedTags.isEmpty {
+                                    Button("Add tags..."){ isShowingTagToggler = true }
+                                } else {
+                                    VStack {
+                                        Text("Tags").fontWeight(.semibold)
+                                        
+                                        HStack {
+                                            ForEach(selectedTags) { tag in
+                                                ZStack {
+                                                    Circle()
+                                                        .foregroundStyle(.tint)
+                                                        .frame(width: 30)
+                                                    Image(systemName: tag.symbolName)
+                                                        .resizable().scaledToFit()
+                                                        .foregroundStyle(.white)
+                                                        .frame(maxWidth: 20, maxHeight: 20)
+                                                }
                                             }
                                         }
+                                        .frame(maxWidth: 150)
+                                        
+                                        Button("Edit tags...") { isShowingTagToggler = true }
                                     }
-                                    .frame(maxWidth: 150)
                                     
-                                    Button("Edit tags...") { isShowingTagToggler = true }
                                 }
-                                
                             }
+                            .padding(.vertical)
+                            
+                            Group {
+                                if !notes.isEmpty {
+                                    VStack {
+                                        Text("Notes").fontWeight(.semibold)
+                                        Text(notes)
+                                            .foregroundStyle(.secondary)
+                                            .italic()
+                                        
+                                        Button("Edit notes...") { isShowingNotesEditor = true }
+                                    }
+                                } else {
+                                    Button("Add notes...") { isShowingNotesEditor = true }
+                                }
+                            }
+                            .padding(.vertical)
                         }
-                        .padding(.vertical)
                         
-                        Group {
-                            if !notes.isEmpty {
-                                VStack {
-                                    Text("Notes").fontWeight(.semibold)
-                                    Text(notes)
-                                        .foregroundStyle(.secondary)
-                                        .italic()
-                                    
-                                    Button("Edit notes...") { isShowingNotesEditor = true }
-                                }
-                            } else {
-                                Button("Add notes...") { isShowingNotesEditor = true }
-                            }
-                        }
-                        .padding(.vertical)
+                        
                         
                     } else if thereWasAnError {
                         VStack(alignment: .leading, spacing: 20) {
@@ -134,7 +143,7 @@ struct ContentView: View {
                             save()
                         }
                         .bold()
-                        .disabled(musicEntity == nil)
+                        .disabled(musicEntity == nil || (musicEntities.count >= 10 && !userHasPremiumAccess))
                         .padding()
                     }
                 }
@@ -168,6 +177,19 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingNotesEditor) {
                 if let musicEntity {
                     NotesEditorView(musicEntity: musicEntity)
+                }
+            }
+            .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
+                switch state {
+                    case .loading:
+                        print("^^ state is loading")
+                    case .failure(let error):
+                        print("^^ state failed, error is \(error)")
+                    case .success(let transaction):
+                        print("^^ state is success")
+                        userHasPremiumAccess = transaction != nil
+                    @unknown default:
+                        fatalError()
                 }
             }
         }

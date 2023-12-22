@@ -177,7 +177,6 @@ struct MusicSearchView: View {
                             
                             
                             Button {
-                                // TODO: Check IAP status
                                 if allMusicEntites.count >= 10 && !userHasPremiumAccess {
                                     isShowingIAPSheet = true
                                 } else {
