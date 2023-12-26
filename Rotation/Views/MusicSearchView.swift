@@ -52,9 +52,18 @@ struct MusicSearchView: View {
                         // MARK: Search box
                         HStack {
                             TextField("Search for an album or song...", text: $searchText)
-                                .textFieldStyle(.roundedBorder)
                                 .submitLabel(.done)
                                 .autocorrectionDisabled()
+                                .padding()
+                                .background {
+                                    if colorScheme == .light {
+                                        Color.primary.colorInvert()
+                                    } else {
+                                        Color.primary.opacity(0.2)
+                                    }
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.1) , radius: 4, x: 1, y: 3)
                             Button {
                                 searchText = ""
                             } label: {
@@ -102,11 +111,20 @@ struct MusicSearchView: View {
                         // MARK: URL Box
                         HStack {
                             TextField("URL", text: $urlString)
-                                .textFieldStyle(.roundedBorder) // This is something that I am typing into this here computer. The cat loves this stuff.
                                 .onSubmit {
                                     submitURL()
                                 }
                                 .keyboardType(.URL)
+                                .padding()
+                                .background {
+                                    if colorScheme == .light {
+                                        Color.primary.colorInvert()
+                                    } else {
+                                        Color.primary.opacity(0.2)
+                                    }
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.1) , radius: 4, x: 1, y: 3)
                             
                             Button {
                                 if let pasteboardContents = UIPasteboard.general.string, URL(string: pasteboardContents) != nil {
@@ -152,25 +170,31 @@ struct MusicSearchView: View {
                             }
                             
                             // TAGGING
-                            HStack {
+                            VStack {
                                 if selectedTags.isEmpty {
-                                    Spacer()
                                     Button {
                                         isShowingTagToggler = true
                                     } label: {
                                         Label("Tag...", systemImage: "tag")
                                             .fontWeight(.semibold)
+                                            .frame(minWidth: 100)
                                     }
-                                    Spacer()
+                                    .buttonStyle(.bordered)
                                 } else {
-                                    VStack(spacing: 8) {
-                                        LittleTagGrid(tags: selectedTags)
+                                    VStack {
+                                        Text("Tags: \(selectedTags.map({$0.title}).joined(separator: ", ") )")
+                                            .foregroundStyle(.secondary)
                                         
-                                        Button("Edit Tags") {
+//                                        Button("Edit Tags") {
+//                                            isShowingTagToggler = true
+//                                        }
+//                                        .buttonStyle(.bordered)
+                                        
+                                        Button("Edit") {
                                             isShowingTagToggler = true
-                                        }
-                                        
+                                        }.bold()
                                     }
+                                    .font(.caption)
                                 }
                             }
                             .padding(.vertical)
@@ -185,7 +209,8 @@ struct MusicSearchView: View {
                                     dismiss()
                                 }
                             } label: {
-                                Label("Save to Collection", systemImage: "plus")
+                                Label("Save", systemImage: "plus")
+                                    .frame(minWidth: 100)
                             }
                             .bold()
                             .buttonStyle(.borderedProminent)
@@ -194,8 +219,10 @@ struct MusicSearchView: View {
                     
                     Spacer()
                 }
+                .padding()
+                
             }
-            .padding()
+            .scrollIndicators(.hidden)
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }

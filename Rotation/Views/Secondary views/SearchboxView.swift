@@ -24,17 +24,16 @@ struct SearchboxView: View {
                         }
                     }
                     .padding()
-                
-                .background {
-                    if colorScheme == .light {
-                        Color.primary.colorInvert()
-                    } else {
-                        Color.primary.opacity(0.2)
+                    .background {
+                        if colorScheme == .light {
+                            Color.primary.colorInvert()
+                        } else {
+                            Color.primary.opacity(0.2)
+                        }
                     }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
-                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.15) , radius: 5, x: 1, y: 5)
-                    
+                    .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.1) , radius: 4, x: 1, y: 3)
+                
                 Button("Search") {
                     withAnimation {
                         searchText = searchTextIntermediary

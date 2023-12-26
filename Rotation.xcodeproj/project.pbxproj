@@ -93,7 +93,6 @@
 		01B398692B29284D0015E5D2 /* CardStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B398682B29284D0015E5D2 /* CardStatus.swift */; };
 		01B3986B2B293B050015E5D2 /* TagsListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B3986A2B293B050015E5D2 /* TagsListingView.swift */; };
 		01CE6B132B279E7C00B81C82 /* CardActionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */; };
-		01D544F22B06F26100B37D6A /* LittleTagGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D544F12B06F26100B37D6A /* LittleTagGrid.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */; };
 		01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */; };
@@ -193,7 +192,6 @@
 		01B398682B29284D0015E5D2 /* CardStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStatus.swift; sourceTree = "<group>"; };
 		01B3986A2B293B050015E5D2 /* TagsListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsListingView.swift; sourceTree = "<group>"; };
 		01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardActionBlock.swift; sourceTree = "<group>"; };
-		01D544F12B06F26100B37D6A /* LittleTagGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleTagGrid.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01E5DA782AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPIWrangler.swift; sourceTree = "<group>"; };
 		01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEntity.swift; sourceTree = "<group>"; };
@@ -291,7 +289,6 @@
 				011BB8F32B045AA900F3609D /* TagManagerView.swift */,
 				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
 				019045AF2B06D240007F78C1 /* TagTogglerView.swift */,
-				01D544F12B06F26100B37D6A /* LittleTagGrid.swift */,
 				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 				0168F76B2B1A878F004E780E /* SearchboxView.swift */,
 				01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */,
@@ -528,7 +525,6 @@
 				015FB0732B05B3F700BAC1BC /* MusicEntityTagsBlock.swift in Sources */,
 				017AA6982B041726005E43D8 /* CollectionView.swift in Sources */,
 				01101C042B05CB7D00789AE3 /* MusicEntityNotesBlock.swift in Sources */,
-				01D544F22B06F26100B37D6A /* LittleTagGrid.swift in Sources */,
 				01ACB8DD2B05536100C13BDA /* RecordCoverGridView.swift in Sources */,
 				012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */,
 				01E5DA792AFDAD6C0080AF79 /* SpotifyAPIWrangler.swift in Sources */,
