@@ -84,11 +84,6 @@ struct MusicSearchView: View {
                                         Text("Albums").font(.caption).bold().foregroundStyle(.secondary)
                                     }
                                     ForEach(amSearchWrangler.albumResults) { album in
-//                                        Button {setEntity(album)} label: {
-//                                            HStack { Text("\(album.title) by \(album.artistName)"); Spacer() }
-//                                                .multilineTextAlignment(.leading)
-//                                        }
-                                        
                                         LiveResultsRow(song: nil, album: album) {
                                             setEntity(album)
                                         }
@@ -98,11 +93,6 @@ struct MusicSearchView: View {
                                         Text("Songs").font(.caption).bold().foregroundStyle(.secondary)
                                     }
                                     ForEach(amSearchWrangler.songResults) { song in
-//                                        Button {setEntity(song)} label: {
-//                                            HStack { Text("\(song.title) by \(song.artistName)"); Spacer() }
-//                                                .multilineTextAlignment(.leading)
-//                                        }
-                                        
                                         LiveResultsRow(song: song, album: nil) {
                                             setEntity(song)
                                         }
@@ -193,11 +183,6 @@ struct MusicSearchView: View {
                                         Text("Tags: \(selectedTags.map({$0.title}).joined(separator: ", ") )")
                                             .foregroundStyle(.secondary)
                                         
-//                                        Button("Edit Tags") {
-//                                            isShowingTagToggler = true
-//                                        }
-//                                        .buttonStyle(.bordered)
-                                        
                                         Button("Edit") {
                                             isShowingTagToggler = true
                                         }.bold()
@@ -237,7 +222,7 @@ struct MusicSearchView: View {
             .navigationTitle("Search")
             
         }
-        .onChange(of: searchText) { oldValue, newValue in
+        .onChange(of: searchText) {_, newValue in
             musicEntity = nil // TODO: Just remove this so that the music entity doesn't go away until a new one is selected?
             Task {
                 await amSearchWrangler.search(withTerm: newValue)
