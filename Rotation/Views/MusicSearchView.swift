@@ -84,9 +84,13 @@ struct MusicSearchView: View {
                                         Text("Albums").font(.caption).bold().foregroundStyle(.secondary)
                                     }
                                     ForEach(amSearchWrangler.albumResults) { album in
-                                        Button {setEntity(album)} label: {
-                                            HStack { Text("\(album.title) by \(album.artistName)"); Spacer() }
-                                                .multilineTextAlignment(.leading)
+//                                        Button {setEntity(album)} label: {
+//                                            HStack { Text("\(album.title) by \(album.artistName)"); Spacer() }
+//                                                .multilineTextAlignment(.leading)
+//                                        }
+                                        
+                                        LiveResultsRow(song: nil, album: album) {
+                                            setEntity(album)
                                         }
                                     }
                                     
@@ -94,9 +98,13 @@ struct MusicSearchView: View {
                                         Text("Songs").font(.caption).bold().foregroundStyle(.secondary)
                                     }
                                     ForEach(amSearchWrangler.songResults) { song in
-                                        Button {setEntity(song)} label: {
-                                            HStack { Text("\(song.title) by \(song.artistName)"); Spacer() }
-                                                .multilineTextAlignment(.leading)
+//                                        Button {setEntity(song)} label: {
+//                                            HStack { Text("\(song.title) by \(song.artistName)"); Spacer() }
+//                                                .multilineTextAlignment(.leading)
+//                                        }
+                                        
+                                        LiveResultsRow(song: song, album: nil) {
+                                            setEntity(song)
                                         }
                                     }
                                 }
