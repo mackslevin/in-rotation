@@ -12,6 +12,7 @@
 		010393C02AFC9B14000DF698 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393BF2AFC9B14000DF698 /* Utility.swift */; };
 		010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393C12AFCA4B5000DF698 /* EntityType.swift */; };
 		010A36D12B3B779900E40EC7 /* LiveResultsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */; };
+		010A36D32B3B979900E40EC7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D22B3B979900E40EC7 /* MainView.swift */; };
 		01101C042B05CB7D00789AE3 /* MusicEntityNotesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */; };
 		01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C052B05CDDD00789AE3 /* NotesEditorView.swift */; };
 		011BB8F02B044F7B00F3609D /* TagDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BB8EF2B044F7B00F3609D /* TagDetailView.swift */; };
@@ -132,6 +133,7 @@
 		010393BF2AFC9B14000DF698 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		010393C12AFCA4B5000DF698 /* EntityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
 		010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveResultsRow.swift; sourceTree = "<group>"; };
+		010A36D22B3B979900E40EC7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntityNotesBlock.swift; sourceTree = "<group>"; };
 		01101C052B05CDDD00789AE3 /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
 		011BB8EF2B044F7B00F3609D /* TagDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagDetailView.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				01B2064B2B1809CD001265FC /* MainInterface.storyboard */,
 				01B2064E2B1809CD001265FC /* Info.plist */,
 				01B2065D2B180C4E001265FC /* ContentView.swift */,
+				010A36D22B3B979900E40EC7 /* MainView.swift */,
 			);
 			path = "Rotation-iOSActionExtension";
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				017E66192B1969FF0096C9D8 /* NotesEditorView.swift in Sources */,
+				010A36D32B3B979900E40EC7 /* MainView.swift in Sources */,
 				01B2065C2B180BD2001265FC /* Tag.swift in Sources */,
 				017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */,
 				01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */,
