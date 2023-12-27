@@ -13,6 +13,9 @@
 		010393C22AFCA4B6000DF698 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393C12AFCA4B5000DF698 /* EntityType.swift */; };
 		010A36D12B3B779900E40EC7 /* LiveResultsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */; };
 		010A36D32B3B979900E40EC7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D22B3B979900E40EC7 /* MainView.swift */; };
+		010A36D52B3B9B6800E40EC7 /* InvalidURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D42B3B9B6800E40EC7 /* InvalidURLView.swift */; };
+		010A36D72B3BB35A00E40EC7 /* URLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D62B3BB35A00E40EC7 /* URLSource.swift */; };
+		010A36D82B3BB35A00E40EC7 /* URLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D62B3BB35A00E40EC7 /* URLSource.swift */; };
 		01101C042B05CB7D00789AE3 /* MusicEntityNotesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */; };
 		01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C052B05CDDD00789AE3 /* NotesEditorView.swift */; };
 		011BB8F02B044F7B00F3609D /* TagDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BB8EF2B044F7B00F3609D /* TagDetailView.swift */; };
@@ -22,6 +25,7 @@
 		012513B22AFB1C770064AA07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B12AFB1C770064AA07 /* Assets.xcassets */; };
 		012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B42AFB1C770064AA07 /* Preview Assets.xcassets */; };
 		012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
+		013D9B802B3CCCE5003A6FA0 /* MusicEntityNotesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */; };
 		01447F832B1FD0390084E23F /* CollectionListingViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */; };
 		01447F842B1FFEBD0084E23F /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
 		014A65482B34D28B001DF7AE /* InRotationStoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 014A65472B34D28B001DF7AE /* InRotationStoreKitConfig.storekit */; };
@@ -81,7 +85,6 @@
 		01B2065A2B180A3B001265FC /* EnvironmentValues-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */; };
 		01B2065B2B180BCC001265FC /* MusicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E62AFC2E2600D53903 /* MusicEntity.swift */; };
 		01B2065C2B180BD2001265FC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017AA6922B0404A0005E43D8 /* Tag.swift */; };
-		01B2065E2B180C4E001265FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B2065D2B180C4E001265FC /* ContentView.swift */; };
 		01B2065F2B180C89001265FC /* EnvironmentValues-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */; };
 		01B206602B180D8C001265FC /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010393C12AFCA4B5000DF698 /* EntityType.swift */; };
 		01B206622B1815CD001265FC /* AppleMusicSearchWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC64E42AFC17E900D53903 /* AppleMusicSearchWrangler.swift */; };
@@ -134,6 +137,8 @@
 		010393C12AFCA4B5000DF698 /* EntityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
 		010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveResultsRow.swift; sourceTree = "<group>"; };
 		010A36D22B3B979900E40EC7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		010A36D42B3B9B6800E40EC7 /* InvalidURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidURLView.swift; sourceTree = "<group>"; };
+		010A36D62B3BB35A00E40EC7 /* URLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSource.swift; sourceTree = "<group>"; };
 		01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntityNotesBlock.swift; sourceTree = "<group>"; };
 		01101C052B05CDDD00789AE3 /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
 		011BB8EF2B044F7B00F3609D /* TagDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagDetailView.swift; sourceTree = "<group>"; };
@@ -191,7 +196,6 @@
 		01B2064E2B1809CD001265FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01B206562B1809F5001265FC /* UIHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingView.swift; sourceTree = "<group>"; };
 		01B206592B180A3B001265FC /* EnvironmentValues-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues-Ext.swift"; sourceTree = "<group>"; };
-		01B2065D2B180C4E001265FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		01B206612B180FF3001265FC /* Rotation-iOSActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Rotation-iOSActionExtension.entitlements"; sourceTree = "<group>"; };
 		01B398682B29284D0015E5D2 /* CardStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStatus.swift; sourceTree = "<group>"; };
 		01B3986A2B293B050015E5D2 /* TagsListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsListingView.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 				01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */,
 				01B398682B29284D0015E5D2 /* CardStatus.swift */,
 				01A803E12B2A358700777251 /* DefaultScreen.swift */,
+				010A36D62B3BB35A00E40EC7 /* URLSource.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -393,8 +398,8 @@
 				01B206492B1809CD001265FC /* ActionViewController.swift */,
 				01B2064B2B1809CD001265FC /* MainInterface.storyboard */,
 				01B2064E2B1809CD001265FC /* Info.plist */,
-				01B2065D2B180C4E001265FC /* ContentView.swift */,
 				010A36D22B3B979900E40EC7 /* MainView.swift */,
+				010A36D42B3B9B6800E40EC7 /* InvalidURLView.swift */,
 			);
 			path = "Rotation-iOSActionExtension";
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 				01ACB8E52B05808400C13BDA /* Font-Ext.swift in Sources */,
 				014A65522B34DCD7001DF7AE /* PremiumUnlockProductView.swift in Sources */,
 				018811972B084212003EF47A /* MusicURLWrangler.swift in Sources */,
+				010A36D72B3BB35A00E40EC7 /* URLSource.swift in Sources */,
 				01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */,
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				019045B02B06D240007F78C1 /* TagTogglerView.swift in Sources */,
@@ -573,12 +579,14 @@
 				017E66192B1969FF0096C9D8 /* NotesEditorView.swift in Sources */,
 				010A36D32B3B979900E40EC7 /* MainView.swift in Sources */,
 				01B2065C2B180BD2001265FC /* Tag.swift in Sources */,
+				010A36D52B3B9B6800E40EC7 /* InvalidURLView.swift in Sources */,
 				017E66162B19465A0096C9D8 /* TagTogglerView.swift in Sources */,
 				01B2066B2B18169C001265FC /* SpotifyAPIWrangler.swift in Sources */,
 				01B206662B1815EC001265FC /* SpotifyAPIError.swift in Sources */,
-				01B2065E2B180C4E001265FC /* ContentView.swift in Sources */,
 				01B2065B2B180BCC001265FC /* MusicEntity.swift in Sources */,
 				01B2064A2B1809CD001265FC /* ActionViewController.swift in Sources */,
+				010A36D82B3BB35A00E40EC7 /* URLSource.swift in Sources */,
+				013D9B802B3CCCE5003A6FA0 /* MusicEntityNotesBlock.swift in Sources */,
 				01B206622B1815CD001265FC /* AppleMusicSearchWrangler.swift in Sources */,
 				014A65502B34D6C9001DF7AE /* IAPWrangler.swift in Sources */,
 				01B206682B181600001265FC /* SpotifySearchResults.swift in Sources */,

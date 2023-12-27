@@ -22,9 +22,7 @@ enum MusicURLWranglerError: String, Error, Equatable {
 @Observable
 class MusicURLWrangler {
     
-    enum URLSource {
-        case appleMusic, spotify, unknown
-    }
+    
     
     var isLoading = false
     
@@ -332,18 +330,10 @@ class MusicURLWrangler {
         }
     }
     
-    private func determineSource(ofURL url: URL) throws -> URLSource  {
+    func determineSource(ofURL url: URL) throws -> URLSource  {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false), let host = components.host else {
             throw MusicURLWranglerError.urlParsing
         }
-        
-//        if host == "open.spotify.com" {
-//            return .spotify
-//        } else if host == "music.apple.com" {
-//            return .appleMusic
-//        } else {
-//            throw MusicURLWranglerError.unknownSource
-//        }
         
         if host.contains("spotify.com") {
             return .spotify

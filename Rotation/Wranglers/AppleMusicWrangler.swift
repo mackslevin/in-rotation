@@ -226,6 +226,8 @@ class AppleMusicWrangler {
     }
     
     func fillInAppleMusicInfo(_ musicEntity: MusicEntity) async throws {
+        print("^^ filling in am info")
+        
         switch musicEntity.type {
             case .song:
                 guard !musicEntity.isrc.isEmpty else { return }
@@ -236,12 +238,15 @@ class AppleMusicWrangler {
                     musicEntity.appleMusicURLString = song.url?.absoluteString ?? ""
                 }
             case .album:
-                guard !musicEntity.upc.isEmpty else { return }
+                guard !musicEntity.upc.isEmpty else { print("^^ no upc") ; return }
+                print("^^ going to try to match upc: \(musicEntity.upc)")
                 let request = MusicCatalogResourceRequest<Album>(matching: \.upc, equalTo: musicEntity.upc)
                 let response = try await request.response()
                 if let album = response.items.first {
                     musicEntity.appleMusicID = album.id.rawValue
                     musicEntity.appleMusicURLString = album.url?.absoluteString ?? ""
+                } else {
+                    print("^^ no album returned from AM")
                 }
             case .playlist:
                 return
@@ -255,6 +260,17 @@ class AppleMusicWrangler {
                 musicItem = try? await findSongByISRC(musicEntity.isrc)
             } else if musicEntity.type == .album, !musicEntity.upc.isEmpty {
                 musicItem = try? await findAlbumByUPC(musicEntity.upc)
+            }
+        }
+        
+        if musicItem == nil {
+            switch musicEntity.type {
+                case .song:
+                    throw AppleMusicWranglerError.noMatchISRC
+                case .album:
+                    throw AppleMusicWranglerError.noMatchUPC
+                default:
+                    throw AppleMusicWranglerError.noMatch
             }
         }
         

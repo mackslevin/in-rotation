@@ -29,7 +29,7 @@ class ActionViewController: UIViewController {
         
         let modelContainer = try? ModelContainer(for: MusicEntity.self, configurations: modelConfiguration)
         
-        let contentView = ContentView()
+        let contentView = MainView()
                     .environment(\.modelContext, modelContainer!.mainContext)
                     .environment(\.extensionContext, extensionContext)
         
