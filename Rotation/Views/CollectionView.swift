@@ -25,6 +25,9 @@ struct CollectionView: View {
     
     @State private var isShowingArchive = false
     
+    @Query var musicEntities: [MusicEntity]
+    @State private var isShowingArchiveAllWarning = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -89,6 +92,12 @@ struct CollectionView: View {
                         } label: {
                             Label("View archived items...", systemImage: "archivebox")
                         }
+                        
+                        Button {
+                            isShowingArchiveAllWarning = true
+                        } label: {
+                            Label("Archive All", systemImage: "pin")
+                        }
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
@@ -149,6 +158,15 @@ struct CollectionView: View {
             .sheet(isPresented: $isShowingArchive) {
                 ArchiveView()
             }
+            .alert("Are you sure?", isPresented: $isShowingArchiveAllWarning) {
+                Button("Cancel"){}
+                Button("Archive All") {
+                    archiveAll()
+                }
+            } message: {
+                Text("All items in the collection will be moved to the archive.")
+            }
+
         }
     }
     
@@ -162,6 +180,14 @@ struct CollectionView: View {
                 sortOrder = SortDescriptor(\MusicEntity.title)
             case .byArtist:
                 sortOrder = SortDescriptor(\MusicEntity.artistName)
+        }
+    }
+    
+    func archiveAll() {
+        for entity in musicEntities {
+            withAnimation {
+                entity.archived = true
+            }
         }
     }
 }
