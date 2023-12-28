@@ -36,6 +36,7 @@ struct MusicEntityDetailView: View {
                 .padding([.horizontal, .bottom])
                 
                 
+                
             }
             .background {
                 ZStack {
@@ -47,13 +48,6 @@ struct MusicEntityDetailView: View {
             }
             .navigationTitle(Utility.stringForType(musicEntity.type))
             .navigationBarTitleDisplayMode(.inline)
-            .alert(isPresented: $isShowingErrorAlert, content: {
-                if let alertMessage {
-                    Alert(title: Text("Something Went Wrong"), message: Text(alertMessage))
-                } else {
-                    Alert(title: Text("Something went wrong"))
-                }
-            })
             .alert(isPresented: $isShowingAddedToLibrarySuccessAlert, content: {
                 Alert(title: Text("Added!"), message: Text("The item has been successfully added to your Apple Music Library"))
             })
@@ -75,6 +69,9 @@ struct MusicEntityDetailView: View {
                                 } label: {
                                     Label("Add to Apple Music Library", systemImage: "plus")
                                 }
+                                .alert(isPresented: $isShowingErrorAlert, content: {
+                                    Alert(title: Text(alertMessage ?? "Something went wrong"))
+                                })
                             }
                         } label: {
                             Image(systemName: "ellipsis.circle.fill")
@@ -103,26 +100,38 @@ struct MusicEntityDetailView: View {
     func addToLibrary() {
         Task {
             do {
+                
                 if let musicItem = try await amWrangler.appleMusicItemFromMusicEntity(musicEntity) {
+                    print("^^ we have a music item")
                     if let item = musicItem as? MusicLibraryAddable {
-                        try? await MusicLibrary.shared.add(item)
+                        try await MusicLibrary.shared.add(item)
                         isShowingAddedToLibrarySuccessAlert = true
                     } else {
-                        showLibraryFailureAlert()
+                        showLibraryFailureAlert(message: nil)
                     }
                 } else {
-                    showLibraryFailureAlert()
+                    showLibraryFailureAlert(message: nil)
                 }
             } catch {
-                showLibraryFailureAlert()
+                print("^^ gahhhh")
+                
+                await MainActor.run {
+                    showLibraryFailureAlert(message: error.localizedDescription)
+                }
+                
             }
         }
         
         
     }
     
-    func showLibraryFailureAlert() {
-        alertMessage = "The item could not be added to your library"
+    func showLibraryFailureAlert(message: String?) {
+        if let message {
+            alertMessage = message
+        } else {
+            alertMessage = "The item could not be added to your library."
+        }
+        
         isShowingErrorAlert = true
         alertMessage = nil
     }
