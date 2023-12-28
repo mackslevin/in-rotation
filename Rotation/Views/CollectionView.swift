@@ -45,7 +45,6 @@ struct CollectionView: View {
                             Label("Search...", systemImage: "magnifyingglass")
                         }
                         
-                        Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
                         
                         Menu("Sort") {
                             Picker("Sort", selection: $collectionSortCriteria) {
@@ -87,6 +86,29 @@ struct CollectionView: View {
                             }
                         }
                         
+                        Menu("Mark") {
+                            Button {
+                                for entity in musicEntities {
+                                    withAnimation {
+                                        entity.played = false
+                                    }
+                                }
+                            } label: {
+                                Label("Mark All Unplayed", systemImage: "circle")
+                            }
+                            Button {
+                                for entity in musicEntities {
+                                    withAnimation {
+                                        entity.played = true
+                                    }
+                                }
+                            } label: {
+                                Label("Mark All Played", systemImage: "circle.fill")
+                            }
+                        }
+                        
+                        Toggle("Show unplayed only", isOn: $showOnlyUnplayed)
+                        
                         Button {
                             isShowingArchive = true
                         } label: {
@@ -96,7 +118,7 @@ struct CollectionView: View {
                         Button {
                             isShowingArchiveAllWarning = true
                         } label: {
-                            Label("Archive All", systemImage: "pin")
+                            Label("Archive All", systemImage: "archivebox.fill")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()

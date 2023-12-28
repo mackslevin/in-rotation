@@ -87,6 +87,27 @@ struct ArchiveView: View {
                             }
                         }
                         
+                        Menu("Mark") {
+                            Button {
+                                for entity in archivedMusicEntities {
+                                    withAnimation {
+                                        entity.played = false
+                                    }
+                                }
+                            } label: {
+                                Label("Mark All Unplayed", systemImage: "circle")
+                            }
+                            Button {
+                                for entity in archivedMusicEntities {
+                                    withAnimation {
+                                        entity.played = true
+                                    }
+                                }
+                            } label: {
+                                Label("Mark All Played", systemImage: "circle.fill")
+                            }
+                        }
+                        
                         Button(role: .destructive) {
                             isShowingDeleteAllWarning = true
                         } label: {
