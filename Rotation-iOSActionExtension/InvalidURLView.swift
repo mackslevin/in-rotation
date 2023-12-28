@@ -30,8 +30,9 @@ struct InvalidURLView: View {
                 Text("\("https://music.apple.com/us/album/hard-to-be/718735084?i=718735089")")
                     .fontDesign(.monospaced)
                     .foregroundStyle(.secondary)
+            } else {
+                Text("This application is not providing a valid URL")
             }
-            
         }
     }
 }

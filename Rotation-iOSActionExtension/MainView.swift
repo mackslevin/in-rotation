@@ -97,7 +97,7 @@ struct MainView: View {
                                 Spacer()
                             }
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.bordered).fontWeight(.medium)
                     } else if source == .appleMusic && !musicEntity.spotifyURLString.isEmpty {
                         Button {
                             handleCopy(withURLString: musicEntity.spotifyURLString)
@@ -108,8 +108,7 @@ struct MainView: View {
                                 Spacer()
                             }
                         }
-                        .buttonStyle(.bordered)
-                        .fontWeight(.medium)
+                        .buttonStyle(.bordered).fontWeight(.medium)
                     }
                     
                     // MARK: TAGS
@@ -206,6 +205,7 @@ struct MainView: View {
             }
         }
         .onAppear {
+            print("^^ appear")
             setURLFromExtensionContext()
         }
         .onChange(of: url) { oldValue, newValue in
@@ -291,19 +291,6 @@ struct MainView: View {
         }
     }
     
-    
-    
-    func save() {
-        if let musicEntity {
-            if !selectedTags.isEmpty {
-                musicEntity.tags = selectedTags
-            }
-            // TODO: Check IAP status
-            modelContext.insert(musicEntity)
-            dismiss()
-        }
-    }
-    
     func dismiss() {
         extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
     }
@@ -312,8 +299,14 @@ struct MainView: View {
         if let inputItem = extensionContext?.inputItems.first as? NSExtensionItem {
             if let provider = inputItem.attachments?.first {
                 provider.loadItem(forTypeIdentifier: UTType.url.identifier) { (item, error) in
+                    guard error == nil else {
+                        thereWasAnError = true
+                        return
+                    }
+                    
                     if let nsURL = item, let incomingURL = nsURL as? URL {
                         url = incomingURL
+                        return
                     }
                 }
             }
@@ -347,7 +340,11 @@ struct MainView: View {
             musicEntity.tags = selectedTags
         }
         
+        
+        print("^^ Saving \(musicEntity.title) by \(musicEntity.artistName)")
         modelContext.insert(musicEntity)
+        
+        
         
         successMessage = "Saved!"
         withAnimation {
