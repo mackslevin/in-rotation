@@ -23,9 +23,7 @@ struct MusicEntityActionBlock: View {
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
     let actionIconSize: CGFloat = 36
-    
-//    let buttonBGOpacity: Double = 1
-//    let buttonVerticalSpacing: CGFloat = 8
+
     
     var body: some View {
         VStack {
@@ -41,21 +39,50 @@ struct MusicEntityActionBlock: View {
                     }
                     .frame(width: 75)
                 } else {
+                    if !musicEntity.appleMusicURLString.isEmpty {
+                        Button {
+                            Task {
+                                do {
+                                    try await amWrangler.openInAppleMusic(musicEntity)
+                                } catch {
+                                    print(error)
+                                    isShowingErrorAlert = true
+                                }
+                            }
+                        } label: {
+                            VStack() {
+                                Image(systemName: "arrow.up.right.square")
+                                    .font(.system(size: actionIconSize, weight: .bold))
+                                
+                                Text("Apple Music")
+                                    .font(.system(size: 12))
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .frame(width: 75)
+                    }
+                }
+                
+                
+                Spacer()
+                
+                if !musicEntity.spotifyURLString.isEmpty {
                     Button {
                         Task {
                             do {
-                                try await amWrangler.openInAppleMusic(musicEntity)
+                                try await spotifyWrangler.openInSpotify(musicEntity)
                             } catch {
                                 print(error)
                                 isShowingErrorAlert = true
                             }
+                            
                         }
                     } label: {
                         VStack() {
                             Image(systemName: "arrow.up.right.square")
                                 .font(.system(size: actionIconSize, weight: .bold))
                             
-                            Text("Apple Music")
+                            Text("Spotify")
                                 .font(.system(size: 12))
                                 .fontWeight(.semibold)
                         }
@@ -63,30 +90,6 @@ struct MusicEntityActionBlock: View {
                     .frame(width: 75)
                 }
                 
-                
-                Spacer()
-                
-                Button {
-                    Task {
-                        do {
-                            try await spotifyWrangler.openInSpotify(musicEntity)
-                        } catch {
-                            print(error)
-                            isShowingErrorAlert = true
-                        }
-                        
-                    }
-                } label: {
-                    VStack() {
-                        Image(systemName: "arrow.up.right.square")
-                            .font(.system(size: actionIconSize, weight: .bold))
-                        
-                        Text("Spotify")
-                            .font(.system(size: 12))
-                            .fontWeight(.semibold)
-                    }
-                }
-                .frame(width: 75)
                 
                 Spacer()
                     

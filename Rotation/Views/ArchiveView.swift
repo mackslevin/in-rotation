@@ -97,6 +97,7 @@ struct ArchiveView: View {
                             } label: {
                                 Label("Mark All Unplayed", systemImage: "circle")
                             }
+                            
                             Button {
                                 for entity in archivedMusicEntities {
                                     withAnimation {
