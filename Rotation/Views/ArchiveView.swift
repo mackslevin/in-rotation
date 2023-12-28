@@ -25,6 +25,9 @@ struct ArchiveView: View {
     @Query var allTags: [Tag]
     
     
+    @Query(filter: #Predicate<MusicEntity> {$0.archived == true}) var archivedMusicEntities: [MusicEntity]
+    @State private var isShowingDeleteAllWarning = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -83,6 +86,14 @@ struct ArchiveView: View {
                                 }
                             }
                         }
+                        
+                        Button(role: .destructive) {
+                            isShowingDeleteAllWarning = true
+                        } label: {
+                            Label("Delete All", systemImage: "trash")
+                        }
+                        
+                        
                     } label: {
                         Image(systemName: "ellipsis.circle").resizable().scaledToFit()
                             .frame(width: 30)
@@ -141,6 +152,16 @@ struct ArchiveView: View {
             .onChange(of: collectionSortCriteria) { _, newValue in
                 applySortCriterion(newValue)
             }
+            .alert("Are you sure?", isPresented: $isShowingDeleteAllWarning) {
+                Button(role: .destructive) {
+                    deleteAll()
+                } label: {
+                    Text("Delete")
+                }
+            } message: {
+                Text("All archived items will be deleted. This cannot be undone.")
+            }
+
         }
         
     }
@@ -155,6 +176,14 @@ struct ArchiveView: View {
                 sortOrder = SortDescriptor(\MusicEntity.title)
             case .byArtist:
                 sortOrder = SortDescriptor(\MusicEntity.artistName)
+        }
+    }
+    
+    func deleteAll() {
+        for entity in archivedMusicEntities {
+            withAnimation {
+                modelContext.delete(entity)
+            }
         }
     }
 }
