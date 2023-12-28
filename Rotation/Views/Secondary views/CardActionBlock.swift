@@ -61,6 +61,9 @@ struct CardActionBlock: View {
                     await grabSpotifyURL()
                 }
             }
+            .onDisappear {
+                player.stop()
+            }
         }
         .alert("PlaybackError", isPresented: $isShowingPlaybackError) {
             Button("OK"){}
