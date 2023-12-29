@@ -73,6 +73,35 @@ struct CollectionListingViewRow: View {
                 Label("\(musicEntity.archived ? "Un-archive" : "Archive")", systemImage: "archivebox")
             }
         }
+        .contextMenu {
+            Button {
+                withAnimation {
+                    musicEntity.played.toggle()
+                }
+            } label: {
+                if musicEntity.played {
+                    Label("Mark Unplayed", systemImage: "play.slash")
+                } else {
+                    Label("Mark Played", systemImage: "play")
+                }
+            }
+            .tint(Color.accentColor)
+            
+            Button {
+                withAnimation {
+                    musicEntity.archived.toggle()
+                    print("^^ \(musicEntity.archived ? "just archived" : "just unarchived")")
+                }
+            } label: {
+                Label("\(musicEntity.archived ? "Un-archive" : "Archive")", systemImage: "archivebox")
+            }
+            
+            Button(role: .destructive) {
+                modelContext.delete(musicEntity)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
         
     }
 }
