@@ -26,6 +26,7 @@ class MusicURLWrangler {
     
     var isLoading = false
     
+    @MainActor
     func musicEntityFromURL(_ url: URL) async throws -> MusicEntity {
         isLoading = true
         

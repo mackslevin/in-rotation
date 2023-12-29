@@ -31,12 +31,12 @@ struct MusicSearchView: View {
     @State private var errorAlertMessage: String? = nil
     let defaultErrorAlertMessage = "Something went wrong"
     
-    @State private var selectedTags: [Tag] = []
-    @State private var isShowingTagToggler = false
+//    @State private var selectedTags: [Tag] = []
+//    @State private var isShowingTagToggler = false
     
-    @State private var isShowingIAPSheet = false
-    @State private var userHasPremiumAccess = false
-    @Query var allMusicEntites: [MusicEntity]
+//    @State private var isShowingIAPSheet = false
+//    @State private var userHasPremiumAccess = false
+//    @Query var allMusicEntites: [MusicEntity]
     
     var body: some View {
         NavigationStack {
@@ -140,73 +140,83 @@ struct MusicSearchView: View {
                     }
                     
                     // MARK: Music Entity
+//                    if amSearchWrangler.isLoading || musicURLWrangler.isLoading {
+//                        HStack {
+//                            Spacer(); ProgressView(); Spacer()
+//                        }
+//                    } else if let musicEntity {
+//                        Spacer()
+//                        
+//                        VStack(spacing: 12) {
+//                            
+//                            if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
+//                                Image(uiImage: uiImage).resizable().scaledToFit()
+//                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+//                            }
+//                            
+//                            VStack {
+//                                Text(musicEntity.title)
+//                                    .font(Font.displayFont(ofSize: 24))
+//                                Text("\(Utility.stringForType(musicEntity.type)) by \(musicEntity.artistName)")
+//                                    .foregroundStyle(.secondary)
+//                                    .fontWeight(.semibold)
+//                                    .multilineTextAlignment(.center)
+//                                if let year = musicEntity.releaseYear() {
+//                                    Text(String(year))
+//                                        .foregroundStyle(.secondary)
+//                                }
+//                            }
+//                            
+//                            // TAGGING
+//                            VStack {
+//                                if selectedTags.isEmpty {
+//                                    Button {
+//                                        isShowingTagToggler = true
+//                                    } label: {
+//                                        Label("Tag...", systemImage: "tag")
+//                                            .fontWeight(.semibold)
+//                                            .frame(minWidth: 100)
+//                                    }
+//                                    .buttonStyle(.bordered)
+//                                } else {
+//                                    VStack {
+//                                        Text("Tags: \(selectedTags.map({$0.title}).joined(separator: ", ") )")
+//                                            .foregroundStyle(.secondary)
+//                                        
+//                                        Button("Edit") {
+//                                            isShowingTagToggler = true
+//                                        }.bold()
+//                                    }
+//                                    .font(.caption)
+//                                }
+//                            }
+//                            .padding(.vertical)
+//                            
+//                            
+//                            Button {
+//                                if allMusicEntites.count >= Utility.maximumFreeEntities && !userHasPremiumAccess {
+//                                    isShowingIAPSheet = true
+//                                } else {
+//                                    modelContext.insert(musicEntity)
+//                                    musicEntity.tags = selectedTags
+//                                    dismiss()
+//                                }
+//                            } label: {
+//                                Label("Save", systemImage: "plus")
+//                                    .frame(minWidth: 100)
+//                            }
+//                            .bold()
+//                            .buttonStyle(.borderedProminent)
+//                        }
+//                    }
+                    
                     if amSearchWrangler.isLoading || musicURLWrangler.isLoading {
                         HStack {
                             Spacer(); ProgressView(); Spacer()
                         }
                     } else if let musicEntity {
-                        Spacer()
-                        
-                        VStack(spacing: 12) {
-                            
-                            if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
-                                Image(uiImage: uiImage).resizable().scaledToFit()
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                            }
-                            
-                            VStack {
-                                Text(musicEntity.title)
-                                    .font(Font.displayFont(ofSize: 24))
-                                Text("\(Utility.stringForType(musicEntity.type)) by \(musicEntity.artistName)")
-                                    .foregroundStyle(.secondary)
-                                    .fontWeight(.semibold)
-                                    .multilineTextAlignment(.center)
-                                if let year = musicEntity.releaseYear() {
-                                    Text(String(year))
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                            
-                            // TAGGING
-                            VStack {
-                                if selectedTags.isEmpty {
-                                    Button {
-                                        isShowingTagToggler = true
-                                    } label: {
-                                        Label("Tag...", systemImage: "tag")
-                                            .fontWeight(.semibold)
-                                            .frame(minWidth: 100)
-                                    }
-                                    .buttonStyle(.bordered)
-                                } else {
-                                    VStack {
-                                        Text("Tags: \(selectedTags.map({$0.title}).joined(separator: ", ") )")
-                                            .foregroundStyle(.secondary)
-                                        
-                                        Button("Edit") {
-                                            isShowingTagToggler = true
-                                        }.bold()
-                                    }
-                                    .font(.caption)
-                                }
-                            }
-                            .padding(.vertical)
-                            
-                            
-                            Button {
-                                if allMusicEntites.count >= Utility.maximumFreeEntities && !userHasPremiumAccess {
-                                    isShowingIAPSheet = true
-                                } else {
-                                    modelContext.insert(musicEntity)
-                                    musicEntity.tags = selectedTags
-                                    dismiss()
-                                }
-                            } label: {
-                                Label("Save", systemImage: "plus")
-                                    .frame(minWidth: 100)
-                            }
-                            .bold()
-                            .buttonStyle(.borderedProminent)
+                        MusicEntityAddingView(musicEntity: musicEntity) {
+                            dismiss()
                         }
                     }
                     
@@ -236,25 +246,25 @@ struct MusicSearchView: View {
         } message: {
             Text(errorAlertMessage ?? defaultErrorAlertMessage)
         }
-        .sheet(isPresented: $isShowingTagToggler) {
-            TagTogglerView(selectedTags: $selectedTags)
-        }
-        .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
-            switch state {
-                case .loading:
-                    print("^^ state is loading")
-                case .failure(let error):
-                    print("^^ state failed, error is \(error)")
-                case .success(let transaction):
-                    print("^^ state is success")
-                    userHasPremiumAccess = transaction != nil
-                @unknown default:
-                    fatalError()
-            }
-        }
-        .sheet(isPresented: $isShowingIAPSheet) {
-            IAPPaywallView()
-        }
+//        .sheet(isPresented: $isShowingTagToggler) {
+//            TagTogglerView(selectedTags: $selectedTags)
+//        }
+//        .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
+//            switch state {
+//                case .loading:
+//                    print("^^ state is loading")
+//                case .failure(let error):
+//                    print("^^ state failed, error is \(error)")
+//                case .success(let transaction):
+//                    print("^^ state is success")
+//                    userHasPremiumAccess = transaction != nil
+//                @unknown default:
+//                    fatalError()
+//            }
+//        }
+//        .sheet(isPresented: $isShowingIAPSheet) {
+//            IAPPaywallView()
+//        }
     }
     
     func setEntity<T: MusicItem>(_ musicItem: T) {
