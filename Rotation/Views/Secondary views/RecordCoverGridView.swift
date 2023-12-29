@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RecordCoverGridView: View {
-    let musicEntities: [MusicEntity]
+    var musicEntities: [MusicEntity]
+    let tag: Tag
     
+    @Environment(\.modelContext) var modelContext
     @Environment(\.horizontalSizeClass) var horizontalSize
+    @Environment(\.dismiss) var dismiss
     
     @State private var columnCount = 2
     
@@ -42,6 +46,39 @@ struct RecordCoverGridView: View {
                             .padding(5)
                         }
                 }
+                .contextMenu(menuItems: {
+                    Button {
+                        withAnimation {
+                            musicEntity.played.toggle()
+                        }
+                    } label: {
+                        if musicEntity.played {
+                            Label("Mark Unplayed", systemImage: "play.slash")
+                        } else {
+                            Label("Mark Played", systemImage: "play")
+                        }
+                    }
+                    .tint(Color.accentColor)
+                    
+                    Button {
+                        withAnimation {
+                            musicEntity.archived.toggle()
+                            print("^^ \(musicEntity.archived ? "just archived" : "just unarchived")")
+                        }
+                    } label: {
+                        Label("\(musicEntity.archived ? "Un-archive" : "Archive")", systemImage: "archivebox")
+                    }
+                    
+                    Button(role: .destructive) {
+                        withAnimation {
+                            tag.musicEntities?.removeAll(where: {$0.id == musicEntity.id})
+                            modelContext.delete(musicEntity)
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                    
+                })
             }
         }
         .onAppear {

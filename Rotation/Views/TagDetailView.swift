@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct TagDetailView: View {
     @Bindable var tag: Tag
@@ -25,7 +24,7 @@ struct TagDetailView: View {
                 
                 if let musicEntities = tag.musicEntities?.filter({$0.archived == false}), !musicEntities.isEmpty {
                     ScrollView {
-                        RecordCoverGridView(musicEntities: musicEntities)
+                        RecordCoverGridView(musicEntities: musicEntities, tag: tag)
                     }
                 } else {
                     ContentUnavailableView("Nothing here yet...", systemImage: "eyes")

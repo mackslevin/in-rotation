@@ -9,7 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct TagsViewListRow: View {
-    let tag: Tag
+    @State var tag: Tag
+    
+    @State private var musicEntities: [MusicEntity] = []
     
     @State private var count = 0
     
@@ -39,7 +41,8 @@ struct TagsViewListRow: View {
                             .font(.displayFont(ofSize: 18))
                         
                         HStack {
-                            if let musicEntities = tag.musicEntities?.filter({$0.archived == false}), !musicEntities.isEmpty {
+                            let musicEntities = musicEntities.filter({$0.archived == false})
+                            if !musicEntities.isEmpty {
                                 let last = if musicEntities.count < 5 {
                                     musicEntities.count - 1
                                 } else {
@@ -73,10 +76,21 @@ struct TagsViewListRow: View {
         }
         .listRowBackground(Color.clear)
         .onAppear {
-            count = tag.musicEntities?.count ?? 0
+            if let tagEntities = tag.musicEntities {
+                musicEntities = tagEntities
+                count = musicEntities.count
+            }
         }
         .onChange(of: tag.musicEntities) { oldValue, newValue in
-            count = newValue?.count ?? 0
+//            count = newValue?.count ?? 0
+            
+            if let tagEntities = newValue {
+                musicEntities = tagEntities
+                count = musicEntities.count
+            } else {
+                musicEntities = []
+                count = 0
+            }
         }
     }
 }
