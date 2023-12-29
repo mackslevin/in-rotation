@@ -12,6 +12,9 @@ struct RecommendationCardView: View {
     let viewModel: ExploreViewModel
     @Binding var hostingViewCardStatus: CardStatus
     @Binding var userCanSaveToCollection: Bool
+    @Binding var currentCardID: String?
+    @Binding var shouldSkipCurrentCard: Bool
+    @Binding var shouldSaveCurrentCard: Bool
     let completion: (Bool) -> Void
     
     @Environment(\.colorScheme) var colorScheme
@@ -79,8 +82,11 @@ struct RecommendationCardView: View {
                         .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                 }
                 
-                Text("Recommended based on \(recEntity.recommendationSource.title) by \(recEntity.recommendationSource.artistName)")
-                    .font(.caption)
+                VStack {
+                    Text("Recommended based on \(recEntity.recommendationSource.title) by \(recEntity.recommendationSource.artistName)")
+                    Text("Rec ID \(recEntity.id)")
+                }
+                .font(.caption)
                 
                 Spacer()
             }
@@ -217,7 +223,9 @@ struct RecommendationCardView: View {
                         cardOverlayOpacity = 0
                 }
                 
-                hostingViewCardStatus = newValue
+                if hostingViewCardStatus != newValue {
+                    hostingViewCardStatus = newValue
+                }
             }
             
         }
@@ -251,19 +259,25 @@ struct RecommendationCardView: View {
         }
         .sheet(isPresented: $isShowingIAPPaywall) {
             IAPPaywallView()
+                .onDisappear {
+                    shouldSaveCurrentCard = false
+                }
+        }
+        .onChange(of: shouldSkipCurrentCard) { _, newValue in
+            if newValue, let currentCardID, currentCardID == recEntity.id.uuidString {
+                handleSavingByButton()
+            }
+        }
+        .onChange(of: shouldSaveCurrentCard) { _, newValue in
+            if newValue, let currentCardID, currentCardID == recEntity.id.uuidString {
+                handleSavingByButton()
+            }
         }
     }
     
     func swipeAway(right: Bool) {
-        print("Swiped \(right ? "right" : "left")")
         withAnimation {
             offset.width = right ? 1000 : -1000
-        }
-        
-        if right {
-            print("^^ liked")
-        } else {
-            print("^^ disliked")
         }
         
         completion(right)
@@ -275,6 +289,23 @@ struct RecommendationCardView: View {
                 try await viewModel.amWrangler.playInAppleMusicApp(recEntity.musicEntity)
             } catch {
                 print("^^ playback error")
+            }
+        }
+    }
+    
+    func handleSavingByButton() {
+        if shouldSaveCurrentCard && !userCanSaveToCollection {
+            isShowingIAPPaywall = true
+        } else {
+            withAnimation(.easeIn(duration: 0.7)) {
+                cardStatus = shouldSaveCurrentCard ? .liked : .disliked
+            }
+            
+            withAnimation(.easeIn(duration: 1.7)) {
+                offset.width = shouldSaveCurrentCard ? 1000 : -1000
+                rotation = shouldSaveCurrentCard ? 25 : -25
+            } completion: {
+                completion(shouldSaveCurrentCard)
             }
         }
     }

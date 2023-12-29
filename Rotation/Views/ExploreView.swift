@@ -21,6 +21,11 @@ struct ExploreView: View {
     @State private var userHasPremiumAccess = false
     @State private var canSave = true
     
+    // These state vars are used to facilitate skipping/saving via the button in this view (as an alternative to simply swiping the card)
+    @State private var currentCardID: String? = nil
+    @State private var shouldSkipCurrentCard = false
+    @State private var shouldSaveCurrentCard = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -94,9 +99,19 @@ struct ExploreView: View {
             } else {
                 ZStack {
                     ForEach(viewModel.recommendationEntities) { rec in
-                        RecommendationCardView(recEntity: rec, viewModel: viewModel, hostingViewCardStatus: $currentCardStatus, userCanSaveToCollection: $canSave) { liked in
-                            handleRecommendation(rec, liked: liked)
-                            currentCardStatus = .neutral
+                        RecommendationCardView(
+                            recEntity: rec,
+                            viewModel: viewModel,
+                            hostingViewCardStatus: $currentCardStatus, 
+                            userCanSaveToCollection: $canSave,
+                            currentCardID: $currentCardID,
+                            shouldSkipCurrentCard:$shouldSkipCurrentCard,
+                            shouldSaveCurrentCard: $shouldSaveCurrentCard
+                            ) { liked in
+                                handleRecommendation(rec, liked: liked)
+                                currentCardStatus = .neutral
+                                shouldSaveCurrentCard = false
+                                shouldSkipCurrentCard = false
                         }
                     }
                 }
@@ -110,6 +125,10 @@ struct ExploreView: View {
                     .font(.body)
                     .fontWeight(.semibold)
                     .foregroundStyle(currentCardStatus == .disliked ? Color.primary : Color.gray)
+                    .onTapGesture {
+                        shouldSkipCurrentCard = true
+                        shouldSaveCurrentCard = false
+                    }
                     
                     HStack {
                         Text("Save")
@@ -118,6 +137,10 @@ struct ExploreView: View {
                     .font(.body)
                     .fontWeight(.semibold)
                     .foregroundStyle(currentCardStatus == .liked ? Color.accentColor : Color.gray)
+                    .onTapGesture {
+                        shouldSaveCurrentCard = true
+                        shouldSkipCurrentCard = false
+                    }
                         
                 }
                 .bold()
@@ -144,12 +167,14 @@ struct ExploreView: View {
         .onChange(of: canSave) { oldValue, newValue in
             print("can save? \(newValue)")
         }
+        .onChange(of: viewModel.recommendationEntities) { oldValue, newValue in
+            currentCardID = getCurrentCardID()
+        }
     }
     
     func handleRecommendation(_ rec: RecommendationEntity, liked: Bool) {
         viewModel.recommendationEntities.removeAll(where: {$0.id == rec.id})
         if liked {
-            // TODO: Check IAP status 
             modelContext.insert(rec.musicEntity)
         }
         
@@ -163,6 +188,14 @@ struct ExploreView: View {
                 print(error)
             }
         }
+    }
+    
+    func getCurrentCardID() -> String? {
+        if let recEnt = viewModel.recommendationEntities.last {
+            return recEnt.id.uuidString
+        }
+        
+        return nil
     }
 }
 

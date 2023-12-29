@@ -10,7 +10,7 @@ import Observation
 import MusicKit
 
 @Observable
-class RecommendationEntity: Identifiable {
+class RecommendationEntity: Identifiable, Equatable {
     let id = UUID()
     let musicEntity: MusicEntity
     let recommendationSource: MusicEntity
@@ -22,5 +22,9 @@ class RecommendationEntity: Identifiable {
         self.recommendationSource = recommendationSource
         self.blurb = blurb
         self.artist = artist
+    }
+    
+    static func == (lhs: RecommendationEntity, rhs: RecommendationEntity) -> Bool {
+        lhs.id == rhs.id
     }
 }
