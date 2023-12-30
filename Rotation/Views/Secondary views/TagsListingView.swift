@@ -17,6 +17,15 @@ struct TagsListingView: View {
         List(selection: $selectedTag, content: {
             ForEach(tags) { tag in
                 TagsViewListRow(tag: tag)
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            withAnimation {
+                                modelContext.delete(tag)
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
             }
             .onDelete(perform: { indexSet in
                 if let index = indexSet.first {

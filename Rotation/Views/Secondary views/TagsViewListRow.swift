@@ -65,10 +65,6 @@ struct TagsViewListRow: View {
                     }
                     
                     Spacer()
-                    
-                    
-                    
-                    
                 }
             }
             .padding(.vertical)
@@ -82,8 +78,6 @@ struct TagsViewListRow: View {
             }
         }
         .onChange(of: tag.musicEntities) { oldValue, newValue in
-//            count = newValue?.count ?? 0
-            
             if let tagEntities = newValue {
                 musicEntities = tagEntities
                 count = musicEntities.count
