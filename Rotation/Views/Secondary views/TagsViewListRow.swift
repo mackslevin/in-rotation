@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct TagsViewListRow: View {
-    @State var tag: Tag
+    @Bindable var tag: Tag
     
     @State private var musicEntities: [MusicEntity] = []
     
