@@ -12,6 +12,8 @@ struct TagDetailView: View {
     @State private var isShowingEditTag = false
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var selectedMusicEntity: MusicEntity? = nil
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -21,18 +23,21 @@ struct TagDetailView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(.tint)
                 }
+                .padding(.horizontal)
                 
                 if let musicEntities = tag.musicEntities?.filter({$0.archived == false}), !musicEntities.isEmpty {
-                    ScrollView {
-                        RecordCoverGridView(tag: tag)
-                    }
+                        List {
+                            ForEach(musicEntities) { musicEntity in
+                                CollectionListingViewRow(musicEntity: musicEntity)
+                            }
+                        }
+                        .listStyle(.plain)
                 } else {
                     ContentUnavailableView("Nothing here yet...", systemImage: "eyes")
                 }
                 
                 Spacer()
             }
-            .padding([.horizontal])
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
@@ -50,6 +55,12 @@ struct TagDetailView: View {
             }
             .sheet(isPresented: $isShowingEditTag) {
                 EditTagView(tag: tag)
+            }
+            .onAppear {
+                print(tag.musicEntities!)
+            }
+            .navigationDestination(item: $selectedMusicEntity) { musicEntity in
+                MusicEntityDetailView(musicEntity: musicEntity)
             }
         }
     }
