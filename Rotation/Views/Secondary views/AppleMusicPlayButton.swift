@@ -18,8 +18,10 @@ struct AppleMusicPlayButton: View {
     @State private var isPlaying = false
     @State private var isInitialState = true
     @State private var amWrangler = AppleMusicWrangler()
-    
     @State private var buttonSymbolName = "play.fill"
+    
+    
+    @State private var isLoading = false
     
     var body: some View {
         Button {
@@ -34,21 +36,34 @@ struct AppleMusicPlayButton: View {
                 if player.state.playbackStatus == .playing {
                     player.pause()
                 } else {
+                    isLoading = true
                     Task {
                         do {
                             try await player.play()
+                            
                             buttonSymbolName = "pause.fill" // Workaround for playback state notification apparently not firing on time in some cases
                         } catch {
                             print(error)
                             isShowingPlaybackError = true
                         }
+                        
+                        isLoading = false
                     }
                 }
             }
             
             isInitialState = false
         } label: {
-            Image(systemName: buttonSymbolName)
+            if isLoading {
+                ZStack {
+                    Image(systemName: "pin")
+                        .opacity(0)
+                    
+                    ProgressView()
+                }
+            } else {
+                Image(systemName: buttonSymbolName)
+            }
         }
         .alert("PlaybackError", isPresented: $isShowingPlaybackError) {
             Button("OK"){}
@@ -74,12 +89,15 @@ struct AppleMusicPlayButton: View {
     }
     
     func playFromTheTop() {
+        isLoading = true
         Task {
             do {
                 try await amWrangler.playInAppleMusicApp(musicEntity)
             } catch {
                 isShowingPlaybackError = true
             }
+            
+            isLoading = false
         }
     }
 }

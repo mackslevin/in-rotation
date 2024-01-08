@@ -84,7 +84,6 @@ struct RecommendationCardView: View {
                 
                 VStack {
                     Text("Recommended based on \(recEntity.recommendationSource.title) by \(recEntity.recommendationSource.artistName)")
-                    Text("Rec ID \(recEntity.id)")
                 }
                 .font(.caption)
                 
