@@ -17,12 +17,12 @@ struct Utility {
     static let exampleEntity = MusicEntity(title: "Cool Title", artistName: "Great Artist", numberOfTracks: 15, songTitles: [], type: .album)
     static let exampleTag = Tag(title: "Cool Tag", symbolName: "photo.fill", musicEntities: []) 
     
-    @MainActor
-    static func dismissKeyboard() {
-        #if !ACTIONEXTENSION
-        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
-        #endif
-    }
+//    @MainActor
+//    static func dismissKeyboard() {
+//        #if !ACTIONEXTENSION
+//        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+//        #endif
+//    }
     
     static func formattedTimeInterval(_ timeInterval: TimeInterval) -> String {
         let hours = Int(timeInterval / 3600)

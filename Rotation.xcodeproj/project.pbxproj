@@ -286,10 +286,10 @@
 		015FB06D2B059AEF00BAC1BC /* Secondary views */ = {
 			isa = PBXGroup;
 			children = (
+				01ACB8E02B05740700C13BDA /* EditTagView.swift */,
 				0168F7692B1A6703004E780E /* CollectionListingView.swift */,
 				01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */,
 				01ACB8DC2B05536100C13BDA /* RecordCoverGridView.swift */,
-				01ACB8E02B05740700C13BDA /* EditTagView.swift */,
 				01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */,
 				015FB06E2B059BC200BAC1BC /* MusicEntityActionBlock.swift */,
 				015FB0702B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift */,
@@ -313,13 +313,6 @@
 				013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */,
 			);
 			path = "Secondary views";
-			sourceTree = "<group>";
-		};
-		016854CE2B0D40D900931CE6 /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OLD;
 			sourceTree = "<group>";
 		};
 		017AA68E2B04033F005E43D8 /* Views */ = {
@@ -355,7 +348,6 @@
 		017AA6902B040381005E43D8 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				016854CE2B0D40D900931CE6 /* OLD */,
 				01FC64E62AFC2E2600D53903 /* MusicEntity.swift */,
 				010393BB2AFC67FD000DF698 /* SearchError.swift */,
 				010393C12AFCA4B5000DF698 /* EntityType.swift */,

@@ -32,6 +32,8 @@ struct MusicSearchView: View {
     let defaultErrorAlertMessage = "Something went wrong"
     
     
+    @FocusState private var searchBoxIsFocused: Bool
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -58,6 +60,9 @@ struct MusicSearchView: View {
                                 }
                                 .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
                                 .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.1) , radius: 4, x: 1, y: 3)
+                                .focused($searchBoxIsFocused)
+                            
+                            
                             Button {
                                 searchText = ""
                             } label: {
@@ -156,6 +161,9 @@ struct MusicSearchView: View {
             .navigationTitle("Add Music")
             
         }
+        .onAppear {
+            searchBoxIsFocused = true
+        }
         .onChange(of: searchText) {_, newValue in
             musicEntity = nil // TODO: Just remove this so that the music entity doesn't go away until a new one is selected?
             Task {
@@ -176,7 +184,8 @@ struct MusicSearchView: View {
         Task {
             musicEntity = await amSearchWrangler.makeMusicEntity(from: musicItem)
             await amSearchWrangler.reset()
-            await Utility.dismissKeyboard()
+//            await Utility.dismissKeyboard()
+            searchBoxIsFocused = false
         }
     }
     

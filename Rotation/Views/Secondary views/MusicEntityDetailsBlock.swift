@@ -21,6 +21,7 @@ struct MusicEntityDetailsBlock: View {
                     Text(Utility.prettyDate(musicEntity.releaseDate))
                 }
             }
+            
             HStack {
                 Text("Tracks")
                     .fontWeight(.semibold)
@@ -36,6 +37,18 @@ struct MusicEntityDetailsBlock: View {
                 Spacer()
                 Text(Utility.formattedTimeInterval(musicEntity.duration))
             }
+            
+            if !musicEntity.recordLabel.isEmpty {
+                HStack(alignment: .top) {
+                    Text("Label")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(musicEntity.recordLabel)
+                        .multilineTextAlignment(.trailing)
+                }
+            }
+            
             
         }
         .padding()
