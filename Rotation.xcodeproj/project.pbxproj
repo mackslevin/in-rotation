@@ -824,7 +824,7 @@
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Add to Rotation...";
+				INFOPLIST_KEY_CFBundleDisplayName = "Add to In Rotation...";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -852,7 +852,7 @@
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Add to Rotation...";
+				INFOPLIST_KEY_CFBundleDisplayName = "Add to In Rotation...";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
