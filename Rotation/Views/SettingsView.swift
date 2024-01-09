@@ -13,7 +13,7 @@ struct SettingsView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var isShowingWelcomView = false
+    @State private var isShowingWelcomeView = false
     
     var body: some View {
         NavigationStack {
@@ -27,30 +27,38 @@ struct SettingsView: View {
                 .padding()
                 
                 Form {
-                    Section("Defaults") {
+                    Section {
+                        PremiumUnlockProductView()
+                            .padding()
+                    }
+                    
+                    Section {
                         Picker("Default screen", selection: $defaultScreen) {
                             ForEach(DefaultScreen.allCases, id: \.rawValue) { screen in
                                 Text(screen.rawValue.capitalized)
                                     .tag(screen)
                             }
                         }
+                    }
                         
+                    Section {
                         Picker("The Apple Music button should...", selection: $shouldPlayInAppleMusicApp) {
                             Text("Open in app").tag(false)
                             Text("Start playback").tag(true)
                         }
+                        .listRowSpacing(0)
+                        Text("For users who have an Apple Music subscription and have granted access, playback can be triggered directly from within the app.")
+                            .foregroundStyle(.secondary)
+                            .listRowSeparator(.hidden)
+                            .font(.caption)
+                            .listRowSpacing(0)
                     }
                     
                     Section {
                         Button("Show welcome screen again") {
-                            isShowingWelcomView = true
+                            isShowingWelcomeView = true
                         }
                         .fontWeight(.medium)
-                    }
-                    
-                    Section("In-App Purchase") {
-                        PremiumUnlockProductView()
-                            .padding()
                     }
                 }
                 .scrollContentBackground(.hidden)
@@ -59,7 +67,7 @@ struct SettingsView: View {
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
-            .sheet(isPresented: $isShowingWelcomView, content: {
+            .sheet(isPresented: $isShowingWelcomeView, content: {
                 WelcomeView(){}
             })
         }
@@ -67,6 +75,6 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    SettingsView()
-}
+//#Preview {
+//    SettingsView()
+//}
