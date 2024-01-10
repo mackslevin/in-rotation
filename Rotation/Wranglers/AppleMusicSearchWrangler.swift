@@ -105,7 +105,7 @@ class AppleMusicSearchWrangler {
         if let song = item as? Song {
             titles = [song.title]
             duration = song.duration ?? .zero
-            if let url = song.artwork?.url(width: song.artwork?.maximumWidth ?? 800, height: song.artwork?.maximumHeight ?? 800) {
+            if let url = song.artwork?.url(width: 1000, height: 1000) {
                 do {
                     imageData = try Data(contentsOf: url)
                 } catch {
@@ -126,7 +126,7 @@ class AppleMusicSearchWrangler {
                     dontTrustTheDuration = true
                 }
                 titles.append(track.title)
-                if let url = album.artwork?.url(width: album.artwork?.maximumWidth ?? 800, height: album.artwork?.maximumHeight ?? 800) {
+                if let url = album.artwork?.url(width: 1000, height: 1000) {
                     do {
                         imageData = try Data(contentsOf: url)
                     } catch {
@@ -135,8 +135,6 @@ class AppleMusicSearchWrangler {
                 }
             }
             if dontTrustTheDuration { duration = .zero }
-            
-            print("^^ Album UPC: \(album.upc ?? "N/A")")
             
             isLoading = false
             return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, recordLabel: album.recordLabelName ?? "", upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", appleMusicID: album.id.rawValue)
@@ -150,7 +148,7 @@ class AppleMusicSearchWrangler {
                     dontTrustTheDuration = true
                 }
                 titles.append(track.title)
-                if let url = playlist.artwork?.url(width: playlist.artwork?.maximumWidth ?? 800, height: playlist.artwork?.maximumHeight ?? 800) {
+                if let url = playlist.artwork?.url(width: 1000, height: 1000) {
                     do {
                         imageData = try Data(contentsOf: url)
                     } catch {
