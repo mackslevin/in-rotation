@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = false
+    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
     @AppStorage("defaultScreen") var defaultScreen = DefaultScreen.collection
     
     @Environment(\.colorScheme) var colorScheme

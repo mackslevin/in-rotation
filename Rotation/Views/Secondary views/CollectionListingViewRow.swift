@@ -102,7 +102,6 @@ struct CollectionListingViewRow: View {
                 Label("Delete", systemImage: "trash")
             }
         }
-        
     }
 }
 

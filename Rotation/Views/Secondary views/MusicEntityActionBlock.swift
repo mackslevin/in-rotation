@@ -18,7 +18,7 @@ struct MusicEntityActionBlock: View {
     
     @State private var played = false
     
-    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = false
+    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
     
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
