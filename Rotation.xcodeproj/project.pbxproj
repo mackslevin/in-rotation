@@ -752,7 +752,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Rotation/Rotation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Rotation/Preview Content\"";
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				ENABLE_PREVIEWS = YES;
@@ -791,7 +791,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Rotation/Rotation.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Rotation/Preview Content\"";
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				ENABLE_PREVIEWS = YES;
@@ -828,7 +828,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-ActionExtension";
 				CODE_SIGN_ENTITLEMENTS = "Rotation-iOSActionExtension/Rotation-iOSActionExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
@@ -860,7 +860,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-ActionExtension";
 				CODE_SIGN_ENTITLEMENTS = "Rotation-iOSActionExtension/Rotation-iOSActionExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = CCAQHTG68D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Rotation-iOSActionExtension/Info.plist";
