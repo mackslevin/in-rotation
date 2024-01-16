@@ -32,7 +32,6 @@ final class IAPWrangler: ObservableObject {
             case .success(let state):
                 switch state {
                     case .pending:
-                        print("^^ pending")
                         iapError = .purchasePending
                     case .success(let verification):
                         switch verification {
@@ -48,7 +47,6 @@ final class IAPWrangler: ObservableObject {
                 }
                 
             case .failure(let error):
-                print("^^ failure")
                 iapError = .system(error)
         }
     }

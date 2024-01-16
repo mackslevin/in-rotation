@@ -15,7 +15,7 @@ struct IAPPaywallView: View {
             ScrollView {
                 VStack(spacing: 40) {
                     EntityLimitReachedView()
-                    PremiumUnlockProductView()
+                    PremiumUnlockProductView(showExplainer: false)
                         .padding()
                         .background {
                             RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))

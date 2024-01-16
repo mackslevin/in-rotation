@@ -20,7 +20,7 @@ struct EntityLimitReachedView: View {
                 .font(.displayFont(ofSize: 28))
                 .foregroundStyle(.tint)
             
-            Text("To start, In Rotation limits your collection to \(Utility.maximumFreeEntities) albums or songs. To add more, you can either delete some items or consider making an in-app purchase to unlock unlimited items and help fund further development. ")
+            Text("To start, In Rotation limits your collection to \(Utility.maximumFreeEntities) albums or songs. To add more, you can either delete some items or consider making an in-app purchase to unlock unlimited items and help fund further development.")
                 .multilineTextAlignment(.center)
                 .fontWeight(.medium)
         }

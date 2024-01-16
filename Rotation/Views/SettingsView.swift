@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SettingsView: View {
     @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
@@ -13,7 +14,12 @@ struct SettingsView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @EnvironmentObject var iapWrangler: IAPWrangler
+    
     @State private var isShowingWelcomeView = false
+    
+    @State private var restorePurchaseError: Error? = nil
+    @State private var isShowingRestorePurchaseError = false
     
     var body: some View {
         NavigationStack {
@@ -28,8 +34,18 @@ struct SettingsView: View {
                 
                 Form {
                     Section {
-                        PremiumUnlockProductView()
-                            .padding()
+                        PremiumUnlockProductView(showExplainer: true)
+                        
+                        Button("Restore Purchase") {
+                            Task {
+                                do {
+                                    try await AppStore.sync()
+                                } catch {
+                                    restorePurchaseError = error
+                                    isShowingRestorePurchaseError = true
+                                }
+                            }
+                        }
                     }
                     
                     Section {
@@ -63,13 +79,22 @@ struct SettingsView: View {
                 }
                 .scrollContentBackground(.hidden)
             }
-            
             .background {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
             .sheet(isPresented: $isShowingWelcomeView, content: {
                 WelcomeView(){}
             })
+            .alert("Could Not Restore Purchase", isPresented: $isShowingRestorePurchaseError) {
+                Button("OK"){}
+            } message: {
+                if let restorePurchaseError {
+                    Text(restorePurchaseError.localizedDescription)
+                } else {
+                    Text("Please try again.")
+                }
+            }
+
         }
         
     }
