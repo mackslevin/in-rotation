@@ -22,6 +22,7 @@ struct IAPPaywallView: View {
                                 .foregroundStyle(colorScheme == .light ? Color.white : Color(red: 0.2, green: 0.2, blue: 0.2))
                                 .shadow(radius: 1)
                         }
+                        .padding(8)
                         
                 }
             }
