@@ -35,7 +35,9 @@ struct SettingsView: View {
                 Form {
                     Section {
                         PremiumUnlockProductView(showExplainer: true)
-                        
+                    }
+                    
+                    Section {
                         Button("Restore Purchase") {
                             Task {
                                 do {
