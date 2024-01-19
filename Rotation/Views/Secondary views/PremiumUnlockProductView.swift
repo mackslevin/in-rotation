@@ -22,7 +22,9 @@ struct PremiumUnlockProductView: View {
     
     var body: some View {
         if isLoading {
-            ProgressView()
+            HStack {
+                Spacer(); ProgressView(); Spacer()
+            }
         } else if alreadyPurchased {
             HStack {
                 Spacer()
@@ -48,7 +50,11 @@ struct PremiumUnlockProductView: View {
                         .resizable().scaledToFit()
                         .foregroundStyle(Color.accentColor)
                 }
+                .onInAppPurchaseStart(perform: { _ in
+                    isLoading = true
+                })
                 .onInAppPurchaseCompletion { product, result in
+                    isLoading = false
                     Task {
                         await iapWrangler.handlePurchaseCompletion(product:product, result: result)
                     }
