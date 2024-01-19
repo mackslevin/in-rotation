@@ -7,7 +7,7 @@
     {
       "displayPrice" : "2.99",
       "familyShareable" : false,
-      "internalID" : "19C4DD25",
+      "internalID" : "F302C923",
       "localizations" : [
         {
           "description" : "Add unlimited items to your collection!",
@@ -15,8 +15,8 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.johnslevin.Rotation.basicUnlock",
-      "referenceName" : "Premium Unlock",
+      "productID" : "com.johnslevin.standardUnlock",
+      "referenceName" : "Standard Unlock",
       "type" : "NonConsumable"
     }
   ],

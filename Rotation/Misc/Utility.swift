@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Utility {
     
-    static let premiumUnlockProductID = "com.johnslevin.Rotation.basicUnlock"
+    static let premiumUnlockProductID = "com.johnslevin.standardUnlock"
     
     static let maximumFreeEntities = 15
     
