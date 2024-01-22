@@ -6,7 +6,7 @@ typealias TransactionListener = Task<Void, Error>
 @MainActor
 final class IAPWrangler: ObservableObject {
     @Published private(set) var items = [Product]()
-    @Published private(set) var iapError: IAPError?
+    @Published var iapError: IAPError? = nil
     
     private var transactionListener: TransactionListener?
     
