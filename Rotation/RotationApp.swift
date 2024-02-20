@@ -2,7 +2,7 @@
 //  RotationApp.swift
 //  Rotation
 //
-//  Created by Mack Slevin on 11/7/23.
+//  Created by Mack Slevin on 11/7/23
 //
 
 import SwiftUI 
