@@ -56,11 +56,11 @@ struct CardActionBlock: View {
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 36, weight: .bold))
             }
-            .onAppear {
-                Task {
-                    await grabSpotifyURL()
-                }
-            }
+//            .onAppear {
+//                Task {
+//                    await grabSpotifyURL()
+//                }
+//            }
             .onDisappear {
                 player.stop()
             }
@@ -72,15 +72,15 @@ struct CardActionBlock: View {
         }
     }
     
-    func grabSpotifyURL() async {
-        if recEntity.musicEntity.spotifyURLString.isEmpty {
-            Task {
-                if let urlStr = try? await SpotifyAPIWrangler().findMatch(forMusicEntity: recEntity.musicEntity) {
-                    recEntity.musicEntity.spotifyURLString = urlStr
-                }
-            }
-        }
-    }
+//    func grabSpotifyURL() async {
+//        if recEntity.musicEntity.spotifyURLString.isEmpty {
+//            Task {
+//                if let urlStr = try? await SpotifyAPIWrangler().findMatch(forMusicEntity: recEntity.musicEntity) {
+//                    recEntity.musicEntity.spotifyURLString = urlStr
+//                }
+//            }
+//        }
+//    }
     
     
 }

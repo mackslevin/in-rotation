@@ -20,7 +20,7 @@ struct MainView: View {
     @State private var url: URL? = nil
     @State private var musicURLWrangler = MusicURLWrangler()
     @State private var amWrangler = AppleMusicWrangler()
-    @State private var spotifyWrangler = SpotifyAPIWrangler()
+//    @State private var spotifyWrangler = SpotifyAPIWrangler()
     @State private var musicEntity: MusicEntity? = nil
     @State private var thereWasAnError = false
     
@@ -280,13 +280,13 @@ struct MainView: View {
                     }
                 }
                 
-                if me.spotifyURLString.isEmpty {
-                    Task {
-                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: me) {
-                            me.spotifyURLString = urlStr
-                        }
-                    }
-                }
+//                if me.spotifyURLString.isEmpty {
+//                    Task {
+//                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: me) {
+//                            me.spotifyURLString = urlStr
+//                        }
+//                    }
+//                }
             }
         }
     }

@@ -13,7 +13,7 @@ struct MusicEntityDetailView: View {
     @State private var amWrangler = AppleMusicWrangler()
     @State private var isShowingErrorAlert = false
     @State private var alertMessage: String? = nil
-    @State private var spotifyWrangler = SpotifyAPIWrangler()
+//    @State private var spotifyWrangler = SpotifyAPIWrangler()
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     @State private var isShowingAddedToLibrarySuccessAlert = false
     
@@ -87,7 +87,7 @@ struct MusicEntityDetailView: View {
                 }
                 
                 
-                // TODO: Replace with new method for checking/adding 
+                // TODO: Replace with new method for checking/adding
 //                if musicEntity.spotifyURLString.isEmpty {
 //                    Task {
 //                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: musicEntity) {

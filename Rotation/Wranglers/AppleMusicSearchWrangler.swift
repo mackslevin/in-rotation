@@ -31,9 +31,7 @@ class AppleMusicSearchWrangler {
         
         do {
             let response = try await request.response()
-            
             reset()
-            
             albumResults = Array<Album>(response.albums)
             songResults = Array<Song>(response.songs)
             playlistResults = Array<Playlist>(response.playlists)

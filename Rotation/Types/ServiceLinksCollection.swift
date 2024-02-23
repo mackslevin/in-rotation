@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct ServiceLinksCollection: Codable {
-    var userCountry: String
-    var odesliURL: String
-    var linksByPlatform: [String : ServiceLink]
+    var userCountry: String = ""
+    var odesliURL: String = ""
+    var linksByPlatform: [String : ServiceLink] = [:]
     
     enum CodingKeys: String, CodingKey {
         case userCountry = "userCountry"

@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct ServiceLink: Codable {
-    let country: String
-    let url: String
-    let entityUniqueId: String
-    let nativeAppUriMobile: String?
-    let nativeAppUriDesktop: String?
+    var country: String = ""
+    var url: String = ""
+    var entityUniqueId: String = ""
+    var nativeAppUriMobile: String? = nil
+    var nativeAppUriDesktop: String? = nil
 }
