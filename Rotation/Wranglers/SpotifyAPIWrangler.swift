@@ -50,20 +50,20 @@ class SpotifyAPIWrangler {
         }
     }
     
-    func openInSpotify(_ musicEntity: MusicEntity) async throws {
-        if !musicEntity.spotifyURLString.isEmpty {
-            let urlString = musicEntity.spotifyURLString
-            await MainActor.run {
-                open(URL(string: urlString)!)
-            }
-        } else {
-            let urlString = try await findMatch(forMusicEntity: musicEntity)
-            musicEntity.spotifyURLString = urlString
-            await MainActor.run {
-                open(URL(string: urlString)!)
-            }
-        }
-    }
+//    func openInSpotify(_ musicEntity: MusicEntity) async throws {
+//        if !musicEntity.spotifyURLString.isEmpty {
+//            let urlString = musicEntity.spotifyURLString
+//            await MainActor.run {
+//                open(URL(string: urlString)!)
+//            }
+//        } else {
+//            let urlString = try await findMatch(forMusicEntity: musicEntity)
+//            musicEntity.spotifyURLString = urlString
+//            await MainActor.run {
+//                open(URL(string: urlString)!)
+//            }
+//        }
+//    }
     
     
     private func open(_ url: URL) {

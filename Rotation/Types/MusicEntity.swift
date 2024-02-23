@@ -35,6 +35,7 @@ class MusicEntity {
     var notes: String = ""
     
     var archived = false
+    var linkCollection: ServiceLinksCollection? = nil
     
     var image: Image {
         if let data = self.imageData, let uiImage = UIImage(data: data) {
@@ -44,7 +45,7 @@ class MusicEntity {
         }
     }
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, recordLabel: String = "", isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", spotifyURLString: String = "", spotifyID: String = "", appleMusicID: String = "", tags: [Tag]? = [], notes: String = "") {
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, recordLabel: String = "", isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", spotifyURLString: String = "", spotifyID: String = "", appleMusicID: String = "", tags: [Tag]? = [], notes: String = "", linkCollection: ServiceLinksCollection? = nil) {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -64,6 +65,7 @@ class MusicEntity {
         self.appleMusicID = appleMusicID
         self.tags = tags
         self.notes = notes
+        self.linkCollection = linkCollection
         
         self.archived = false
     }

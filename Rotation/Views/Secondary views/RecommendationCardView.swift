@@ -239,16 +239,22 @@ struct RecommendationCardView: View {
                 }
             }
             
-            Button("Spotify") {
-                Task {
-                    do {
-                        try await viewModel.spotifyWrangler.openInSpotify(recEntity.musicEntity)
-                    } catch {
-                        print(error)
-                        isShowingSpotifyOpenError = true
-                    }
+//            Button("Spotify") {
+//                Task {
+//                    do {
+//                        try await viewModel.spotifyWrangler.openInSpotify(recEntity.musicEntity)
+//                    } catch {
+//                        print(error)
+//                        isShowingSpotifyOpenError = true
+//                    }
+//                }
+//            }
+            if !recEntity.musicEntity.spotifyURLString.isEmpty, let url = URL(string: recEntity.musicEntity.spotifyURLString) {
+                Button("Spotify") {
+                    UIApplication.shared.open(url)
                 }
             }
+            
         }
         .alert("Unable to find matching album on Spotify", isPresented: $isShowingSpotifyOpenError) {
             Button("OK"){}

@@ -14,7 +14,7 @@ struct MusicEntityActionBlock: View {
     @Binding var isShowingErrorAlert: Bool
     
     @State private var amWrangler = AppleMusicWrangler()
-    @State private var spotifyWrangler = SpotifyAPIWrangler()
+//    @State private var spotifyWrangler = SpotifyAPIWrangler()
     
     @State private var played = false
     
@@ -66,17 +66,19 @@ struct MusicEntityActionBlock: View {
                 
                 Spacer()
                 
-                if !musicEntity.spotifyURLString.isEmpty {
+                if !musicEntity.spotifyURLString.isEmpty, let url = URL(string: musicEntity.spotifyURLString) {
                     Button {
-                        Task {
-                            do {
-                                try await spotifyWrangler.openInSpotify(musicEntity)
-                            } catch {
-                                print(error)
-                                isShowingErrorAlert = true
-                            }
-                            
-                        }
+//                        Task {
+//                            do {
+//                                try await spotifyWrangler.openInSpotify(musicEntity)
+//                            } catch {
+//                                print(error)
+//                                isShowingErrorAlert = true
+//                            }
+//                            
+//                        }
+                        
+                        UIApplication.shared.open(url)
                     } label: {
                         VStack() {
                             Image(systemName: "arrow.up.right.square")

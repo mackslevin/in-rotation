@@ -86,13 +86,15 @@ struct MusicEntityDetailView: View {
                     }
                 }
                 
-                if musicEntity.spotifyURLString.isEmpty {
-                    Task {
-                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: musicEntity) {
-                            musicEntity.spotifyURLString = urlStr
-                        }
-                    }
-                }
+                
+                // TODO: Replace with new method for checking/adding 
+//                if musicEntity.spotifyURLString.isEmpty {
+//                    Task {
+//                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: musicEntity) {
+//                            musicEntity.spotifyURLString = urlStr
+//                        }
+//                    }
+//                }
             }
         }
     }

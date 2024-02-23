@@ -113,9 +113,13 @@ class AppleMusicSearchWrangler {
                 }
             }
             
+            let amURLString = song.url?.absoluteString
+            let linkCollection = try? await ServiceLinksCollection.linkCollection(fromServiceURL: amURLString ?? "")
+            let spotifyURLString = linkCollection?.linksByPlatform["spotify"]?.url
+            
             isLoading = false
             
-            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, recordLabel: song.albums?.first?.recordLabelName ?? "", isrc: song.isrc ?? "", appleMusicURLString: song.url?.absoluteString ?? "", appleMusicID: song.id.rawValue)
+            return MusicEntity(title: song.title, artistName: song.artistName, releaseDate: song.releaseDate ?? .distantFuture, numberOfTracks: 1, songTitles: titles, duration: duration, imageData: imageData, type: .song, recordLabel: song.albums?.first?.recordLabelName ?? "", isrc: song.isrc ?? "", appleMusicURLString: amURLString ?? "", spotifyURLString: spotifyURLString ?? "", appleMusicID: song.id.rawValue, linkCollection: linkCollection)
         } else if let album = item as? Album {
             let tracks = await getTracksForAlbum(album)
             var dontTrustTheDuration = false
@@ -136,8 +140,13 @@ class AppleMusicSearchWrangler {
             }
             if dontTrustTheDuration { duration = .zero }
             
+            let amURLString = album.url?.absoluteString
+            let linkCollection = try? await ServiceLinksCollection.linkCollection(fromServiceURL: amURLString ?? "")
+            let spotifyURLString = linkCollection?.linksByPlatform["spotify"]?.url
+            
             isLoading = false
-            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, recordLabel: album.recordLabelName ?? "", upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", appleMusicID: album.id.rawValue)
+            
+            return MusicEntity(title: album.title, artistName: album.artistName, releaseDate: album.releaseDate ?? .distantFuture, numberOfTracks: album.trackCount, songTitles: titles, duration: duration, imageData: imageData, type: .album, recordLabel: album.recordLabelName ?? "", upc: album.upc ?? "", appleMusicURLString: album.url?.absoluteString ?? "", spotifyURLString: spotifyURLString ?? "", appleMusicID: album.id.rawValue, linkCollection: linkCollection)
         } else if let playlist = item as? Playlist {
             let tracks = await getTracksForPlaylist(playlist)
             var dontTrustTheDuration = false
