@@ -86,6 +86,7 @@ class AppleMusicWrangler {
     
     @MainActor
     private func openFromISRC(_ isrc: String, forMusicEntity musicEntity: MusicEntity) async throws {
+        // TODO: Deprecate this funtion, as there's no more Spotify API integration
         let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: isrc)
         let response = try await request.response()
         if let song = response.items.first {

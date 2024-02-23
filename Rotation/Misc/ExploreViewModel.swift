@@ -20,7 +20,6 @@ class ExploreViewModel {
     
     let amWrangler = AppleMusicWrangler()
     let amSearchWrangler = AppleMusicSearchWrangler()
-//    let spotifyWrangler = SpotifyAPIWrangler()
     var recommendationsAreLoading = false
     
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {

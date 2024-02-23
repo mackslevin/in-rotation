@@ -98,9 +98,9 @@ struct MainView: View {
                             }
                         }
                         .buttonStyle(.bordered).fontWeight(.medium)
-                    } else if source == .appleMusic && !musicEntity.spotifyURLString.isEmpty {
+                    } else if source == .appleMusic && musicEntity.serviceLinks["spotify"] != nil {
                         Button {
-                            handleCopy(withURLString: musicEntity.spotifyURLString)
+                            handleCopy(withURLString: musicEntity.serviceLinks["spotify"]!)
                         } label: {
                             HStack {
                                 Spacer()

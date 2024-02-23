@@ -26,16 +26,17 @@ class MusicEntity {
     var isrc = "" // Cross-platform identifier for songs only 
     var upc = "" // Cross-platform identifier for albums only.
     var appleMusicURLString = ""
-    var spotifyURI = ""
-    var spotifyURLString = ""
-    var spotifyID: String = ""
+//    var spotifyURI = ""
+//    var spotifyURLString = ""
+//    var spotifyID: String = ""
     var appleMusicID: String = ""
+    var serviceLinks: [String:String] = [:]
     
     var tags: [Tag]?
     var notes: String = ""
     
     var archived = false
-    var linkCollection: ServiceLinksCollection? = nil
+    
     
     var image: Image {
         if let data = self.imageData, let uiImage = UIImage(data: data) {
@@ -45,7 +46,7 @@ class MusicEntity {
         }
     }
     
-    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, recordLabel: String = "", isrc: String = "", upc: String = "", appleMusicURLString: String = "", spotifyURI: String = "", spotifyURLString: String = "", spotifyID: String = "", appleMusicID: String = "", tags: [Tag]? = [], notes: String = "", linkCollection: ServiceLinksCollection? = nil) {
+    init(title: String, artistName: String, releaseDate: Date = .distantFuture, numberOfTracks: Int, songTitles: [String], duration: TimeInterval = .zero, imageData: Data? = nil, played: Bool = false, type: EntityType, recordLabel: String = "", isrc: String = "", upc: String = "", appleMusicURLString: String = "", appleMusicID: String = "", serviceLinks: [String:String] = [:], tags: [Tag]? = [], notes: String = "") {
         self.title = title
         self.artistName = artistName
         self.releaseDate = releaseDate
@@ -59,13 +60,11 @@ class MusicEntity {
         self.isrc = isrc
         self.upc = upc
         self.appleMusicURLString = appleMusicURLString
-        self.spotifyURI = spotifyURI
-        self.spotifyURLString = spotifyURLString
-        self.spotifyID = spotifyID
+        self.serviceLinks = serviceLinks
         self.appleMusicID = appleMusicID
         self.tags = tags
         self.notes = notes
-        self.linkCollection = linkCollection
+        
         
         self.archived = false
     }

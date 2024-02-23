@@ -12,19 +12,13 @@ import MusicKit
 struct MusicEntityActionBlock: View {
     @Bindable var musicEntity: MusicEntity
     @Binding var isShowingErrorAlert: Bool
-    
     @State private var amWrangler = AppleMusicWrangler()
-//    @State private var spotifyWrangler = SpotifyAPIWrangler()
-    
     @State private var played = false
-    
     @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
-    
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
     let actionIconSize: CGFloat = 36
 
-    
     var body: some View {
         VStack {
             HStack {
@@ -66,18 +60,8 @@ struct MusicEntityActionBlock: View {
                 
                 Spacer()
                 
-                if !musicEntity.spotifyURLString.isEmpty, let url = URL(string: musicEntity.spotifyURLString) {
+                if let urlString = musicEntity.serviceLinks["spotify"], let url = URL(string: urlString) {
                     Button {
-//                        Task {
-//                            do {
-//                                try await spotifyWrangler.openInSpotify(musicEntity)
-//                            } catch {
-//                                print(error)
-//                                isShowingErrorAlert = true
-//                            }
-//                            
-//                        }
-                        
                         UIApplication.shared.open(url)
                     } label: {
                         VStack() {
@@ -91,7 +75,6 @@ struct MusicEntityActionBlock: View {
                     }
                     .frame(width: 75)
                 }
-                
                 
                 Spacer()
                     

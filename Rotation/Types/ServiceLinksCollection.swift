@@ -5,6 +5,16 @@ struct ServiceLinksCollection: Codable {
     var odesliURL: String = ""
     var linksByPlatform: [String : ServiceLink] = [:]
     
+    var simpleLinks: [String:String] {
+        var returnValue = [String:String]()
+        for key in linksByPlatform.keys {
+            if let value = linksByPlatform[key] {
+                returnValue[key] = value.url
+            }
+        }
+        return returnValue
+    }
+    
     enum CodingKeys: String, CodingKey {
         case userCountry = "userCountry"
         case odesliURL = "pageUrl"

@@ -13,7 +13,6 @@ struct MusicEntityDetailView: View {
     @State private var amWrangler = AppleMusicWrangler()
     @State private var isShowingErrorAlert = false
     @State private var alertMessage: String? = nil
-//    @State private var spotifyWrangler = SpotifyAPIWrangler()
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     @State private var isShowingAddedToLibrarySuccessAlert = false
     
@@ -52,14 +51,14 @@ struct MusicEntityDetailView: View {
                 Alert(title: Text("Added!"), message: Text("The item has been successfully added to your Apple Music Library"))
             })
             .toolbar {
-                if !musicEntity.appleMusicURLString.isEmpty || !musicEntity.spotifyURLString.isEmpty {
+                if !musicEntity.appleMusicURLString.isEmpty || musicEntity.serviceLinks["spotify"] != nil {
                     ToolbarItem {
                         Menu {
                             if !musicEntity.appleMusicURLString.isEmpty, let amURL = URL(string: musicEntity.appleMusicURLString) {
                                 ShareLink("Share Apple Music Link", item: amURL)
                             }
                             
-                            if !musicEntity.spotifyURLString.isEmpty, let spURL = URL(string: musicEntity.spotifyURLString) {
+                            if let urlStr = musicEntity.serviceLinks["spotify"], let spURL = URL(string: urlStr) {
                                 ShareLink("Share Spotify Link", item: spURL)
                             }
                             
@@ -86,15 +85,14 @@ struct MusicEntityDetailView: View {
                     }
                 }
                 
-                
-                // TODO: Replace with new method for checking/adding
-//                if musicEntity.spotifyURLString.isEmpty {
-//                    Task {
-//                        if let urlStr = try? await spotifyWrangler.findMatch(forMusicEntity: musicEntity) {
-//                            musicEntity.spotifyURLString = urlStr
-//                        }
-//                    }
-//                }
+                print("^^ slinks \(musicEntity.serviceLinks)")
+                if musicEntity.serviceLinks.isEmpty, !musicEntity.appleMusicURLString.isEmpty {
+                    Task {
+                        if let linkCollection = try await ServiceLinksCollection.linkCollection(fromServiceURL: musicEntity.appleMusicURLString) {
+                            musicEntity.serviceLinks = linkCollection.simpleLinks
+                        }
+                    }
+                }
             }
         }
     }

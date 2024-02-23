@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+// TODO: Deprecate this
 enum URLSource {
     case appleMusic, spotify, unknown
 }

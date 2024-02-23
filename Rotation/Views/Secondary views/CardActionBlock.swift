@@ -47,8 +47,8 @@ struct CardActionBlock: View {
                     }
                 }
                 
-                if !recEntity.musicEntity.spotifyURLString.isEmpty {
-                    ShareLink(item: URL(string: recEntity.musicEntity.spotifyURLString)!) {
+                if let urlString = recEntity.musicEntity.serviceLinks["spotify"], let spotURL = URL(string: urlString) {
+                    ShareLink(item: spotURL) {
                         Label("Share Spotify Link", systemImage: "square.and.arrow.up")
                     }
                 }
@@ -56,11 +56,6 @@ struct CardActionBlock: View {
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 36, weight: .bold))
             }
-//            .onAppear {
-//                Task {
-//                    await grabSpotifyURL()
-//                }
-//            }
             .onDisappear {
                 player.stop()
             }
@@ -71,18 +66,6 @@ struct CardActionBlock: View {
             Text("Unable to play this item from Apple Music.")
         }
     }
-    
-//    func grabSpotifyURL() async {
-//        if recEntity.musicEntity.spotifyURLString.isEmpty {
-//            Task {
-//                if let urlStr = try? await SpotifyAPIWrangler().findMatch(forMusicEntity: recEntity.musicEntity) {
-//                    recEntity.musicEntity.spotifyURLString = urlStr
-//                }
-//            }
-//        }
-//    }
-    
-    
 }
 
 //#Preview {

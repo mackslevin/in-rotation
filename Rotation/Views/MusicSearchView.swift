@@ -16,7 +16,6 @@ enum AddMode: CaseIterable {
 struct MusicSearchView: View {
     @State private var amSearchWrangler = AppleMusicSearchWrangler()
     @State private var amWrangler = AppleMusicWrangler()
-//    @State private var spotifyWrangler = SpotifyAPIWrangler()
     @State private var searchText = ""
     @State private var musicEntity: MusicEntity? = nil
     @State private var addMode = AddMode.search
