@@ -134,8 +134,7 @@ class ExploreViewModel {
         
         guard 
             let album,
-            let populatedAlbum = try? await album.with([.relatedAlbums, .artists]),
-            let relatedAlbums = populatedAlbum.relatedAlbums
+            let relatedAlbums = album.relatedAlbums
         else {return nil }
         
         var albumsToReturn: [Album] = []
@@ -144,7 +143,7 @@ class ExploreViewModel {
             for alb in relatedAlbums {
                 albumsToReturn.append(alb as Album)
             }
-        } else if let artist = try? await populatedAlbum.artists?.first?.with([.similarArtists]), let similarArtists = artist.similarArtists, !similarArtists.isEmpty {
+        } else if let artist = try? await album.artists?.first?.with([.similarArtists]), let similarArtists = artist.similarArtists, !similarArtists.isEmpty {
             let randomSimilarArtist = similarArtists.randomElement()!
             let populatedArtist = try? await randomSimilarArtist.with([.albums])
             if let albums = populatedArtist?.albums, !albums.isEmpty {

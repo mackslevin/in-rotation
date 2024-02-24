@@ -286,7 +286,7 @@ class AppleMusicWrangler {
             case .album:
                 let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(musicEntity.appleMusicID))
                 let response = try await request.response()
-                return response.items.first
+                return try? await response.items.first?.with([.relatedAlbums, .artists])
             case .playlist:
                 let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: MusicItemID(musicEntity.appleMusicID))
                 let response = try await request.response()
