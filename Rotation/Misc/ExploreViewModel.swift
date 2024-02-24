@@ -108,8 +108,6 @@ class ExploreViewModel {
     func getRelatedAlbums(for musicEntity: MusicEntity) async -> [Album]? {
         var album: Album? = nil
         
-        print("^^ getting related for \(musicEntity.title)")
-        
         switch musicEntity.type {
             case .song:
                 var song: Song? = nil

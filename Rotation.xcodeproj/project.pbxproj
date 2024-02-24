@@ -283,6 +283,7 @@
 			children = (
 				01ACB8E02B05740700C13BDA /* EditTagView.swift */,
 				0168F7692B1A6703004E780E /* CollectionListingView.swift */,
+				01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */,
 				01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */,
 				01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */,
 				015FB06E2B059BC200BAC1BC /* MusicEntityActionBlock.swift */,
@@ -295,7 +296,6 @@
 				019045AF2B06D240007F78C1 /* TagTogglerView.swift */,
 				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 				0168F76B2B1A878F004E780E /* SearchboxView.swift */,
-				01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */,
 				0198F45E2B22D7540051F428 /* RecommendationCardView.swift */,
 				01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */,
 				01B3986A2B293B050015E5D2 /* TagsListingView.swift */,

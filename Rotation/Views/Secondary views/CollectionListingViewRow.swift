@@ -59,7 +59,9 @@ struct CollectionListingViewRow: View {
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
-                modelContext.delete(musicEntity)
+                withAnimation {
+                    modelContext.delete(musicEntity)
+                }
             } label: {
                 Label("Delete", systemImage: "trash")
             }
