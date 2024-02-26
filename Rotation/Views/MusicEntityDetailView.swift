@@ -85,7 +85,6 @@ struct MusicEntityDetailView: View {
                     }
                 }
                 
-                print("^^ slinks \(musicEntity.serviceLinks)")
                 if musicEntity.serviceLinks.isEmpty, !musicEntity.appleMusicURLString.isEmpty {
                     Task {
                         if let linkCollection = try await ServiceLinksCollection.linkCollection(fromServiceURL: musicEntity.appleMusicURLString) {
@@ -100,7 +99,6 @@ struct MusicEntityDetailView: View {
     func addToLibrary() {
         Task {
             do {
-                
                 if let musicItem = try await amWrangler.appleMusicItemFromMusicEntity(musicEntity) {
                     print("^^ we have a music item")
                     if let item = musicItem as? MusicLibraryAddable {

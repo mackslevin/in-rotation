@@ -37,6 +37,8 @@ class ExploreViewModel {
             attempts += 1
             let randomSource = sources.randomElement()!
             
+            
+            // MARK: 1ST & 2ND CALLS
             if let relatedAlbum = await findRelatedAlbum(for: randomSource),
                !matchExists(forAlbum: relatedAlbum, inCollection: sources),
                 let recommendationEntity = await recommendationEntityFromAlbum(relatedAlbum, withSource: randomSource)
@@ -124,8 +126,10 @@ class ExploreViewModel {
                 }
             case .album:
                 if !musicEntity.appleMusicID.isEmpty, let foundAlbum = try? await amWrangler.findByAppleMusicID(musicEntity) {
+                    print("^^ find by am ID ")
                     album = foundAlbum as? Album
                 } else if !musicEntity.upc.isEmpty {
+                    print("^^ find by am UPC ")
                     album = try? await amWrangler.findAlbumByUPC(musicEntity.upc)
                 }
             case .playlist:
