@@ -27,4 +27,6 @@ class RecommendationEntity: Identifiable, Equatable {
     static func == (lhs: RecommendationEntity, rhs: RecommendationEntity) -> Bool {
         lhs.id == rhs.id
     }
+    
+    
 }

@@ -10,7 +10,7 @@ import Observation
 import MusicKit
 
 enum ExploreError: String, Error {
-    case unableToFillRecommendations = "Unable to generate recommendations based on your collection. Please make sure your collection contains some songs and/or albums, at least a half dozen or so for best results. (Currently, playlists do not generate recommendations.)"
+    case unableToFillRecommendations = "Unable to generate recommendations. Please try again."
 }
 
 
@@ -23,36 +23,107 @@ class ExploreViewModel {
     var recommendationsAreLoading = false
     
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {
-        guard !sources.isEmpty else {
-            print("^^ no sources")
-            throw ExploreError.unableToFillRecommendations
-        }
+        guard !sources.isEmpty else { throw ExploreError.unableToFillRecommendations }
         
-        recommendationEntities = []
         recommendationsAreLoading = true
-        
+        recommendationEntities = []
         var attempts = 0
         
-        while attempts < 50 && recommendationEntities.count < 10 {
+        while recommendationEntities.count < 10 && attempts <= 100 {
             attempts += 1
-            let randomSource = sources.randomElement()!
             
+            // Grab random source MusicEntity
+            guard let sourceMusicEntity = sources.randomElement() else { try abortRecommendationGeneration(); return }
             
-            // MARK: 1ST & 2ND CALLS
-            if let relatedAlbum = await findRelatedAlbum(for: randomSource),
-               !matchExists(forAlbum: relatedAlbum, inCollection: sources),
-                let recommendationEntity = await recommendationEntityFromAlbum(relatedAlbum, withSource: randomSource)
-            {
-                recommendationEntities.append(recommendationEntity)
+            // If this source is an album
+            if sourceMusicEntity.type == .album {
+                guard !sourceMusicEntity.appleMusicID.isEmpty else { print("^^ No AM ID"); continue }
+                
+                // Convert to MusicItem populated with related albums and with artists
+                var sourceMusicItemRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(sourceMusicEntity.appleMusicID))
+                sourceMusicItemRequest.properties = [.relatedAlbums, .artists]
+                let result = try await sourceMusicItemRequest.response()
+                guard let sourceMusicItem = result.items.first else { print("^^ no resource req result"); continue }
+                
+                // Create variable to store the ID of the album we'll be recommending
+                var recommendedAlbumID = ""
+                
+                // Find an album either from the related albums or from a related artist's albums
+                if let relatedAlbums = sourceMusicItem.relatedAlbums, relatedAlbums.count > 0, let randomRelatedAlbum = relatedAlbums.randomElement() {
+                    
+                    guard !matchExists(forAlbum: randomRelatedAlbum, inCollection: sources), !alreadyExistsInRecommendations(randomRelatedAlbum) else { print("^^ Skipping duplicate"); continue }
+                    
+                    print("^^ Found a related album")
+                    recommendedAlbumID = randomRelatedAlbum.id.rawValue
+                    
+                } else {
+                    print("^^ Gonna try to find a similar artist album...")
+                    guard let artist = sourceMusicItem.artists?.first else { print("^^ No source artist"); continue }
+                    guard let relatedArtist = artist.similarArtists?.randomElement() else { print("^^ No related artists"); continue }
+                    let populatedRelated = try await relatedArtist.with([.albums])
+                    guard let randomRelatedArtistAlbum = populatedRelated.albums?.randomElement() else { print("^^ No related artist albums"); continue }
+                    recommendedAlbumID = randomRelatedArtistAlbum.id.rawValue
+                    
+                    
+                }
+                
+                guard !recommendedAlbumID.isEmpty else { print("^^ rec album id is empty"); continue }
+                
+                // Use ID for catalog resource request for MusicItem populated with artists and editorial
+                var recommendedMusicItemRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(recommendedAlbumID))
+                recommendedMusicItemRequest.properties = [.artists]
+                let recReqResult = try await recommendedMusicItemRequest.response()
+                guard let recMusicItem = recReqResult.items.first else { print("^^ no results for recommended album music item request"); continue }
+                
+                // Add recommendation entity
+                // Get artist
+                guard let recAlbumArtist = recMusicItem.artists?.first else { print("^^ No artist for recommended album"); continue}
+                
+                // Get image data
+                var imgData: Data? = nil
+                if let artURL = recMusicItem.artwork?.url(width: 1000, height: 1000) {
+                    imgData = try Data(contentsOf: artURL)
+                }
+                
+                // Convert recommended album to MusicEntity
+                let recMusicEntity = MusicEntity(
+                    title: recMusicItem.title,
+                    artistName: recMusicItem.artistName,
+                    releaseDate: recMusicItem.releaseDate ?? .distantFuture,
+                    numberOfTracks: recMusicItem.trackCount,
+                    songTitles: recMusicItem.tracks?.map({$0.title}) ?? [],
+                    duration: recMusicItem.tracks?.map({$0.duration ?? .zero}).reduce(0.0, { partialResult, timeInt in
+                        partialResult + timeInt
+                    }) ?? .zero,
+                    imageData: imgData,
+                    played: false,
+                    type: .album,
+                    recordLabel: recMusicItem.recordLabelName ?? "",
+                    isrc: "",
+                    upc: recMusicItem.upc ?? "",
+                    appleMusicURLString: recMusicItem.url?.absoluteString ?? "",
+                    appleMusicID: recMusicItem.id.rawValue,
+                    serviceLinks: [:],
+                    tags: [],
+                    notes: ""
+                )
+                
+                recommendationEntities.append(
+                    RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: recMusicItem.editorialNotes?.short ?? "", artist: recAlbumArtist)
+                )
+            } else if sourceMusicEntity.type == .song {
+                // Do something.
             }
-        }
+        } // END WHILE LOOP
         
+        print("^^ total attempts: \(attempts)")
         recommendationsAreLoading = false
-        
-        if recommendationEntities.count < 10 {
-            print("^^ ran out of attempts: \(attempts)")
-            throw ExploreError.unableToFillRecommendations
-        }
+    }
+    
+    func abortRecommendationGeneration() throws {
+        recommendationEntities = []
+        recommendationsAreLoading = false
+        throw ExploreError.unableToFillRecommendations
     }
     
     func matchExists(forAlbum album: Album, inCollection collection: [MusicEntity]) -> Bool {
@@ -64,39 +135,6 @@ class ExploreViewModel {
         
         return false
     }
-    
-    func recommendationEntityFromAlbum(_ album: Album, withSource source: MusicEntity) async -> RecommendationEntity? {
-        guard let populatedAlbum = try? await album.with([.artists]) else { return nil }
-        
-        var blurb = populatedAlbum.editorialNotes?.short
-        if blurb == nil {
-            blurb = populatedAlbum.editorialNotes?.standard
-        }
-        guard let artist = populatedAlbum.artists?.first else { return nil }
-        guard let musicEntity = await amSearchWrangler.makeMusicEntity(from: populatedAlbum) else { return nil }
-        
-        return RecommendationEntity(musicEntity: musicEntity, recommendationSource: source, blurb: blurb, artist: artist)
-    }
-    
-    func findRelatedAlbum(for source: MusicEntity) async -> Album? {
-        guard let relatedAlbums = await getRelatedAlbums(for: source), !relatedAlbums.isEmpty else {
-            return nil
-        }
-        
-        var randomAlbum = relatedAlbums.randomElement()!
-        var attempts = 0 // Set an upper limit to the amount of times we can try this.
-        while attempts < 3 && alreadyExistsInRecommendations(randomAlbum) {
-            attempts += 1
-            randomAlbum = relatedAlbums.randomElement()!
-        }
-        
-        if alreadyExistsInRecommendations(randomAlbum) {
-            return nil
-        } else {
-            return randomAlbum
-        }
-    }
-    
     func alreadyExistsInRecommendations(_ musicItem: MusicItem) -> Bool {
         for rec in recommendationEntities {
             if rec.musicEntity.appleMusicID == musicItem.id.rawValue {
@@ -105,59 +143,6 @@ class ExploreViewModel {
         }
         
         return false
-    }
-    
-    func getRelatedAlbums(for musicEntity: MusicEntity) async -> [Album]? {
-        var album: Album? = nil
-        
-        switch musicEntity.type {
-            case .song:
-                var song: Song? = nil
-                if !musicEntity.appleMusicID.isEmpty, let foundSong = try? await amWrangler.findByAppleMusicID(musicEntity) {
-                    song = foundSong as? Song
-                } else if !musicEntity.isrc.isEmpty {
-                    song = try? await amWrangler.findSongByISRC(musicEntity.isrc)
-                }
-                
-                if let song = try? await song?.with([.albums]), let songAlbum = song.albums?.first {
-                    album = songAlbum as Album
-                } else {
-                    return nil
-                }
-            case .album:
-                if !musicEntity.appleMusicID.isEmpty, let foundAlbum = try? await amWrangler.findByAppleMusicID(musicEntity) {
-                    print("^^ find by am ID ")
-                    album = foundAlbum as? Album
-                } else if !musicEntity.upc.isEmpty {
-                    print("^^ find by am UPC ")
-                    album = try? await amWrangler.findAlbumByUPC(musicEntity.upc)
-                }
-            case .playlist:
-                return nil
-        }
-        
-        guard 
-            let album,
-            let relatedAlbums = album.relatedAlbums
-        else {return nil }
-        
-        var albumsToReturn: [Album] = []
-        
-        if relatedAlbums.count > 0 {
-            for alb in relatedAlbums {
-                albumsToReturn.append(alb as Album)
-            }
-        } else if let artist = try? await album.artists?.first?.with([.similarArtists]), let similarArtists = artist.similarArtists, !similarArtists.isEmpty {
-            let randomSimilarArtist = similarArtists.randomElement()!
-            let populatedArtist = try? await randomSimilarArtist.with([.albums])
-            if let albums = populatedArtist?.albums, !albums.isEmpty {
-                for album in albums {
-                    albumsToReturn.append(album)
-                }
-            }
-        }
-
-        return albumsToReturn
     }
 }
 
