@@ -100,7 +100,6 @@ struct MusicEntityDetailView: View {
         Task {
             do {
                 if let musicItem = try await amWrangler.appleMusicItemFromMusicEntity(musicEntity) {
-                    print("^^ we have a music item")
                     if let item = musicItem as? MusicLibraryAddable {
                         try await MusicLibrary.shared.add(item)
                         isShowingAddedToLibrarySuccessAlert = true
