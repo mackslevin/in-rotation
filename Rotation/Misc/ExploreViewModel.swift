@@ -23,13 +23,15 @@ class ExploreViewModel {
     var recommendationsAreLoading = false
     
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {
+        // TODO: Throw less often so that this isn't adandoned because of, like, an error getting image data
+        
         guard !sources.isEmpty else { throw ExploreError.unableToFillRecommendations }
         
         recommendationsAreLoading = true
         recommendationEntities = []
         var attempts = 0
         
-        while recommendationEntities.count < 10 && attempts <= 100 {
+        while recommendationEntities.count < 10 && attempts <= 200 {
             attempts += 1
             
             // Grab random source MusicEntity
@@ -63,8 +65,6 @@ class ExploreViewModel {
                     let populatedRelated = try await relatedArtist.with([.albums])
                     guard let randomRelatedArtistAlbum = populatedRelated.albums?.randomElement() else { print("^^ No related artist albums"); continue }
                     recommendedAlbumID = randomRelatedArtistAlbum.id.rawValue
-                    
-                    
                 }
                 
                 guard !recommendedAlbumID.isEmpty else { print("^^ rec album id is empty"); continue }
@@ -75,7 +75,7 @@ class ExploreViewModel {
                 let recReqResult = try await recommendedMusicItemRequest.response()
                 guard let recMusicItem = recReqResult.items.first else { print("^^ no results for recommended album music item request"); continue }
                 
-                // Add recommendation entity
+                
                 // Get artist
                 guard let recAlbumArtist = recMusicItem.artists?.first else { print("^^ No artist for recommended album"); continue}
                 
@@ -112,7 +112,59 @@ class ExploreViewModel {
                     RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: recMusicItem.editorialNotes?.short ?? "", artist: recAlbumArtist)
                 )
             } else if sourceMusicEntity.type == .song {
-                // Do something.
+                print("^^ Starting with a song")
+                // Get source Artist MusicItem
+                guard !sourceMusicEntity.appleMusicID.isEmpty else { print("^^ No AM ID"); continue }
+                var sourceRequest = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: MusicItemID(sourceMusicEntity.appleMusicID))
+                sourceRequest.properties = [.artists]
+                let result = try await sourceRequest.response()
+                guard let sourceMusicItem = result.items.first else { continue }
+                
+                // Get related artist
+                guard let sourceArtist = sourceMusicItem.artists?.randomElement() else { print("^^ Song - no source artist"); continue }
+                guard let populatedSourceArtist = try? await sourceArtist.with([.similarArtists]) else { continue }
+                guard let relatedArtist = populatedSourceArtist.similarArtists?.randomElement() else { print("^^ Song - No related artists"); continue }
+                guard let populatedRelatedArtist = try? await relatedArtist.with([.albums]) else { continue }
+                
+                // Get related artist album
+                guard let relatedArtistAlbum = populatedRelatedArtist.albums?.randomElement() else { print("^^ Song - No related artist albums"); continue }
+                
+                // Get album art Data
+                var imgData: Data? = nil
+                if let artURL = relatedArtistAlbum.artwork?.url(width: 1000, height: 1000) {
+                    imgData = try Data(contentsOf: artURL)
+                    print("^^ Song - Got image data")
+                }
+                
+                // Convert to MusicEntity
+                let recMusicEntity = MusicEntity(
+                    title: relatedArtistAlbum.title,
+                    artistName: relatedArtistAlbum.artistName,
+                    releaseDate: relatedArtistAlbum.releaseDate ?? .distantFuture,
+                    numberOfTracks: relatedArtistAlbum.trackCount,
+                    songTitles: relatedArtistAlbum.tracks?.map({$0.title}) ?? [],
+                    duration: relatedArtistAlbum.tracks?.map({$0.duration ?? .zero}).reduce(0.0, { partialResult, timeInt in
+                        partialResult + timeInt
+                    }) ?? .zero,
+                    imageData: imgData,
+                    played: false,
+                    type: .album,
+                    recordLabel: relatedArtistAlbum.recordLabelName ?? "",
+                    isrc: "",
+                    upc: relatedArtistAlbum.upc ?? "",
+                    appleMusicURLString: relatedArtistAlbum.url?.absoluteString ?? "",
+                    appleMusicID: relatedArtistAlbum.id.rawValue,
+                    serviceLinks: [:],
+                    tags: [],
+                    notes: ""
+                )
+                
+                // Add recommendation
+                recommendationEntities.append(
+                    RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: relatedArtistAlbum.editorialNotes?.short ?? "", artist: relatedArtist)
+                )
+                
+                print("^^ Added from a song source")
             }
         } // END WHILE LOOP
         
