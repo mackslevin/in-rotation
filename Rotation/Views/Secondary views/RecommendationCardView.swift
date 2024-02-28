@@ -149,6 +149,18 @@ struct RecommendationCardView: View {
             if let sourceImageData = recEntity.recommendationSource.imageData, let sourceUIImage = UIImage(data: sourceImageData) {
                 sourceThumbnail = Image(uiImage: sourceUIImage)
             }
+            
+            if recEntity.musicEntity.serviceLinks.isEmpty, !recEntity.musicEntity.appleMusicURLString.isEmpty {
+                print("^^ gonna grab links")
+                
+                Task {
+                    if let linkCollection = try await ServiceLinksCollection.linkCollection(fromServiceURL: recEntity.musicEntity.appleMusicURLString) {
+                        print("^^ got a collection \(linkCollection)")
+                        
+                        recEntity.musicEntity.serviceLinks = linkCollection.simpleLinks
+                    }
+                }
+            }
         }
         .rotationEffect(Angle(degrees: rotation))
         .offset(offset)

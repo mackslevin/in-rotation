@@ -32,20 +32,20 @@ class ExploreViewModel {
         var attempts = 0
         
         while recommendationEntities.count < 10 && attempts <= 200 {
-            attempts += 1
+            
             
             // Grab random source MusicEntity
             guard let sourceMusicEntity = sources.randomElement() else { try abortRecommendationGeneration(); return }
             
             // If this source is an album
             if sourceMusicEntity.type == .album {
-                guard !sourceMusicEntity.appleMusicID.isEmpty else { print("^^ No AM ID"); continue }
+                guard !sourceMusicEntity.appleMusicID.isEmpty else { continue }
                 
                 // Convert to MusicItem populated with related albums and with artists
                 var sourceMusicItemRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(sourceMusicEntity.appleMusicID))
                 sourceMusicItemRequest.properties = [.relatedAlbums, .artists]
                 let result = try await sourceMusicItemRequest.response()
-                guard let sourceMusicItem = result.items.first else { print("^^ no resource req result"); continue }
+                guard let sourceMusicItem = result.items.first else { continue }
                 
                 // Create variable to store the ID of the album we'll be recommending
                 var recommendedAlbumID = ""
@@ -53,31 +53,30 @@ class ExploreViewModel {
                 // Find an album either from the related albums or from a related artist's albums
                 if let relatedAlbums = sourceMusicItem.relatedAlbums, relatedAlbums.count > 0, let randomRelatedAlbum = relatedAlbums.randomElement() {
                     
-                    guard !matchExists(forAlbum: randomRelatedAlbum, inCollection: sources), !alreadyExistsInRecommendations(randomRelatedAlbum) else { print("^^ Skipping duplicate"); continue }
+                    guard !matchExists(forAlbum: randomRelatedAlbum, inCollection: sources), !alreadyExistsInRecommendations(randomRelatedAlbum) else { continue }
                     
-                    print("^^ Found a related album")
                     recommendedAlbumID = randomRelatedAlbum.id.rawValue
                     
                 } else {
                     print("^^ Gonna try to find a similar artist album...")
-                    guard let artist = sourceMusicItem.artists?.first else { print("^^ No source artist"); continue }
-                    guard let relatedArtist = artist.similarArtists?.randomElement() else { print("^^ No related artists"); continue }
+                    guard let artist = sourceMusicItem.artists?.first else { continue }
+                    guard let relatedArtist = artist.similarArtists?.randomElement() else { continue }
                     let populatedRelated = try await relatedArtist.with([.albums])
-                    guard let randomRelatedArtistAlbum = populatedRelated.albums?.randomElement() else { print("^^ No related artist albums"); continue }
+                    guard let randomRelatedArtistAlbum = populatedRelated.albums?.randomElement() else { continue }
                     recommendedAlbumID = randomRelatedArtistAlbum.id.rawValue
                 }
                 
-                guard !recommendedAlbumID.isEmpty else { print("^^ rec album id is empty"); continue }
+                guard !recommendedAlbumID.isEmpty else { continue }
                 
                 // Use ID for catalog resource request for MusicItem populated with artists and editorial
                 var recommendedMusicItemRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(recommendedAlbumID))
                 recommendedMusicItemRequest.properties = [.artists]
                 let recReqResult = try await recommendedMusicItemRequest.response()
-                guard let recMusicItem = recReqResult.items.first else { print("^^ no results for recommended album music item request"); continue }
+                guard let recMusicItem = recReqResult.items.first else { continue }
                 
                 
                 // Get artist
-                guard let recAlbumArtist = recMusicItem.artists?.first else { print("^^ No artist for recommended album"); continue}
+                guard let recAlbumArtist = recMusicItem.artists?.first else { continue}
                 
                 // Get image data
                 var imgData: Data? = nil
@@ -112,28 +111,26 @@ class ExploreViewModel {
                     RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: recMusicItem.editorialNotes?.short ?? "", artist: recAlbumArtist)
                 )
             } else if sourceMusicEntity.type == .song {
-                print("^^ Starting with a song")
                 // Get source Artist MusicItem
-                guard !sourceMusicEntity.appleMusicID.isEmpty else { print("^^ No AM ID"); continue }
+                guard !sourceMusicEntity.appleMusicID.isEmpty else { continue }
                 var sourceRequest = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: MusicItemID(sourceMusicEntity.appleMusicID))
                 sourceRequest.properties = [.artists]
                 let result = try await sourceRequest.response()
                 guard let sourceMusicItem = result.items.first else { continue }
                 
                 // Get related artist
-                guard let sourceArtist = sourceMusicItem.artists?.randomElement() else { print("^^ Song - no source artist"); continue }
+                guard let sourceArtist = sourceMusicItem.artists?.randomElement() else { continue }
                 guard let populatedSourceArtist = try? await sourceArtist.with([.similarArtists]) else { continue }
-                guard let relatedArtist = populatedSourceArtist.similarArtists?.randomElement() else { print("^^ Song - No related artists"); continue }
+                guard let relatedArtist = populatedSourceArtist.similarArtists?.randomElement() else { continue }
                 guard let populatedRelatedArtist = try? await relatedArtist.with([.albums]) else { continue }
                 
                 // Get related artist album
-                guard let relatedArtistAlbum = populatedRelatedArtist.albums?.randomElement() else { print("^^ Song - No related artist albums"); continue }
+                guard let relatedArtistAlbum = populatedRelatedArtist.albums?.randomElement() else { continue }
                 
                 // Get album art Data
                 var imgData: Data? = nil
                 if let artURL = relatedArtistAlbum.artwork?.url(width: 1000, height: 1000) {
                     imgData = try Data(contentsOf: artURL)
-                    print("^^ Song - Got image data")
                 }
                 
                 // Convert to MusicEntity
@@ -163,12 +160,11 @@ class ExploreViewModel {
                 recommendationEntities.append(
                     RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: relatedArtistAlbum.editorialNotes?.short ?? "", artist: relatedArtist)
                 )
-                
-                print("^^ Added from a song source")
             }
+            
+            attempts += 1
         } // END WHILE LOOP
         
-        print("^^ total attempts: \(attempts)")
         recommendationsAreLoading = false
     }
     
