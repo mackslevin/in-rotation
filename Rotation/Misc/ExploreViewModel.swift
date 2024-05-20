@@ -25,7 +25,6 @@ class ExploreViewModel {
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {
         
         guard !sources.isEmpty else {
-            print("^^ Sources empty")
             throw ExploreError.unableToFillRecommendations
         }
         
@@ -36,17 +35,13 @@ class ExploreViewModel {
         while recommendationEntities.count < 10 && attempts <= 200 {
             // Grab random source MusicEntity
             guard let sourceMusicEntity = sources.randomElement() else {
-                print("^^ Aborting")
                 try abortRecommendationGeneration()
                 return
             }
             
             // If this source is an album
             if sourceMusicEntity.type == .album {
-                print("^^ Album")
-                
                 guard !sourceMusicEntity.appleMusicID.isEmpty else {
-                    print("^^ No apple music ID")
                     continue
                 }
                 
@@ -55,54 +50,44 @@ class ExploreViewModel {
                 sourceMusicItemRequest.properties = [.relatedAlbums, .artists]
                 let result = try? await sourceMusicItemRequest.response()
                 guard let sourceMusicItem = result?.items.first else {
-                    print("^^ Resource request came up with no results")
                     continue
                 }
-                
-                print("^^ Source album: \(sourceMusicItem.artistName) - \(sourceMusicItem.title)")
-                print("^^ artists: \(sourceMusicItem.artists ?? [])")
-                print("^^ related album: \(sourceMusicItem.relatedAlbums?.first?.title ?? ":(")")
                 
                 // Create variable to store the ID of the album we'll be recommending
                 var recommendedAlbumID = ""
                 
                 // Find an album either from the related albums or from a related artist's albums
                 if let relatedAlbums = sourceMusicItem.relatedAlbums, relatedAlbums.count > 0, let randomRelatedAlbum = relatedAlbums.randomElement() {
-                    print("^^ Found related album")
                     
-                    guard !matchExists(forAlbum: randomRelatedAlbum, inCollection: sources), !alreadyExistsInRecommendations(randomRelatedAlbum) else { 
-                        print("^^ Album already exists in recs or collection")
+                    guard !matchExists(forAlbum: randomRelatedAlbum, inCollection: sources), !alreadyExistsInRecommendations(randomRelatedAlbum) else {
                         continue
                     }
                     
                     recommendedAlbumID = randomRelatedAlbum.id.rawValue
                 } else {
-                    print("^^ No related albums")
-                    
-                    guard let artist = sourceMusicItem.artists?.first else { print("^^ No artist"); continue }
-                    print("^^ Found an artist");
+                    guard let artist = sourceMusicItem.artists?.first else { continue }
                     
                     // Populate with similar artists
                     let popArtist = try? await artist.with([.similarArtists])
                     
-                    guard let relatedArtist = popArtist?.similarArtists?.randomElement() else {print("^^ No similar artists"); continue }
-                    print("^^ Found related artist")
+                    guard let relatedArtist = popArtist?.similarArtists?.randomElement() else { continue }
+                    
                     let populatedRelated = try? await relatedArtist.with([.albums])
-                    guard let randomRelatedArtistAlbum = populatedRelated?.albums?.randomElement() else {print("^^ No album from related artist"); continue }
-                    print("^^ Found an album from related artist");
+                    guard let randomRelatedArtistAlbum = populatedRelated?.albums?.randomElement() else { continue }
+                    
                     recommendedAlbumID = randomRelatedArtistAlbum.id.rawValue
                 }
                 
-                guard !recommendedAlbumID.isEmpty else {print("^^ No rec album ID"); continue }
+                guard !recommendedAlbumID.isEmpty else { continue }
                 
                 // Use ID for catalog resource request for MusicItem populated with artists and editorial
                 var recommendedMusicItemRequest = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: MusicItemID(recommendedAlbumID))
                 recommendedMusicItemRequest.properties = [.artists]
                 let recReqResult = try? await recommendedMusicItemRequest.response()
-                guard let recMusicItem = recReqResult?.items.first else {print("^^ Could not fetch populated album"); continue }
+                guard let recMusicItem = recReqResult?.items.first else { continue }
                 
                 // Get artist
-                guard let recAlbumArtist = recMusicItem.artists?.first else {print("^^ Fetched album has no artist"); continue}
+                guard let recAlbumArtist = recMusicItem.artists?.first else { continue}
                 
                 // Get image data
                 var imgData: Data? = nil
@@ -137,10 +122,7 @@ class ExploreViewModel {
                     RecommendationEntity(musicEntity: recMusicEntity, recommendationSource: sourceMusicEntity, blurb: recMusicItem.editorialNotes?.short ?? "", artist: recAlbumArtist)
                 )
                 
-                print("^^ New rec album appended");
             } else if sourceMusicEntity.type == .song {
-                print("^^ Song")
-                
                 // Get source Artist MusicItem
                 guard !sourceMusicEntity.appleMusicID.isEmpty else { continue }
                 var sourceRequest = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: MusicItemID(sourceMusicEntity.appleMusicID))
@@ -194,8 +176,6 @@ class ExploreViewModel {
             
             attempts += 1
         } // END WHILE LOOP
-        
-        print("^^ loop count \(attempts)")
         
         recommendationsAreLoading = false
     }
