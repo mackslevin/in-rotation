@@ -11,7 +11,7 @@ struct WelcomeView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     
-    let completion: () -> Void?
+//    let completion: () -> Void?
     
     var body: some View {
         TabView {
@@ -138,7 +138,6 @@ struct WelcomeView: View {
                 .foregroundStyle(.accent)
                 
                 Button {
-                    completion()
                     dismiss()
                 } label: {
                     Text("Cool, thanks for the lecture. Can I use the app now please?")
@@ -161,5 +160,5 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView(completion: {})
+    WelcomeView()
 }

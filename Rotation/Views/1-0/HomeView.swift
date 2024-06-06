@@ -16,11 +16,7 @@ struct HomeView: View {
     
     var body: some View {
         if shouldShowWelcomeView {
-            WelcomeView() {
-                withAnimation {
-                    shouldShowWelcomeView = false
-                }
-            }   
+            WelcomeView()   
         } else {
             TabView(selection: $selectedTab) {
                 CollectionView()

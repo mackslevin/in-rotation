@@ -85,7 +85,7 @@ struct SettingsView: View {
                 Utility.customBackground(withColorScheme: colorScheme)
             }
             .sheet(isPresented: $isShowingWelcomeView, content: {
-                WelcomeView(){}
+                WelcomeView()
             })
             .alert("Could Not Restore Purchase", isPresented: $isShowingRestorePurchaseError) {
                 Button("OK"){}

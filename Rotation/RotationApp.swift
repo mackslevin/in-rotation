@@ -31,7 +31,7 @@ struct RotationApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            PrimaryView()
         }
         .modelContainer(sharedModelContainer)
         .environment(\.appleMusicAuthWrangler, appleMusicAuthWrangler)
