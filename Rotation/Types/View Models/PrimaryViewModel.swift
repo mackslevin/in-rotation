@@ -11,7 +11,7 @@ import Observation
 @Observable
 class PrimaryViewModel {
     var selectedTab = 1
-    var shouldShowWelcomeView = true
+    var shouldShowWelcomeView = false // TODO: Change back
     
     init() {
         if let defaultScreen = UserDefaults.standard.value(forKey: StorageKeys.defaultScreen.rawValue) as? DefaultScreen {
@@ -42,12 +42,10 @@ class PrimaryViewModel {
     private func setUpNavBar() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .font: UIFont(name: "PPPierSans-Bold", size: 48)!,
-            .backgroundColor: UIColor(Color.customBG),
             .foregroundColor: UIColor(Color.accentColor)
         ]
         UINavigationBar.appearance().titleTextAttributes = [
             .font: UIFont(name: "PPPierSans-Bold", size: 20)!,
-            .backgroundColor: UIColor(Color.customBG),
             .foregroundColor: UIColor(Color.accentColor)
         ]
     }

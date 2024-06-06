@@ -18,13 +18,16 @@ struct PrimaryView: View {
                 List {
                     Text("Hello")
                         .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                 }
                 .navigationTitle("Collection")
-                .listRowBackground(Color.clear)
                 .listStyle(.plain)
+                .background { Color.customBG.ignoresSafeArea() }
             }
             .tag(1)
             .tabItem { Label("Collection", systemImage: "circle.grid.3x3.fill") }
+            .background { Color.customBG.ignoresSafeArea() }
+            
             
             Text("Tags")
                 .tag(2)
@@ -44,9 +47,6 @@ struct PrimaryView: View {
         }
         .onAppear {
             vm.setUpAppearance()
-        }
-        .background {
-            Color.customBG
         }
         .sheet(isPresented: $vm.shouldShowWelcomeView, content: {
             WelcomeView()
