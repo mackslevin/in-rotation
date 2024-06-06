@@ -18,7 +18,6 @@ struct PrimaryView: View {
             .tag(1)
             .tabItem { Label("Collection", systemImage: "circle.grid.3x3.fill") }
             
-            
             Text("Tags")
                 .tag(2)
                 .tabItem { Label("Tags", systemImage: "tag.fill") }

@@ -41,7 +41,7 @@ class PrimaryViewModel {
     
     private func setUpNavBar() {
         UINavigationBar.appearance().largeTitleTextAttributes = [
-            .font: UIFont(name: "PPPierSans-Bold", size: 48)!,
+            .font: UIFont(name: "PPPierSans-Bold", size: 38)!,
             .foregroundColor: UIColor(Color.accentColor)
         ]
         UINavigationBar.appearance().titleTextAttributes = [

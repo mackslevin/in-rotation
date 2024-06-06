@@ -60,7 +60,7 @@ struct TagDetailView: View {
                 print(tag.musicEntities!)
             }
             .navigationDestination(item: $selectedMusicEntity) { musicEntity in
-                MusicEntityDetailView(musicEntity: musicEntity)
+                OldMusicEntityDetailView(musicEntity: musicEntity)
             }
         }
     }

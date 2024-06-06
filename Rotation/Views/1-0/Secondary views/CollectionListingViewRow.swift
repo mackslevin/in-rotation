@@ -13,7 +13,7 @@ struct CollectionListingViewRow: View {
     
     var body: some View {
         NavigationLink {
-            MusicEntityDetailView(musicEntity: musicEntity)
+            OldMusicEntityDetailView(musicEntity: musicEntity)
         } label: {
             HStack(spacing: 12) {
                 VStack {

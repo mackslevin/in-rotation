@@ -8,7 +8,7 @@
 import SwiftUI
 import MusicKit
 
-struct MusicEntityDetailView: View {
+struct OldMusicEntityDetailView: View {
     @Bindable var musicEntity: MusicEntity
     @State private var amWrangler = AppleMusicWrangler()
     @State private var isShowingErrorAlert = false
@@ -135,5 +135,5 @@ struct MusicEntityDetailView: View {
 }
 
 #Preview {
-    MusicEntityDetailView(musicEntity: Utility.exampleEntity)
+    OldMusicEntityDetailView(musicEntity: Utility.exampleEntity)
 }
