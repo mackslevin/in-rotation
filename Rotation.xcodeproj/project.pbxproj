@@ -69,6 +69,7 @@
 		01A1507A2C1228FD006DB549 /* PrimaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150792C1228FD006DB549 /* PrimaryView.swift */; };
 		01A1507D2C123513006DB549 /* PrimaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1507C2C123513006DB549 /* PrimaryViewModel.swift */; };
 		01A1507F2C123AD4006DB549 /* StorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1507E2C123AD4006DB549 /* StorageKeys.swift */; };
+		01A150812C12618B006DB549 /* CollectionIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150802C12618B006DB549 /* CollectionIndexView.swift */; };
 		01A803E22B2A358700777251 /* DefaultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E12B2A358700777251 /* DefaultScreen.swift */; };
 		01A803E42B2A456100777251 /* AppleMusicPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */; };
 		01ACB8DB2B05455A00C13BDA /* TagsViewListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */; };
@@ -182,6 +183,7 @@
 		01A150792C1228FD006DB549 /* PrimaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryView.swift; sourceTree = "<group>"; };
 		01A1507C2C123513006DB549 /* PrimaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryViewModel.swift; sourceTree = "<group>"; };
 		01A1507E2C123AD4006DB549 /* StorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageKeys.swift; sourceTree = "<group>"; };
+		01A150802C12618B006DB549 /* CollectionIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIndexView.swift; sourceTree = "<group>"; };
 		01A803E12B2A358700777251 /* DefaultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScreen.swift; sourceTree = "<group>"; };
 		01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicPlayButton.swift; sourceTree = "<group>"; };
 		01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewListRow.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				01A150792C1228FD006DB549 /* PrimaryView.swift */,
+				01A150802C12618B006DB549 /* CollectionIndexView.swift */,
 			);
 			path = "2-0";
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01A150812C12618B006DB549 /* CollectionIndexView.swift in Sources */,
 				018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */,
 				01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */,
 				01ACB8E12B05740700C13BDA /* EditTagView.swift in Sources */,

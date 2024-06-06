@@ -14,24 +14,15 @@ struct PrimaryView: View {
     var body: some View {
         
         TabView(selection: $vm.selectedTab) {
-            NavigationStack {
-                List {
-                    Text("Hello")
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                }
-                .navigationTitle("Collection")
-                .listStyle(.plain)
-                .background { Color.customBG.ignoresSafeArea() }
-            }
+            CollectionIndexView()
             .tag(1)
             .tabItem { Label("Collection", systemImage: "circle.grid.3x3.fill") }
-            .background { Color.customBG.ignoresSafeArea() }
             
             
             Text("Tags")
                 .tag(2)
                 .tabItem { Label("Tags", systemImage: "tag.fill") }
+                .background { Color.customBG.ignoresSafeArea() }
             
             Text("Explore")
                 .tag(3)
