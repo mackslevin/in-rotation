@@ -18,7 +18,7 @@ struct CollectionIndexView: View {
         NavigationSplitView {
             List(selection: $selectedEntityID) {
                 ForEach(musicEntities) { musicEntity in
-                    Text(musicEntity.title)
+                    CollectionIndexRow(musicEntity: musicEntity)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
                 }
@@ -29,9 +29,10 @@ struct CollectionIndexView: View {
         } detail: {
             NavigationStack {
                 Group {
-                    if let selectedEntityID, var musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
+                    if let selectedEntityID, let musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
                         MusicEntityDetailView(musicEntity: musicEntity)
                     } else {
+                        // TODO: Replace with something custom, including custom font
                         ContentUnavailableView("Nothing Selected", systemImage: "questionmark.app.dashed")
                     }
                 }
