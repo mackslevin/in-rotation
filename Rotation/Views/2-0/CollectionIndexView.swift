@@ -9,42 +9,54 @@ import SwiftUI
 import SwiftData
 
 struct CollectionIndexView: View {
+    @Environment(\.modelContext) var modelContext
     @Query var musicEntities: [MusicEntity]
-    @State var selectedEntityID: UUID?
+    @State private var vm = CollectionIndexViewModel()
     
     var body: some View {
-        
-        
         NavigationSplitView {
-            List(selection: $selectedEntityID) {
+            List(selection: $vm.selectedEntityID) {
                 ForEach(musicEntities) { musicEntity in
                     CollectionIndexRow(musicEntity: musicEntity)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
+                        .swipeActions(edge: .trailing) {
+                            Button("Delete", systemImage: "trash", role: .destructive) {
+                                withAnimation {
+                                    modelContext.delete(musicEntity)
+                                }
+                            }
+                        }
                 }
             }
             .listStyle(.plain)
             .background { Color.customBG.ignoresSafeArea() }
             .navigationTitle("Collection")
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
+                }
+            }
+            .sheet(isPresented: $vm.shouldShowAddView, content: {
+                
+            })
         } detail: {
             NavigationStack {
                 Group {
-                    if let selectedEntityID, let musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
+                    if let selectedEntityID = vm.selectedEntityID, let musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
                         MusicEntityDetailView(musicEntity: musicEntity)
                     } else {
-                        // TODO: Replace with something custom, including custom font
+                        // TODO: Replace with something custom, including the custom font
                         ContentUnavailableView("Nothing Selected", systemImage: "questionmark.app.dashed")
                     }
                 }
                 .background { Color.customBG.ignoresSafeArea() }
-                
             }
         }
-
     }
 }
 
 #Preview {
     PrimaryView()
-//    CollectionIndexView()
+        .modelContainer(for: MusicEntity.self)
 }
