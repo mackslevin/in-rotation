@@ -11,6 +11,8 @@ import MusicKit
 
 @Observable
 class AppleMusicSearchWrangler {
+    static let shared = AppleMusicSearchWrangler()
+    
     var albumResults: [Album] = []
     var songResults: [Song] = []
     var playlistResults: [Playlist] = []

@@ -28,6 +28,9 @@ struct RotationApp: App {
     }()
     
     var appleMusicAuthWrangler = AppleMusicAuthWrangler()
+    
+    @State private var amSearchWrangler = AppleMusicSearchWrangler.shared
+    @State private var amWrangler = AppleMusicWrangler()
 
     var body: some Scene {
         WindowGroup {
@@ -35,6 +38,9 @@ struct RotationApp: App {
         }
         .modelContainer(sharedModelContainer)
         .environment(\.appleMusicAuthWrangler, appleMusicAuthWrangler)
+        .environment(amWrangler)
+        .environment(amSearchWrangler)
         .environmentObject(iapWrangler)
+        
     }
 }
