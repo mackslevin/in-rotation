@@ -73,6 +73,8 @@
 		01A150842C12696C006DB549 /* MusicEntityDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150832C12696C006DB549 /* MusicEntityDetailView.swift */; };
 		01A150862C126F8E006DB549 /* CollectionIndexRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150852C126F8E006DB549 /* CollectionIndexRow.swift */; };
 		01A150882C1277FC006DB549 /* CollectionIndexViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150872C1277FC006DB549 /* CollectionIndexViewModel.swift */; };
+		01A1508A2C128152006DB549 /* AddEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A150892C128152006DB549 /* AddEntityView.swift */; };
+		01A1508C2C12820A006DB549 /* AddEntityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1508B2C12820A006DB549 /* AddEntityViewModel.swift */; };
 		01A803E22B2A358700777251 /* DefaultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E12B2A358700777251 /* DefaultScreen.swift */; };
 		01A803E42B2A456100777251 /* AppleMusicPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */; };
 		01ACB8DB2B05455A00C13BDA /* TagsViewListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */; };
@@ -190,6 +192,8 @@
 		01A150832C12696C006DB549 /* MusicEntityDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MusicEntityDetailView.swift; path = "Rotation/Views/2-0/MusicEntityDetailView.swift"; sourceTree = SOURCE_ROOT; };
 		01A150852C126F8E006DB549 /* CollectionIndexRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIndexRow.swift; sourceTree = "<group>"; };
 		01A150872C1277FC006DB549 /* CollectionIndexViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIndexViewModel.swift; sourceTree = "<group>"; };
+		01A150892C128152006DB549 /* AddEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityView.swift; sourceTree = "<group>"; };
+		01A1508B2C12820A006DB549 /* AddEntityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityViewModel.swift; sourceTree = "<group>"; };
 		01A803E12B2A358700777251 /* DefaultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScreen.swift; sourceTree = "<group>"; };
 		01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicPlayButton.swift; sourceTree = "<group>"; };
 		01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsViewListRow.swift; sourceTree = "<group>"; };
@@ -397,7 +401,9 @@
 			children = (
 				01A150822C126699006DB549 /* Secondary views */,
 				01A150792C1228FD006DB549 /* PrimaryView.swift */,
+				01A150832C12696C006DB549 /* MusicEntityDetailView.swift */,
 				01A150802C12618B006DB549 /* CollectionIndexView.swift */,
+				01A150892C128152006DB549 /* AddEntityView.swift */,
 			);
 			path = "2-0";
 			sourceTree = "<group>";
@@ -408,6 +414,7 @@
 				01F4A7502B22430000773AC5 /* ExploreViewModel.swift */,
 				01A1507C2C123513006DB549 /* PrimaryViewModel.swift */,
 				01A150872C1277FC006DB549 /* CollectionIndexViewModel.swift */,
+				01A1508B2C12820A006DB549 /* AddEntityViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -416,7 +423,6 @@
 			isa = PBXGroup;
 			children = (
 				01641CC62B2B974F009F2A47 /* WelcomeView.swift */,
-				01A150832C12696C006DB549 /* MusicEntityDetailView.swift */,
 				01A150852C126F8E006DB549 /* CollectionIndexRow.swift */,
 			);
 			path = "Secondary views";
@@ -551,6 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01A1508A2C128152006DB549 /* AddEntityView.swift in Sources */,
 				01A150812C12618B006DB549 /* CollectionIndexView.swift in Sources */,
 				018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */,
 				01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */,
@@ -615,6 +622,7 @@
 				01B3986B2B293B050015E5D2 /* TagsListingView.swift in Sources */,
 				01A150862C126F8E006DB549 /* CollectionIndexRow.swift in Sources */,
 				014A654C2B34D5D5001DF7AE /* IAPWrangler.swift in Sources */,
+				01A1508C2C12820A006DB549 /* AddEntityViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

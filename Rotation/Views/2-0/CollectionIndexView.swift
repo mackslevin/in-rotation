@@ -38,7 +38,7 @@ struct CollectionIndexView: View {
                 }
             }
             .sheet(isPresented: $vm.shouldShowAddView, content: {
-                
+                AddEntityView()
             })
         } detail: {
             NavigationStack {
