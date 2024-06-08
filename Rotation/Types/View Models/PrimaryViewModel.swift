@@ -52,6 +52,5 @@ class PrimaryViewModel {
     
     private func setUpTabBar() {
         UITabBar.appearance().backgroundColor = UIColor(Color.customBG)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.accentColor.opacity(0.5))
     }
 }

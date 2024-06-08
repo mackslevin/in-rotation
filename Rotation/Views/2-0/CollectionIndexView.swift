@@ -16,7 +16,7 @@ struct CollectionIndexView: View {
     var body: some View {
         NavigationSplitView {
             List(selection: $vm.selectedEntityID) {
-                ForEach(musicEntities) { musicEntity in
+                ForEach(vm.filteredMusicEntities(musicEntities, searchText: vm.searchText)) { musicEntity in
                     CollectionIndexRow(musicEntity: musicEntity)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
@@ -40,6 +40,8 @@ struct CollectionIndexView: View {
             .sheet(isPresented: $vm.shouldShowAddView, content: {
                 AddEntityView()
             })
+            .searchable(text: $vm.searchText)
+            
         } detail: {
             NavigationStack {
                 Group {
@@ -53,6 +55,7 @@ struct CollectionIndexView: View {
                 .background { Color.customBG.ignoresSafeArea() }
             }
         }
+        
     }
 }
 
