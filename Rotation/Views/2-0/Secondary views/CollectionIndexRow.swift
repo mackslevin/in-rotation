@@ -12,6 +12,11 @@ struct CollectionIndexRow: View {
     
     var body: some View {
         HStack {
+            Circle()
+                .frame(width: 12)
+                .foregroundStyle(Color.accentColor.gradient)
+                .opacity(musicEntity.played ? 0 : 1)
+            
             musicEntity.image
                 .resizable()
                 .scaledToFill()

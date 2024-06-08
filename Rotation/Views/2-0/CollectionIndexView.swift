@@ -22,9 +22,12 @@ struct CollectionIndexView: View {
                         .listRowBackground(Color.clear)
                         .swipeActions(edge: .trailing) {
                             Button("Delete", systemImage: "trash", role: .destructive) {
-                                withAnimation {
-                                    modelContext.delete(musicEntity)
-                                }
+                                withAnimation { modelContext.delete(musicEntity) }
+                            }
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button(musicEntity.played ? "Mark Unplayed" : "Mark Played", systemImage: "circle") {
+                                withAnimation { musicEntity.played.toggle() }
                             }
                         }
                 }

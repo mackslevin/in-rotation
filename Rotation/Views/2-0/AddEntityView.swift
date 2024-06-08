@@ -24,7 +24,6 @@ struct AddEntityView: View {
                     .focused($searchBoxIsFocused)
                     .autocorrectionDisabled()
                 
-                
                 // MARK: Search Results
                 if amSearchWrangler.resultsExist(), !amSearchWrangler.isLoading {
                     ScrollView(showsIndicators: true) {
@@ -70,7 +69,6 @@ struct AddEntityView: View {
                 }
                 
                 Spacer()
-                
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
