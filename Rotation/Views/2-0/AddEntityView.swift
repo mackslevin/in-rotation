@@ -89,6 +89,12 @@ struct AddEntityView: View {
                     await amSearchWrangler.search(withTerm:vm.searchText)
                 }
             }
+            .onChange(of: amSearchWrangler.searchError) { oldValue, newValue in
+                if newValue != nil {
+                    vm.shouldShowError = true
+                }
+            }
+            .alert("Error", isPresented: $vm.shouldShowError) { Button("OK"){} }
         }
     }
 }

@@ -321,8 +321,6 @@
 				0195D78F2B33D23A00B4E5FF /* EntityLimitReachedView.swift */,
 				014A65512B34DCD7001DF7AE /* PremiumUnlockProductView.swift */,
 				014A65532B34F768001DF7AE /* IAPPaywallView.swift */,
-				010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */,
-				013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -422,8 +420,10 @@
 		01A150822C126699006DB549 /* Secondary views */ = {
 			isa = PBXGroup;
 			children = (
+				010A36D02B3B779900E40EC7 /* LiveResultsRow.swift */,
 				01641CC62B2B974F009F2A47 /* WelcomeView.swift */,
 				01A150852C126F8E006DB549 /* CollectionIndexRow.swift */,
+				013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";

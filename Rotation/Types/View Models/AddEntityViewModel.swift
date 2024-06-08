@@ -14,6 +14,7 @@ class AddEntityViewModel {
     var searchText = ""
     var newMusicEntity: MusicEntity?
     var isLoading = false
+    var shouldShowError = false
     
     func setMusicEntity<T: MusicItem>(_ musicItem: T) async {
         isLoading = true
