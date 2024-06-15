@@ -15,26 +15,35 @@ struct CollectionIndexView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(selection: $vm.selectedEntityID) {
-                ForEach(vm.filteredMusicEntities(musicEntities, searchText: vm.searchText)) { musicEntity in
-                    CollectionIndexRow(musicEntity: musicEntity)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .swipeActions(edge: .trailing) {
-                            Button("Delete", systemImage: "trash", role: .destructive) {
-                                withAnimation { modelContext.delete(musicEntity) }
-                            }
+            VStack {
+                if musicEntities.isEmpty {
+                    EmptyCollectionView(vm: $vm)
+                } else {
+                    List(selection: $vm.selectedEntityID) {
+                        ForEach(vm.filteredMusicEntities(musicEntities, searchText: vm.searchText)) { musicEntity in
+                            CollectionIndexRow(musicEntity: musicEntity)
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.clear)
+                                .swipeActions(edge: .trailing) {
+                                    Button("Delete", systemImage: "trash", role: .destructive) {
+                                        withAnimation { modelContext.delete(musicEntity) }
+                                    }
+                                }
+                                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                    Button(musicEntity.played ? "Mark Unplayed" : "Mark Played", systemImage: "circle") {
+                                        withAnimation { musicEntity.played.toggle() }
+                                    }
+                                }
                         }
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button(musicEntity.played ? "Mark Unplayed" : "Mark Played", systemImage: "circle") {
-                                withAnimation { musicEntity.played.toggle() }
-                            }
-                        }
+                        
+                        
+                    }
+                    .listStyle(.plain)
+                    .searchable(text: $vm.searchText)
                 }
             }
-            .listStyle(.plain)
-            .background { Color.customBG.ignoresSafeArea() }
             .navigationTitle("Collection")
+            .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
@@ -43,7 +52,6 @@ struct CollectionIndexView: View {
             .sheet(isPresented: $vm.shouldShowAddView, content: {
                 AddEntityView()
             })
-            .searchable(text: $vm.searchText)
             
         } detail: {
             NavigationStack {

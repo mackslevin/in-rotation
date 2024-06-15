@@ -105,6 +105,7 @@
 		01CC72972B881A3C00BE31C7 /* ServiceLinksCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CC72962B881A3C00BE31C7 /* ServiceLinksCollection.swift */; };
 		01CC72982B881A3C00BE31C7 /* ServiceLinksCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CC72962B881A3C00BE31C7 /* ServiceLinksCollection.swift */; };
 		01CE6B132B279E7C00B81C82 /* CardActionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */; };
+		01DA38142C1D1CE80073C707 /* EmptyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA38132C1D1CE80073C707 /* EmptyCollectionView.swift */; };
 		01E5DA772AFD60480080AF79 /* AppleMusicWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */; };
 		01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */; };
 		01F4A7512B22430000773AC5 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F4A7502B22430000773AC5 /* ExploreViewModel.swift */; };
@@ -215,6 +216,7 @@
 		01CC72932B88186800BE31C7 /* ServiceLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLink.swift; sourceTree = "<group>"; };
 		01CC72962B881A3C00BE31C7 /* ServiceLinksCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLinksCollection.swift; sourceTree = "<group>"; };
 		01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardActionBlock.swift; sourceTree = "<group>"; };
+		01DA38132C1D1CE80073C707 /* EmptyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionView.swift; sourceTree = "<group>"; };
 		01E5DA762AFD60480080AF79 /* AppleMusicWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicWrangler.swift; sourceTree = "<group>"; };
 		01F1A0F12B215CBB0073331E /* RecommendationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationEntity.swift; sourceTree = "<group>"; };
 		01F4A7502B22430000773AC5 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				01641CC62B2B974F009F2A47 /* WelcomeView.swift */,
 				01A150852C126F8E006DB549 /* CollectionIndexRow.swift */,
 				013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */,
+				01DA38132C1D1CE80073C707 /* EmptyCollectionView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				018811932B080233003EF47A /* CollectionSortCriteria.swift in Sources */,
 				01FC64E52AFC17E900D53903 /* AppleMusicSearchWrangler.swift in Sources */,
 				01ACB8E12B05740700C13BDA /* EditTagView.swift in Sources */,
+				01DA38142C1D1CE80073C707 /* EmptyCollectionView.swift in Sources */,
 				0198F45F2B22D7540051F428 /* RecommendationCardView.swift in Sources */,
 				011BB8F42B045AA900F3609D /* TagManagerView.swift in Sources */,
 				01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */,
