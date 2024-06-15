@@ -37,14 +37,6 @@ struct OldMusicEntityDetailView: View {
                 
                 
             }
-            .background {
-                ZStack {
-                    musicEntity.image.resizable().scaledToFill()
-                    Rectangle()
-                        .foregroundStyle(.thinMaterial)
-                }
-                .ignoresSafeArea()
-            }
             .navigationTitle(Utility.stringForType(musicEntity.type))
             .navigationBarTitleDisplayMode(.inline)
             .alert(isPresented: $isShowingAddedToLibrarySuccessAlert, content: {
