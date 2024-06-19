@@ -21,14 +21,31 @@ struct MusicEntityDetailView: View {
                     LazyVGrid(columns: 
                                 horizontalSize == .compact ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], content: {
                         
-                        if musicEntity.imageData != nil {
-                            musicEntity.image.resizable()
-                                .aspectRatio(1, contentMode: .fill)
-                                .frame(maxWidth: 400, maxHeight: 400)
-                                .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                        VStack {
+                            if musicEntity.imageData != nil {
+                                musicEntity.image.resizable()
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .frame(maxWidth: 500, maxHeight: 500)
+                                    .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                            }
+                            
+                            MusicEntityHeadlineBlock(musicEntity: musicEntity)
+                            
+                            MusicEntityActionBlock(musicEntity: musicEntity)
+                            
+                            Spacer()
                         }
                         
-                        MusicEntityHeadlineBlock(musicEntity: musicEntity)
+                        VStack {
+                            MusicEntityDetailsBlock(musicEntity: musicEntity)
+                            
+                            MusicEntityTagsBlock(musicEntity: musicEntity)
+                            
+                            MusicEntityNotesBlock(musicEntity: musicEntity)
+                            
+                            Spacer()
+                        }
+                        
                     })
                     
                     
@@ -55,5 +72,7 @@ struct MusicEntityDetailView: View {
 }
 
 #Preview {
-    MusicEntityDetailView(musicEntity: Utility.exampleEntity)
+    NavigationStack {
+        MusicEntityDetailView(musicEntity: Utility.exampleEntity)
+    }
 }

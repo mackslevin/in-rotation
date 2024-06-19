@@ -11,13 +11,15 @@ import MusicKit
 
 struct MusicEntityActionBlock: View {
     @Bindable var musicEntity: MusicEntity
-    @Binding var isShowingErrorAlert: Bool
     @State private var amWrangler = AppleMusicWrangler()
     @State private var played = false
     @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
     let actionIconSize: CGFloat = 36
+    
+    @State var isShowingErrorAlert: Bool = false
+    @State private var errorMessage: String? = nil
 
     var body: some View {
         VStack {
@@ -106,6 +108,7 @@ struct MusicEntityActionBlock: View {
         .onChange(of: played) { _, newValue in
             musicEntity.played = newValue
         }
+        .alert(errorMessage ?? "Something went wrong. Please try again.", isPresented: $isShowingErrorAlert) { Button("OK"){} }
         
     }
     
@@ -115,6 +118,7 @@ struct MusicEntityActionBlock: View {
                 try await amWrangler.playInAppleMusicApp(musicEntity)
             } catch {
                 print("^^ playback error")
+                errorMessage = "Error: Playback unavailable at this time."
                 isShowingErrorAlert = true
             }
         }
@@ -124,7 +128,7 @@ struct MusicEntityActionBlock: View {
 #Preview {
     VStack {
         Spacer()
-        MusicEntityActionBlock(musicEntity: Utility.exampleEntity, isShowingErrorAlert: .constant(false))
+        MusicEntityActionBlock(musicEntity: Utility.exampleEntity)
         Spacer()
     }
     .padding()

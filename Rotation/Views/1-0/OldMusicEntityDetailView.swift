@@ -27,7 +27,7 @@ struct OldMusicEntityDetailView: View {
                     }
                     
                     MusicEntityHeadlineBlock(musicEntity: musicEntity)    
-                    MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
+//                    MusicEntityActionBlock(musicEntity: musicEntity, isShowingErrorAlert: $isShowingErrorAlert)
                     MusicEntityDetailsBlock(musicEntity: musicEntity)
                     MusicEntityTagsBlock(musicEntity: musicEntity)
                     MusicEntityNotesBlock(musicEntity: musicEntity)

@@ -23,14 +23,11 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                HStack {
-                    Text("Settings")
-                        .font(.displayFont(ofSize: 32))
-                        .foregroundStyle(.accent)
-                    Spacer()
-                }
-                .padding()
+            
+            ZStack {
+                Rectangle()
+                    .ignoresSafeArea()
+                    .foregroundStyle(Color.customBG)
                 
                 Form {
                     Section {
@@ -58,7 +55,7 @@ struct SettingsView: View {
                             }
                         }
                     }
-                        
+                    
                     Section {
                         Picker("The Apple Music button should...", selection: $shouldPlayInAppleMusicApp) {
                             Text("Open in app").tag(false)
@@ -78,27 +75,27 @@ struct SettingsView: View {
                         }
                         .fontWeight(.medium)
                     }
+                    
                 }
                 .scrollContentBackground(.hidden)
-            }
-            .background {
-                Utility.customBackground(withColorScheme: colorScheme)
-            }
-            .sheet(isPresented: $isShowingWelcomeView, content: {
-                WelcomeView()
-            })
-            .alert("Could Not Restore Purchase", isPresented: $isShowingRestorePurchaseError) {
-                Button("OK"){}
-            } message: {
-                if let restorePurchaseError {
-                    Text(restorePurchaseError.localizedDescription)
-                } else {
-                    Text("Please try again.")
+                .navigationTitle("Settings")
+                .frame(maxWidth: 800, alignment: .center)
+                .sheet(isPresented: $isShowingWelcomeView, content: {
+                    WelcomeView()
+                })
+                .alert("Could Not Restore Purchase", isPresented: $isShowingRestorePurchaseError) {
+                    Button("OK"){}
+                } message: {
+                    if let restorePurchaseError {
+                        Text(restorePurchaseError.localizedDescription)
+                    } else {
+                        Text("Please try again.")
+                    }
                 }
             }
-
+            
+            
         }
-        
     }
 }
 

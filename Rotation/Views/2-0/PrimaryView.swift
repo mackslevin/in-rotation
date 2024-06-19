@@ -27,7 +27,7 @@ struct PrimaryView: View {
                 .tag(3)
                 .tabItem { Label("Explore", systemImage: "rectangle.on.rectangle.angled") }
             
-            Text("Settings")
+            SettingsView()
                 .tag(4)
                 .tabItem { Label("Settings", systemImage: "gear") }
         }
