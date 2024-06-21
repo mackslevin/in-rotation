@@ -26,6 +26,7 @@
 		012513B52AFB1C770064AA07 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012513B42AFB1C770064AA07 /* Preview Assets.xcassets */; };
 		012513C02AFB20E90064AA07 /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
 		013D9B832B3E4626003A6FA0 /* MusicEntityAddingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */; };
+		013FB3DF2C24E95700274DC7 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013FB3DE2C24E95100274DC7 /* DetailViewModel.swift */; };
 		01447F832B1FD0390084E23F /* CollectionListingViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */; };
 		01447F842B1FFEBD0084E23F /* AppleMusicAuthWrangler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */; };
 		014A65482B34D28B001DF7AE /* InRotationStoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 014A65472B34D28B001DF7AE /* InRotationStoreKitConfig.storekit */; };
@@ -159,6 +160,7 @@
 		012513B72AFB1C770064AA07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		012513BF2AFB20E90064AA07 /* AppleMusicAuthWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAuthWrangler.swift; sourceTree = "<group>"; };
 		013D9B822B3E4626003A6FA0 /* MusicEntityAddingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntityAddingView.swift; sourceTree = "<group>"; };
+		013FB3DE2C24E95100274DC7 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		01447F822B1FD0390084E23F /* CollectionListingViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionListingViewRow.swift; sourceTree = "<group>"; };
 		014A65472B34D28B001DF7AE /* InRotationStoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = InRotationStoreKitConfig.storekit; sourceTree = "<group>"; };
 		014A654B2B34D5D5001DF7AE /* IAPWrangler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPWrangler.swift; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 		01A1507B2C1234F1006DB549 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				013FB3DE2C24E95100274DC7 /* DetailViewModel.swift */,
 				01F4A7502B22430000773AC5 /* ExploreViewModel.swift */,
 				01A1507C2C123513006DB549 /* PrimaryViewModel.swift */,
 				01A150872C1277FC006DB549 /* CollectionIndexViewModel.swift */,
@@ -611,6 +614,7 @@
 				018811972B084212003EF47A /* MusicURLWrangler.swift in Sources */,
 				010A36D72B3BB35A00E40EC7 /* URLSource.swift in Sources */,
 				01F1A0F22B215CBB0073331E /* RecommendationEntity.swift in Sources */,
+				013FB3DF2C24E95700274DC7 /* DetailViewModel.swift in Sources */,
 				012513AC2AFB1C750064AA07 /* RotationApp.swift in Sources */,
 				01CC72942B88186800BE31C7 /* ServiceLink.swift in Sources */,
 				019045B02B06D240007F78C1 /* TagTogglerView.swift in Sources */,

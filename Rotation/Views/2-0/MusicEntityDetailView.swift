@@ -11,6 +11,8 @@ import SwiftData
 struct MusicEntityDetailView: View {
     @Bindable var musicEntity: MusicEntity
     @Environment(\.horizontalSizeClass) var horizontalSize
+    @State private var vm = DetailViewModel()
+    @Environment(AppleMusicWrangler.self) var amWrangler
     
     var body: some View {
         NavigationStack {
@@ -45,7 +47,6 @@ struct MusicEntityDetailView: View {
                             
                             Spacer()
                         }
-                        
                     })
                     
                     
@@ -76,11 +77,26 @@ struct MusicEntityDetailView: View {
                             }
                         }
                     }
+                    
+                    if let isAdded = vm.isSavedToUserLibrary {
+                        Button(isAdded ? "Added to Music Library" : "Add to Music Library", systemImage: isAdded ? "checkmark" : "plus") {
+                            Task {
+                                await vm.addToUserLibrary(musicEntity, appleMusicWrangler: amWrangler)
+                                vm.isShowingAddSuccess = true
+                                vm.isSavedToUserLibrary = true
+                            }
+                        }
+                        .disabled(isAdded)
+                    }
                 }
             }
+            .task {
+                try? await vm.setUp(musicEntity)
+            }
+            .alert("The item was successfully added to your library", isPresented: $vm.isShowingAddSuccess) {
+                Button("OK"){}
+            }
         }
-        
-        
     }
 }
 

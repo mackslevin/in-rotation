@@ -26,9 +26,6 @@ class MusicEntity {
     var isrc = "" // Cross-platform identifier for songs only 
     var upc = "" // Cross-platform identifier for albums only.
     var appleMusicURLString = ""
-//    var spotifyURI = ""
-//    var spotifyURLString = ""
-//    var spotifyID: String = ""
     var appleMusicID: String = ""
     var serviceLinks: [String:String] = [:]
     
