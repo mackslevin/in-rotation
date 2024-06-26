@@ -48,9 +48,6 @@ struct MusicEntityDetailView: View {
                             Spacer()
                         }
                     })
-                    
-                    
-                    
                 }
                 .padding()
                 
@@ -70,7 +67,7 @@ struct MusicEntityDetailView: View {
                 Menu("More", systemImage: "ellipsis.circle.fill") {
                     if !musicEntity.serviceLinks.isEmpty {
                         Menu("Share...", systemImage: "square.and.arrow.up.fill") {
-                            ForEach(Array(musicEntity.serviceLinks.keys), id: \.self) { key in
+                            ForEach(Array(musicEntity.serviceLinks.keys).sorted(), id: \.self) { key in
                                 if let urlString = musicEntity.serviceLinks[key], let url = URL(string: urlString) {
                                     ShareLink(ServiceLinksCollection.serviceDisplayName(forServiceKey: key), item: url)
                                 }

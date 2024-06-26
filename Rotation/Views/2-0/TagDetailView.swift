@@ -11,10 +11,12 @@ struct TagDetailView: View {
     @Bindable var tag: Tag
     @State private var isShowingSymbolPicker = false
     
+    @Environment(\.horizontalSizeClass) var horizontalSize
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                VStack(spacing: 0) {
                     Button("", systemImage: tag.symbolName) {
                         isShowingSymbolPicker.toggle()
                     }
@@ -23,33 +25,86 @@ struct TagDetailView: View {
                     .foregroundColor(.primary)
                     
                     TextField("Title", text: $tag.title)
-                        .font(.displayFont(ofSize: 32))
-                        .bold()
+                        .font(.displayFont(ofSize: 28))
+                        .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .multilineTextAlignment(.center)
+                        .padding(.bottom)
                     
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], alignment: .leading) {
+                    LazyVGrid(
+                        columns: Array(
+                            repeating: GridItem(.flexible()),
+                            count: horizontalSize == .regular ? 3 : 1
+                            ),
+                        alignment: .leading
+                    ) {
                         ForEach(tag.musicEntities ?? []) { musicEntity in
                             VStack {
                                 musicEntity.image
                                     .resizable()
                                     .scaledToFit()
                                     .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
+                                    .padding(.bottom)
                                 
                                 HStack {
+                                    Button(musicEntity.played ? "Mark Unplayed" : "Mark Played", systemImage: musicEntity.played ? "circle" : "circle.fill") {
+                                        withAnimation {
+                                            musicEntity.played.toggle()
+                                        }
+                                    }
+                                    .labelStyle(.iconOnly)
+                                    .tint(Color.accentColor.gradient)
                                     
                                     Spacer()
-                                    Text(musicEntity.title)
-                                        .font(.displayFont(ofSize: 18))
-                                        .lineLimit(1)
+                                    
+                                    VStack {
+                                        Text(musicEntity.title)
+                                            .lineLimit(1)
+                                        Text(musicEntity.artistName)
+                                            .font(.caption).bold().foregroundStyle(.secondary)
+                                    }
+                                    
                                     Spacer()
+                                    
+                                    Menu("Actions", systemImage: "ellipsis.circle.fill") {
+                                        Section {
+                                            Menu("Share...", systemImage: "square.and.arrow.up.fill") {
+                                                ForEach(Array(musicEntity.serviceLinks.keys).sorted(), id: \.self) { key in
+                                                    if let urlString = musicEntity.serviceLinks[key], let url = URL(string: urlString) {
+                                                        ShareLink(ServiceLinksCollection.serviceDisplayName(forServiceKey: key), item: url)
+                                                    }
+                                                }
+                                            }
+                                            Menu("Open in...", systemImage: "arrow.up.right.square.fill") {
+                                                ForEach(Array(musicEntity.serviceLinks.keys).sorted(), id: \.self) { key in
+                                                    if let urlString = musicEntity.serviceLinks[key], let url = URL(string: urlString) {
+                                                        Link(ServiceLinksCollection.serviceDisplayName(forServiceKey: key), destination: url)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        Section {
+                                            Button("Remove from tag", systemImage: "xmark", role: .destructive) {
+                                                withAnimation {
+                                                    // Possible SwiftData bug: Only removing the music entity from the tag's musicEntities array here causes a crash
+                                                    tag.musicEntities?.removeAll(where: {$0.id == musicEntity.id})
+                                                    musicEntity.tags?.removeAll(where: {$0.id == tag.id})
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                    .labelStyle(.iconOnly)
                                 }
-                                .padding()
-                                
-                                
                             }
                             .padding()
-                            .background(Color.accentColor.opacity(0.15))
+                            .background {
+                                ZStack {
+                                    musicEntity.image.resizable().scaledToFill()
+                                    Rectangle().foregroundStyle(.regularMaterial)
+                                }
+                            }
                             .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: true)))
                             
                         }
@@ -57,9 +112,9 @@ struct TagDetailView: View {
                     
                     Spacer()
                 }
-                .padding()
-                .navigationTitle(tag.title)
                 .navigationBarTitleDisplayMode(.inline)
+                .padding()
+                .navigationTitle("\(String(tag.musicEntities?.count ?? 0)) \(tag.musicEntities?.count == 1 ? "item" : "items")")
                 .sheet(isPresented: $isShowingSymbolPicker) {
                     NavigationStack {
                         ScrollView {

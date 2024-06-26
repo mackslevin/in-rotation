@@ -46,7 +46,7 @@ struct TagsIndexView: View {
             .navigationTitle("Tags")
             .toolbar {
                 ToolbarItem {
-                    Button("Add", systemImage: "plus") {
+                    Button("Add", systemImage: "plus.circle") {
                         isShowingAddView.toggle()
                     }
                 }

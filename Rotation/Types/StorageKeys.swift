@@ -12,4 +12,5 @@ enum StorageKeys: String {
     case shouldShowWelcomeView = "shouldShowWelcomeView"
     case collectionSortCriteria = "collectionSortCriteria"
     case shouldPlayInAppleMusicApp = "shouldPlayInAppleMusicApp"
+    case shouldWarnBeforeRemovingEntityFromTag = "shouldWarnBeforeRemovingEntityFromTag"
 }
