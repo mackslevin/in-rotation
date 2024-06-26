@@ -17,7 +17,7 @@ struct TagsViewListRow: View {
     
     var body: some View {
         NavigationLink {
-            TagDetailView(tag: tag)
+            OLDTagDetailView(tag: tag)
         } label: {
             VStack(alignment: .leading) {
                 HStack(alignment: .center, spacing: 12) {

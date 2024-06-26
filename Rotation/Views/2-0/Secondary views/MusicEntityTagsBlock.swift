@@ -30,7 +30,7 @@ struct MusicEntityTagsBlock: View {
                 
                 ForEach(tags) { tag in
                     NavigationLink {
-                        TagDetailView(tag: tag)
+                        OLDTagDetailView(tag: tag)
                     } label: {
                         HStack(spacing: 12) {
                             Spacer()

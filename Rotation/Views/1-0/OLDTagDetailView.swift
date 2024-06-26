@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TagDetailView: View {
+struct OLDTagDetailView: View {
     @Bindable var tag: Tag
     @State private var isShowingEditTag = false
     @Environment(\.colorScheme) var colorScheme
@@ -67,5 +67,5 @@ struct TagDetailView: View {
 }
 
 #Preview {
-    TagDetailView(tag: Utility.exampleTag)
+    OLDTagDetailView(tag: Utility.exampleTag)
 }
