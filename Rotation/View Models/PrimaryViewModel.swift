@@ -10,7 +10,7 @@ import Observation
 
 @Observable
 class PrimaryViewModel {
-    var selectedTab = 1
+    var selectedTab = 2
     var shouldShowWelcomeView = false // TODO: Change back
     
     init() {

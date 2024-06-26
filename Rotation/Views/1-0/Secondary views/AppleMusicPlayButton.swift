@@ -75,6 +75,7 @@ struct AppleMusicPlayButton: View {
         }
     }
     
+    
     func getPlaybackStateNotifications() async {
         NotificationCenter.default.addObserver(forName: .MPMusicPlayerControllerPlaybackStateDidChange, object: nil, queue: .main) { notification in
             

@@ -18,10 +18,9 @@ struct PrimaryView: View {
             .tag(1)
             .tabItem { Label("Collection", systemImage: "circle.grid.3x3.fill") }
             
-            Text("Tags")
+            TagsIndexView()
                 .tag(2)
                 .tabItem { Label("Tags", systemImage: "tag.fill") }
-                .background { Color.customBG.ignoresSafeArea() }
             
             Text("Explore")
                 .tag(3)
@@ -50,6 +49,8 @@ struct PrimaryView: View {
     
 }
 
-#Preview {
-    PrimaryView()
-}
+//#Preview {
+//    
+//    PrimaryView()
+//        .environment(AppleMusicWrangler())
+//}

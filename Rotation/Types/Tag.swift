@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Tag {
+class Tag: Identifiable, Hashable {
     let id = UUID()
     var title: String = ""
     var symbolName: String = "tag.fill"
