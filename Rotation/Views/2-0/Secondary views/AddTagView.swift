@@ -48,6 +48,12 @@ struct AddTagView: View {
                     .bold()
                     .disabled(title.isEmpty)
                 }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") {
+                        dismiss()
+                    }
+                }
             })
         }
     }

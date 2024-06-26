@@ -313,7 +313,6 @@
 				01ACB8DE2B0570FD00C13BDA /* SymbolPicker.swift */,
 				011BB8F32B045AA900F3609D /* TagManagerView.swift */,
 				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
-				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 				0168F76B2B1A878F004E780E /* SearchboxView.swift */,
 				0198F45E2B22D7540051F428 /* RecommendationCardView.swift */,
 				01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */,
@@ -431,6 +430,7 @@
 				015FB0722B05B3F700BAC1BC /* MusicEntityTagsBlock.swift */,
 				015FB06E2B059BC200BAC1BC /* MusicEntityActionBlock.swift */,
 				016A631F2B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift */,
+				011BB8F12B044FE100F3609D /* AddTagView.swift */,
 				015FB0702B05A95D00BAC1BC /* MusicEntityDetailsBlock.swift */,
 				01DA38132C1D1CE80073C707 /* EmptyCollectionView.swift */,
 			);

@@ -9,9 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct TagsIndexView: View {
+    @Environment(\.modelContext) var modelContext
     @Query var allTags: [Tag]
-    
     @State private var selection: UUID?
+    @State private var isShowingAddView = false
     
     var body: some View {
         NavigationSplitView {
@@ -22,20 +23,37 @@ struct TagsIndexView: View {
                             .frame(width: 25)
                         VStack(alignment: .leading) {
                             Text(tag.title)
+                                .fontWeight(.semibold)
                             Text("\(tag.musicEntities?.count ?? 0) \((tag.musicEntities?.count ?? 0) == 1 ? "item" : "items")")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(selection == tag.id ? .primary : .secondary)
                                 .italic()
                         }
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(selection == tag.id ? Color.accentColor : Color.customBG)
+                    .swipeActions(edge: .trailing) {
+                        Button("Delete", systemImage: "trash", role: .destructive) {
+                            withAnimation {
+                                modelContext.delete(tag)
+                            }
+                        }
+                    }
                 }
             }
-            
             .listStyle(.plain)
             .background { Color.customBG.ignoresSafeArea() }
             .navigationTitle("Tags")
+            .toolbar {
+                ToolbarItem {
+                    Button("Add", systemImage: "plus") {
+                        isShowingAddView.toggle()
+                    }
+                }
+            }
+            .sheet(isPresented: $isShowingAddView) {
+                AddTagView()
+            }
         } detail: {
             NavigationStack {
                 Group {
