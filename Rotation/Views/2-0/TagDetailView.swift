@@ -18,7 +18,7 @@ struct TagDetailView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 0) {
+                VStack(alignment: .center, spacing: 0) {
                     Button("", systemImage: tag.symbolName) {
                         isShowingSymbolPicker.toggle()
                     }
@@ -29,7 +29,6 @@ struct TagDetailView: View {
                     TextField("Title", text: $tag.title)
                         .font(.displayFont(ofSize: 28))
                         .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity, alignment: .center)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                     

@@ -10,7 +10,7 @@ import Observation
 import MediaPlayer
 import MusicKit
 
-@MainActor
+//@MainActor
 @Observable
 class DetailViewModel {
     var isSavedToUserLibrary: Bool? = false
@@ -24,6 +24,7 @@ class DetailViewModel {
         self.isSavedToUserLibrary = try await existsInUserLibrary(musicEntity)
     }
     
+    @MainActor
     func addToUserLibrary(_ musicEntity: MusicEntity, appleMusicWrangler: AppleMusicWrangler) async {
         do {
             if let addableMusicItem = try await appleMusicWrangler.appleMusicItemFromMusicEntity(musicEntity) as? MusicLibraryAddable {
@@ -41,10 +42,12 @@ class DetailViewModel {
         }
     }
     
+    @MainActor
     private func setUpAuth() async {
         self.musicLibraryAuthStatus = await MPMediaLibrary.requestAuthorization()
     }
     
+    @MainActor
     private func existsInUserLibrary(_ musicEntity: MusicEntity) async throws -> Bool {
         guard MPMediaLibrary.authorizationStatus() == .authorized else {
             throw DetailViewError.mediaLibraryNotAuthorized
@@ -53,10 +56,8 @@ class DetailViewModel {
         var query: MPMediaQuery? = nil
         switch musicEntity.type {
             case .song:
-                print("^^ song")
                 query = MPMediaQuery.songs()
             case .album:
-                print("^^ album")
                 query = MPMediaQuery.albums()
             case .playlist:
                 return false

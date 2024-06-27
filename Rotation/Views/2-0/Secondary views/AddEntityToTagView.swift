@@ -55,10 +55,9 @@ struct AddEntityToTagView: View {
                 
                 Spacer()
             }
-            
-            
-            
-            .padding()
+            .padding(.horizontal)
+            .padding(.top)
+            .ignoresSafeArea(edges: .bottom)
             .background { Color.customBG.ignoresSafeArea() }
             .navigationTitle(tag.title)
             .toolbar {

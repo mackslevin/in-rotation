@@ -57,7 +57,7 @@ struct TagsIndexView: View {
         } detail: {
             NavigationStack {
                 Group {
-                    if let selection, var tag = allTags.first(where: {$0.id == selection}) {
+                    if let selection, let tag = allTags.first(where: {$0.id == selection}) {
                         TagDetailView(tag: tag)
                     } else {
                         ContentUnavailableView("Nothing Selected", systemImage: "eyes")
