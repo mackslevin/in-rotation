@@ -49,6 +49,8 @@ class DetailViewModel {
     
     @MainActor
     private func existsInUserLibrary(_ musicEntity: MusicEntity) async throws -> Bool {
+        
+        
         guard MPMediaLibrary.authorizationStatus() == .authorized else {
             throw DetailViewError.mediaLibraryNotAuthorized
         }
@@ -72,12 +74,17 @@ class DetailViewModel {
         }
         
         return false
+        
+        
+        
+        
     }
 }
 
 enum DetailViewError: Error, LocalizedError {
     case mediaLibraryNotAuthorized
     case unableToAddToLibrary
+    case functionalityUnavailableOnMac
     
     var errorDescription: String? {
         switch self {
@@ -85,6 +92,8 @@ enum DetailViewError: Error, LocalizedError {
                 return NSLocalizedString("Unable to access the music library due to lack of authorization", comment: "")
             case .unableToAddToLibrary:
                 return NSLocalizedString("Unable to add the item to the musc library at this time", comment: "")
+            case .functionalityUnavailableOnMac:
+                return NSLocalizedString("Cannot perform this action on macOS", comment: "")
         }
     }
 }

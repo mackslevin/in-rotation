@@ -11,8 +11,6 @@ struct CollectionIndexRow: View {
     let musicEntity: MusicEntity
     @Binding var selectedID: UUID?
     
-    @State private var minHeight: CGFloat = 60
-    
     var body: some View {
         HStack {
             Circle()
@@ -37,13 +35,7 @@ struct CollectionIndexRow: View {
             }
         }
         .listRowSeparator(.hidden)
-        .frame(minHeight: minHeight)
         .listRowBackground(selected() ? Color.accentColor : Color.customBG)
-        .onAppear {
-            #if os(macOS)
-            minHeight = 80
-            #endif
-        }
     }
     
     func selected() -> Bool {
