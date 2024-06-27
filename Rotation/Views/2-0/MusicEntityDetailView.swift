@@ -27,7 +27,6 @@ struct MusicEntityDetailView: View {
                             if musicEntity.imageData != nil {
                                 musicEntity.image.resizable()
                                     .aspectRatio(1, contentMode: .fill)
-                                    .frame(maxWidth: 500, maxHeight: 500)
                                     .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
                             }
                             
@@ -39,11 +38,11 @@ struct MusicEntityDetailView: View {
                         }
                         
                         VStack {
-                            MusicEntityDetailsBlock(musicEntity: musicEntity)
-                            
                             MusicEntityTagsBlock(musicEntity: musicEntity)
                             
                             MusicEntityNotesBlock(musicEntity: musicEntity)
+                            
+                            MusicEntityDetailsBlock(musicEntity: musicEntity)
                             
                             Spacer()
                         }

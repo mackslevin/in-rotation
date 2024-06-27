@@ -13,6 +13,8 @@ struct TagDetailView: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSize
     
+    @State private var isShowingAddEntityView = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -134,6 +136,16 @@ struct TagDetailView: View {
                             }
                         }
                     }
+                }
+                .toolbar {
+                    ToolbarItem {
+                        Button("Add Music Entity", systemImage: "plus.forwardslash.minus") {
+                            isShowingAddEntityView.toggle()
+                        }
+                    }
+                }
+                .sheet(isPresented: $isShowingAddEntityView) {
+                    AddEntityToTagView(tag: tag)
                 }
             }
             
