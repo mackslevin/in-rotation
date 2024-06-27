@@ -21,9 +21,7 @@ struct CollectionIndexView: View {
                 } else {
                     List(selection: $vm.selectedEntityID) {
                         ForEach(vm.filteredMusicEntities(musicEntities, searchText: vm.searchText)) { musicEntity in
-                            CollectionIndexRow(musicEntity: musicEntity)
-                                .listRowSeparator(.hidden)
-                                .listRowBackground(Color.clear)
+                            CollectionIndexRow(musicEntity: musicEntity, selectedID: $vm.selectedEntityID)
                                 .swipeActions(edge: .trailing) {
                                     Button("Delete", systemImage: "trash", role: .destructive) {
                                         withAnimation { modelContext.delete(musicEntity) }
@@ -35,8 +33,6 @@ struct CollectionIndexView: View {
                                     }
                                 }
                         }
-                        
-                        
                     }
                     .listStyle(.plain)
                     .searchable(text: $vm.searchText)
@@ -70,7 +66,7 @@ struct CollectionIndexView: View {
     }
 }
 
-#Preview {
-    PrimaryView()
-        .modelContainer(for: MusicEntity.self)
-}
+//#Preview {
+//    PrimaryView()
+//        .modelContainer(for: MusicEntity.self)
+//}

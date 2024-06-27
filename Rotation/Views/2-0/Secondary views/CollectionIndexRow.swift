@@ -9,12 +9,15 @@ import SwiftUI
 
 struct CollectionIndexRow: View {
     let musicEntity: MusicEntity
+    @Binding var selectedID: UUID?
+    
+    @State private var minHeight: CGFloat = 60
     
     var body: some View {
         HStack {
             Circle()
                 .frame(width: 12)
-                .foregroundStyle(Color.accentColor.gradient)
+                .foregroundStyle(!selected() ? Color.accentColor.gradient : Color.primary.gradient)
                 .opacity(musicEntity.played ? 0 : 1)
             
             musicEntity.image
@@ -29,10 +32,22 @@ struct CollectionIndexRow: View {
                     .lineLimit(2)
                 
                 Text(musicEntity.artistName)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(selected() ? .primary : .secondary)
                     .lineLimit(1)
             }
         }
+        .listRowSeparator(.hidden)
+        .frame(minHeight: minHeight)
+        .listRowBackground(selected() ? Color.accentColor : Color.customBG)
+        .onAppear {
+            #if os(macOS)
+            minHeight = 80
+            #endif
+        }
+    }
+    
+    func selected() -> Bool {
+        selectedID == musicEntity.id
     }
 }
 
