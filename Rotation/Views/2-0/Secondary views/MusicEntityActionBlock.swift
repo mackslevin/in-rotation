@@ -26,6 +26,7 @@ struct MusicEntityActionBlock: View {
             HStack {
                 
                 if shouldPlayInAppleMusicApp, let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
+                    
                     VStack {
                         AppleMusicPlayButton(musicEntity: musicEntity)
                             .font(.system(size: actionIconSize, weight: .bold))
@@ -34,6 +35,7 @@ struct MusicEntityActionBlock: View {
                             .fontWeight(.semibold)
                     }
                     .frame(width: 75)
+                    
                 } else {
                     if !musicEntity.appleMusicURLString.isEmpty {
                         Button {
@@ -41,11 +43,11 @@ struct MusicEntityActionBlock: View {
                                 do {
                                     try await amWrangler.openInAppleMusic(musicEntity)
                                 } catch {
-                                    print(error)
                                     isShowingErrorAlert = true
                                 }
                             }
                         } label: {
+                            
                             VStack() {
                                 Image(systemName: "arrow.up.right.square")
                                     .font(.system(size: actionIconSize, weight: .bold))
@@ -54,26 +56,27 @@ struct MusicEntityActionBlock: View {
                                     .font(.system(size: 12))
                                     .fontWeight(.semibold)
                             }
+                            
                         }
                         .frame(width: 75)
                     }
                 }
                 
-                
                 Spacer()
                 
-                if let urlString = musicEntity.serviceLinks["spotify"], let url = URL(string: urlString) {
-                    Button {
-                        UIApplication.shared.open(url)
-                    } label: {
-                        VStack() {
-                            Image(systemName: "arrow.up.right.square")
-                                .font(.system(size: actionIconSize, weight: .bold))
-                            
-                            Text("Spotify")
-                                .font(.system(size: 12))
-                                .fontWeight(.semibold)
+                Menu {
+                    ForEach(Array(musicEntity.serviceLinks.keys), id: \.self) { key in
+                        if let urlString = musicEntity.serviceLinks[key], let url = URL(string: urlString) {
+                            Link(ServiceLinksCollection.serviceDisplayName(forServiceKey: key), destination: url)
                         }
+                    }
+                } label: {
+                    VStack {
+                        Image(systemName: "arrow.up.right.square")
+                            .font(.system(size: actionIconSize, weight: .bold))
+                        Text("Open")
+                            .font(.system(size: 12))
+                            .fontWeight(.semibold)
                     }
                     .frame(width: 75)
                 }
