@@ -48,10 +48,26 @@ struct CollectionIndexView: View {
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
                 ToolbarItem {
+                    Button("Reverse Sorting Direction", systemImage: "arrow.up.arrow.down.circle") {
+                        withAnimation {
+                            vm.reverseSortOrder.toggle()
+                        }
+                    }
+                }
+                
+                ToolbarItem {
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
                         Section {
                             Toggle("Show played", isOn: $vm.shouldShowPlayed)
                             Toggle("Show archived", isOn: $vm.shouldShowArchived)
+                        }
+                        
+                        Section {
+                            Picker("Select a sorting option", selection: $vm.collectionSorting) {
+                                ForEach(CollectionSort.allCases) { sortOption in
+                                    Text(sortOption.rawValue).tag(sortOption)
+                                }
+                            }
                         }
                     }
                 }

@@ -13,7 +13,6 @@ struct MusicEntityActionBlock: View {
     @Bindable var musicEntity: MusicEntity
     @State private var amWrangler = AppleMusicWrangler()
     @State private var played = false
-    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     
     let actionIconSize: CGFloat = 36
@@ -24,48 +23,21 @@ struct MusicEntityActionBlock: View {
     var body: some View {
         VStack {
             HStack {
-                
-                if shouldPlayInAppleMusicApp, let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
-                    
-                    VStack {
-                        AppleMusicPlayButton(musicEntity: musicEntity)
-                            .font(.system(size: actionIconSize, weight: .bold))
-                        Text("Apple Music")
-                            .font(.system(size: 12))
-                            .fontWeight(.semibold)
-                    }
-                    .frame(width: 75)
-                    
-                } else {
-                    if !musicEntity.appleMusicURLString.isEmpty {
-                        Button {
-                            Task {
-                                do {
-                                    try await amWrangler.openInAppleMusic(musicEntity)
-                                } catch {
-                                    isShowingErrorAlert = true
-                                }
-                            }
-                        } label: {
-                            
-                            VStack() {
-                                Image(systemName: "arrow.up.right.square")
-                                    .font(.system(size: actionIconSize, weight: .bold))
-                                
-                                Text("Apple Music")
-                                    .font(.system(size: 12))
-                                    .fontWeight(.semibold)
-                            }
-                            
-                        }
-                        .frame(width: 75)
-                    }
+                VStack {
+                    AppleMusicPlayButton(musicEntity: musicEntity)
+                        .font(.system(size: actionIconSize, weight: .bold))
+                        .disabled(appleMusicPlaybackDisabled())
+                    Text("Apple Music")
+                        .font(.system(size: 12))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(appleMusicPlaybackDisabled() ? .secondary : .primary)
                 }
+                .frame(width: 75)
                 
                 Spacer()
                 
                 Menu {
-                    ForEach(Array(musicEntity.serviceLinks.keys), id: \.self) { key in
+                    ForEach(Array(musicEntity.serviceLinks.keys.sorted()), id: \.self) { key in
                         if let urlString = musicEntity.serviceLinks[key], let url = URL(string: urlString) {
                             Link(ServiceLinksCollection.serviceDisplayName(forServiceKey: key), destination: url)
                         }
@@ -115,16 +87,12 @@ struct MusicEntityActionBlock: View {
         
     }
     
-    func playInAppleMusicApp() {
-        Task {
-            do {
-                try await amWrangler.playInAppleMusicApp(musicEntity)
-            } catch {
-                print("^^ playback error")
-                errorMessage = "Error: Playback unavailable at this time."
-                isShowingErrorAlert = true
-            }
+    func appleMusicPlaybackDisabled() -> Bool {
+        if let sub = amAuthWrangler.musicSubscription, sub.canPlayCatalogContent {
+            return false
         }
+        
+        return true
     }
 }
 

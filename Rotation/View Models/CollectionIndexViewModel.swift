@@ -8,6 +8,13 @@
 import Foundation
 import Observation
 
+enum CollectionSort: String, Identifiable, CaseIterable {
+    var id: String { self.rawValue }
+    case dateAdded = "Date Added"
+    case alphabeticalByTitle = "Alphabetical by Title"
+    case alphabeticalByArtist = "Alphabetical by Artist"
+}
+
 @Observable
 class CollectionIndexViewModel {
     var selectedEntityID: UUID?
@@ -16,6 +23,8 @@ class CollectionIndexViewModel {
     
     var shouldShowArchived = false
     var shouldShowPlayed = true
+    var collectionSorting: CollectionSort = .dateAdded
+    var reverseSortOrder = false
     
     func filteredMusicEntities(_ musicEntities: [MusicEntity], searchText: String) -> [MusicEntity] {
         var matchingEntities = musicEntities
@@ -29,6 +38,17 @@ class CollectionIndexViewModel {
                 $0.artistName.lowercased().contains(searchText.lowercased())
             })
         }
+        
+        switch collectionSorting {
+            case .dateAdded:
+                matchingEntities = matchingEntities.sorted(by: {$0.dateAdded > $1.dateAdded})
+            case .alphabeticalByTitle:
+                matchingEntities = matchingEntities.sorted(by: {$0.title < $1.title})
+            case .alphabeticalByArtist:
+                matchingEntities = matchingEntities.sorted(by: {$0.artistName < $1.artistName})
+        }
+        
+        if reverseSortOrder { matchingEntities = matchingEntities.reversed() }
         
         return matchingEntities
     }

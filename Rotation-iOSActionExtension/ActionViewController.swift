@@ -32,6 +32,7 @@ class ActionViewController: UIViewController {
         let contentView = MainView()
                     .environment(\.modelContext, modelContainer!.mainContext)
                     .environment(\.extensionContext, extensionContext)
+//                    .modelContext(modelContainer!.mainContext)
         
         view = UIHostingView(rootView: contentView)
                 view.isOpaque = true

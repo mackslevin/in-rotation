@@ -34,6 +34,11 @@ class MusicURLWrangler {
             newURL = url
         } else if source == .spotify {
             if let linkCollection = try? await ServiceLinksCollection.linkCollection(fromServiceURL: url.absoluteString) {
+                
+                for key in linkCollection.linksByPlatform.keys {
+                    print("^^ \(key): \(linkCollection.linksByPlatform[key]?.url ?? "no URL")")
+                }
+                
                 let newURLString = linkCollection.linksByPlatform["appleMusic"]?.url
                 if let newURLString {
                     newURL = URL(string: newURLString)

@@ -206,6 +206,7 @@ struct MainView: View {
         }
         .onAppear {
             print("^^ appear")
+            print("^^ music entities \(musicEntities)")
             setURLFromExtensionContext()
         }
         .onChange(of: url) { oldValue, newValue in
@@ -214,12 +215,13 @@ struct MainView: View {
                     do {
                         musicEntity = try await musicURLWrangler.musicEntityFromURL(url)
                     } catch {
-                        print(error)
+                        print("^^ Change of URL error \(error.localizedDescription)")
                         thereWasAnError = true
                     }
                 }
                 
                 if let urlSource = try? musicURLWrangler.determineSource(ofURL: url) {
+                    print("^^ url -> \(url.absoluteString), source \(urlSource)")
                     source = urlSource
                 }
             } else {
