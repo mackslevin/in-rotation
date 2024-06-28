@@ -26,6 +26,12 @@ struct CollectionIndexView: View {
                                     Button("Delete", systemImage: "trash", role: .destructive) {
                                         withAnimation { modelContext.delete(musicEntity) }
                                     }
+                                    
+                                    Button("Archive", systemImage: "archivebox") {
+                                        withAnimation {
+                                            musicEntity.archived.toggle()
+                                        }
+                                    }
                                 }
                                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                     Button(musicEntity.played ? "Mark Unplayed" : "Mark Played", systemImage: "circle") {
@@ -41,7 +47,16 @@ struct CollectionIndexView: View {
             .navigationTitle("Collection")
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
-                ToolbarItem(placement: .automatic) {
+                ToolbarItem {
+                    Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
+                        Section {
+                            Toggle("Show played", isOn: $vm.shouldShowPlayed)
+                            Toggle("Show archived", isOn: $vm.shouldShowArchived)
+                        }
+                    }
+                }
+                
+                ToolbarItem {
                     Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
                 }
             }

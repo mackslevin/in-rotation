@@ -14,18 +14,22 @@ class CollectionIndexViewModel {
     var shouldShowAddView = false
     var searchText = ""
     
+    var shouldShowArchived = false
+    var shouldShowPlayed = true
+    
     func filteredMusicEntities(_ musicEntities: [MusicEntity], searchText: String) -> [MusicEntity] {
-        guard !searchText.isEmpty else { return musicEntities }
+        var matchingEntities = musicEntities
         
-        var matchingEntities: [MusicEntity] = []
-        for entity in musicEntities {
-            if entity.title.lowercased().contains(searchText.lowercased())
-                ||
-               entity.artistName.lowercased().contains(searchText.lowercased())
-            {
-                matchingEntities.append(entity)
-            }
+        if !shouldShowPlayed { matchingEntities = matchingEntities.filter { !$0.played} }
+        if !shouldShowArchived { matchingEntities = matchingEntities.filter { !$0.archived} }
+        
+        if !searchText.isEmpty {
+            matchingEntities = matchingEntities.filter({
+                $0.title.lowercased().contains(searchText.lowercased()) ||
+                $0.artistName.lowercased().contains(searchText.lowercased())
+            })
         }
+        
         return matchingEntities
     }
 }

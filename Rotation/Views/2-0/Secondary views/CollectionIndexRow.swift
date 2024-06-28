@@ -28,11 +28,13 @@ struct CollectionIndexRow: View {
                 Text(musicEntity.title)
                     .font(.displayFont(ofSize: 16))
                     .lineLimit(2)
+                    .foregroundStyle(musicEntity.archived ? .secondary : .primary)
                 
                 Text(musicEntity.artistName)
-                    .foregroundStyle(selected() ? .primary : .secondary)
+                    .foregroundStyle(musicEntity.archived ? .secondary : selected() ? .primary : .secondary)
                     .lineLimit(1)
             }
+            .italic(musicEntity.archived)
         }
         .listRowSeparator(.hidden)
         .listRowBackground(selected() ? Color.accentColor : Color.customBG)
