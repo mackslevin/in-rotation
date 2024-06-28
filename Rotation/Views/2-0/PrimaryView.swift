@@ -22,7 +22,7 @@ struct PrimaryView: View {
                 .tag(2)
                 .tabItem { Label("Tags", systemImage: "tag.fill") }
             
-            Text("Explore")
+            ExploreView()
                 .tag(3)
                 .tabItem { Label("Explore", systemImage: "rectangle.on.rectangle.angled") }
             

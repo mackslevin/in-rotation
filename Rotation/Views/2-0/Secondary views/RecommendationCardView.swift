@@ -95,7 +95,9 @@ struct RecommendationCardView: View {
             
         }
         .padding()
-        .frame(height: 560)
+//        .frame(height: 560)
+//        .frame(maxWidth: 460)
+        .frame(maxWidth: 600, maxHeight: 800)
         .background {
             if colorScheme == .light {
                 ZStack {
