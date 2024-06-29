@@ -102,10 +102,12 @@ struct RecommendationCardView: View {
                     if let coverThumbnail {
                         coverThumbnail.resizable().scaledToFill()
                         Rectangle()
-                            .foregroundStyle(.ultraThickMaterial)
+                            .foregroundStyle(.primary)
+                            .opacity(0.2)
+                        Rectangle()
+                            .foregroundStyle(.regularMaterial)
                     }
                 }
-                .padding(2)
             
             
         }

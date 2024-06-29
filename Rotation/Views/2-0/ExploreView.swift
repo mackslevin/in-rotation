@@ -160,6 +160,7 @@ struct ExploreView: View {
                     print("^^ state is success")
                     userHasPremiumAccess = transaction != nil
                     canSave = userHasPremiumAccess || musicEntities.count < Utility.maximumFreeEntities
+                    print("^^ can save? \(canSave)")
                 @unknown default:
                     fatalError()
             }
