@@ -62,21 +62,37 @@ struct ExploreView: View {
                     Spacer()
                     Spacer()
                 }
-                VStack(spacing: 40) {
-                    Image(systemName: "rectangle.on.rectangle.angled")
+                VStack {
+                    
+                    Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
                         .resizable().scaledToFit().padding([.horizontal], 50)
-                        .foregroundColor(.accentColor)
+                        .foregroundStyle(.quaternary)
+                        .shadow(radius: 1, x: 1, y: 1)
                     
-                    Text("In Rotation can fetch album recommendations based on songs & albums in your collection.")
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("In Rotation can fetch album recommendations based on songs & albums in your collection.")
+                        
+                        Text("We'll show you some cards with albums on them. Swipe right to save to your collection, swipe left to skip it and move on to the next.")
+                    }
+                    .fontWeight(.medium)
+                    .multilineTextAlignment(.leading)
+                    .padding()
+                    .background {
+                        
+                        RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
+                            .foregroundStyle(.quaternary)
+                            .opacity(0.5)
+                    }
+                    .padding(.bottom, 40)
                     
-                    Text("Swipe right to add an album to your library. Swipe left to skip.")
+                    
                     
                     VStack {
                         Button("Generate Recommendations") {
                             generateRecommendations()
                             isInitialLoad = false
                         }
-                        .bold().buttonStyle(.borderedProminent)
+                        .bold()
                         .disabled(musicEntities.count < 3)
                         
                         if musicEntities.count < 3 {
@@ -84,10 +100,12 @@ struct ExploreView: View {
                                 .italic()
                                 .fontWeight(.regular)
                                 .foregroundStyle(.accent)
+                                .padding(.top)
                         }
                     }
                 }
                 .multilineTextAlignment(.center)
+                .frame(maxWidth: 400)
                 
             } else if viewModel.recommendationEntities.isEmpty {
                 Button {
@@ -202,4 +220,5 @@ struct ExploreView: View {
 
 #Preview {
     ExploreView()
+        .modelContainer(for: MusicEntity.self)
 }
