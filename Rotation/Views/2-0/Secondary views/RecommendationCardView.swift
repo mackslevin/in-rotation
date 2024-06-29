@@ -95,21 +95,19 @@ struct RecommendationCardView: View {
             
         }
         .padding()
-//        .frame(height: 560)
-//        .frame(maxWidth: 460)
         .frame(maxWidth: 600, maxHeight: 800)
         .background {
-            if colorScheme == .light {
+                
                 ZStack {
-                    Rectangle().foregroundStyle(Color.accentColor.gradient)
-                    Color.white.opacity(0.7)
+                    if let coverThumbnail {
+                        coverThumbnail.resizable().scaledToFill()
+                        Rectangle()
+                            .foregroundStyle(.ultraThickMaterial)
+                    }
                 }
-            } else {
-                ZStack {
-                    Rectangle().foregroundStyle(Color.black.gradient)
-                    Color.white.opacity(0.3)
-                }
-            }
+                .padding(2)
+            
+            
         }
         .overlay {
             ZStack {
