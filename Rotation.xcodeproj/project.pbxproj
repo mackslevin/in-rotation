@@ -16,6 +16,7 @@
 		010A36D52B3B9B6800E40EC7 /* InvalidURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D42B3B9B6800E40EC7 /* InvalidURLView.swift */; };
 		010A36D72B3BB35A00E40EC7 /* URLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D62B3BB35A00E40EC7 /* URLSource.swift */; };
 		010A36D82B3BB35A00E40EC7 /* URLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A36D62B3BB35A00E40EC7 /* URLSource.swift */; };
+		010FF17C2C30871200A642CC /* LoadingRecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010FF17B2C30871200A642CC /* LoadingRecommendationsView.swift */; };
 		01101C042B05CB7D00789AE3 /* MusicEntityNotesBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */; };
 		01101C062B05CDDD00789AE3 /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01101C052B05CDDD00789AE3 /* NotesEditorView.swift */; };
 		011BB8F02B044F7B00F3609D /* OLDTagDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011BB8EF2B044F7B00F3609D /* OLDTagDetailView.swift */; };
@@ -150,6 +151,7 @@
 		010A36D22B3B979900E40EC7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		010A36D42B3B9B6800E40EC7 /* InvalidURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidURLView.swift; sourceTree = "<group>"; };
 		010A36D62B3BB35A00E40EC7 /* URLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSource.swift; sourceTree = "<group>"; };
+		010FF17B2C30871200A642CC /* LoadingRecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsView.swift; sourceTree = "<group>"; };
 		01101C032B05CB7D00789AE3 /* MusicEntityNotesBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicEntityNotesBlock.swift; sourceTree = "<group>"; };
 		01101C052B05CDDD00789AE3 /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
 		011BB8EF2B044F7B00F3609D /* OLDTagDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OLDTagDetailView.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				01DE48182C2CE39000E96FE5 /* AddEntityToTagView.swift */,
 				0198F45E2B22D7540051F428 /* RecommendationCardView.swift */,
 				01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */,
+				010FF17B2C30871200A642CC /* LoadingRecommendationsView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				01A1507F2C123AD4006DB549 /* StorageKeys.swift in Sources */,
 				01F4A7512B22430000773AC5 /* ExploreViewModel.swift in Sources */,
 				016A63202B1EA2FD00EB8024 /* MusicEntityHeadlineBlock.swift in Sources */,
+				010FF17C2C30871200A642CC /* LoadingRecommendationsView.swift in Sources */,
 				015FB06F2B059BC200BAC1BC /* MusicEntityActionBlock.swift in Sources */,
 				0168F76C2B1A878F004E780E /* SearchboxView.swift in Sources */,
 				017AA6A42B043D72005E43D8 /* OldMusicEntityDetailView.swift in Sources */,
