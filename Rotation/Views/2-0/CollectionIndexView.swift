@@ -17,7 +17,11 @@ struct CollectionIndexView: View {
         NavigationSplitView {
             VStack {
                 if musicEntities.isEmpty {
-                    EmptyCollectionView(vm: $vm)
+                    Button("Add some music to get started", systemImage: "plus") {
+                        vm.shouldShowAddView.toggle()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .bold()
                 } else {
                     List(selection: $vm.selectedEntityID) {
                         ForEach(vm.filteredMusicEntities(musicEntities, searchText: vm.searchText)) { musicEntity in
@@ -85,8 +89,7 @@ struct CollectionIndexView: View {
                     if let selectedEntityID = vm.selectedEntityID, let musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
                         MusicEntityDetailView(musicEntity: musicEntity)
                     } else {
-                        // TODO: Replace with something custom, including the custom font
-                        ContentUnavailableView("Nothing Selected", systemImage: "questionmark.app.dashed")
+                        NothingSelectedView()
                     }
                 }
                 .background { Color.customBG.ignoresSafeArea() }
