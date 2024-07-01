@@ -146,7 +146,8 @@ struct TagDetailView: View {
                 .sheet(isPresented: $isShowingAddEntityView) {
                     AddEntityToTagView(tag: tag)
                 }
-            }
+                
+            }.background { Color.customBG.ignoresSafeArea() }
             
         }
     }

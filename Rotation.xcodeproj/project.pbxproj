@@ -314,13 +314,8 @@
 			children = (
 				01ACB8DA2B05455A00C13BDA /* TagsViewListRow.swift */,
 				011BB8F32B045AA900F3609D /* TagManagerView.swift */,
-				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
 				0168F76B2B1A878F004E780E /* SearchboxView.swift */,
 				01B3986A2B293B050015E5D2 /* TagsListingView.swift */,
-				01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */,
-				0195D78F2B33D23A00B4E5FF /* EntityLimitReachedView.swift */,
-				014A65512B34DCD7001DF7AE /* PremiumUnlockProductView.swift */,
-				014A65532B34F768001DF7AE /* IAPPaywallView.swift */,
 			);
 			path = "Secondary views";
 			sourceTree = "<group>";
@@ -434,7 +429,12 @@
 				01DA38132C1D1CE80073C707 /* EmptyCollectionView.swift */,
 				01DE48182C2CE39000E96FE5 /* AddEntityToTagView.swift */,
 				0198F45E2B22D7540051F428 /* RecommendationCardView.swift */,
+				01101C052B05CDDD00789AE3 /* NotesEditorView.swift */,
+				014A65532B34F768001DF7AE /* IAPPaywallView.swift */,
+				0195D78F2B33D23A00B4E5FF /* EntityLimitReachedView.swift */,
 				01CE6B122B279E7C00B81C82 /* CardActionBlock.swift */,
+				014A65512B34DCD7001DF7AE /* PremiumUnlockProductView.swift */,
+				01A803E32B2A456100777251 /* AppleMusicPlayButton.swift */,
 				010FF17B2C30871200A642CC /* LoadingRecommendationsView.swift */,
 			);
 			path = "Secondary views";

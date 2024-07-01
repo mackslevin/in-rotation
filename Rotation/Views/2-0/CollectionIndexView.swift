@@ -47,15 +47,18 @@ struct CollectionIndexView: View {
             .navigationTitle("Collection")
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
+                }
+                
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Reverse Sorting Direction", systemImage: "arrow.up.arrow.down.circle") {
                         withAnimation {
                             vm.reverseSortOrder.toggle()
                         }
                     }
-                }
-                
-                ToolbarItem {
+
+                    
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
                         Section {
                             Toggle("Show played", isOn: $vm.shouldShowPlayed)
@@ -70,10 +73,6 @@ struct CollectionIndexView: View {
                             }
                         }
                     }
-                }
-                
-                ToolbarItem {
-                    Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
                 }
             }
             .sheet(isPresented: $vm.shouldShowAddView, content: {
@@ -97,7 +96,7 @@ struct CollectionIndexView: View {
     }
 }
 
-//#Preview {
-//    PrimaryView()
-//        .modelContainer(for: MusicEntity.self)
-//}
+#Preview {
+    PrimaryView()
+        .modelContainer(for: MusicEntity.self)
+}
