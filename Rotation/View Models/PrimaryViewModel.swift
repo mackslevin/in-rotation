@@ -11,7 +11,7 @@ import Observation
 @Observable
 class PrimaryViewModel {
     var selectedTab = 1
-    var shouldShowWelcomeView = true
+    var shouldShowWelcomeView = false
     
     init() {
         if let defaultScreen = UserDefaults.standard.value(forKey: StorageKeys.defaultScreen.rawValue) as? DefaultScreen {

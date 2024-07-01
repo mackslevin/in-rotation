@@ -9,15 +9,13 @@ import SwiftUI
 import StoreKit
 
 struct SettingsView: View {
-    @AppStorage("shouldPlayInAppleMusicApp") var shouldPlayInAppleMusicApp = true
-    @AppStorage("defaultScreen") var defaultScreen = DefaultScreen.collection
+    @AppStorage(StorageKeys.defaultScreen.rawValue) var defaultScreen = DefaultScreen.collection
     
     @Environment(\.colorScheme) var colorScheme
-    
+    @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
     @EnvironmentObject var iapWrangler: IAPWrangler
     
     @State private var isShowingWelcomeView = false
-    
     @State private var restorePurchaseError: Error? = nil
     @State private var isShowingRestorePurchaseError = false
     
@@ -30,6 +28,35 @@ struct SettingsView: View {
                     .foregroundStyle(Color.customBG)
                 
                 Form {
+                    
+                    Section("Apple Music") {
+                        HStack {
+                            Text("Subscription Status").fontWeight(.medium)
+                            Spacer()
+                            Text(amAuthWrangler.musicSubscription?.canPlayCatalogContent == true ? "Active" : "Inactive")
+                        }
+                        HStack {
+                            Text("Authorization Status").fontWeight(.medium)
+                            Spacer()
+                            Text(amAuthWrangler.isAuthorized ? "Authorized" : "Not authoized")
+                        }
+                        
+                        Text("If given authorization, In Rotation can use your active Apple Music subscription to provide extra features, like controlling playback in the Apple Music app and adding to your music library. Authorization can be granted from within the Settings app.")
+                            .foregroundStyle(.secondary)
+                            .font(.caption)
+                            .italic()
+                            .listRowSeparator(.hidden)
+                    }
+                    
+                    Section {
+                        Picker("Default screen", selection: $defaultScreen) {
+                            ForEach(DefaultScreen.allCases, id: \.rawValue) { screen in
+                                Text(screen.rawValue.capitalized)
+                                    .tag(screen)
+                            }
+                        }
+                    }
+                    
                     Section {
                         PremiumUnlockProductView(showExplainer: true)
                     }
@@ -46,36 +73,6 @@ struct SettingsView: View {
                             }
                         }
                     }
-                    
-                    Section {
-                        Picker("Default screen", selection: $defaultScreen) {
-                            ForEach(DefaultScreen.allCases, id: \.rawValue) { screen in
-                                Text(screen.rawValue.capitalized)
-                                    .tag(screen)
-                            }
-                        }
-                    }
-                    
-                    Section {
-                        Picker("The Apple Music button should...", selection: $shouldPlayInAppleMusicApp) {
-                            Text("Open in app").tag(false)
-                            Text("Start playback").tag(true)
-                        }
-                        .listRowSpacing(0)
-                        Text("For users who have an Apple Music subscription and have granted access, playback can be triggered directly from within the app.")
-                            .foregroundStyle(.secondary)
-                            .listRowSeparator(.hidden)
-                            .font(.caption)
-                            .listRowSpacing(0)
-                    }
-                    
-                    Section {
-                        Button("Show welcome screen again") {
-                            isShowingWelcomeView = true
-                        }
-                        .fontWeight(.medium)
-                    }
-                    
                 }
                 .scrollContentBackground(.hidden)
                 .navigationTitle("Settings")

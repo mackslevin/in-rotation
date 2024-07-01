@@ -19,10 +19,15 @@ struct AddEntityView: View {
         NavigationStack {
             VStack {
                 TextField("Search music...", text: $vm.searchText)
-                    .textFieldStyle(.roundedBorder)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .background {Rectangle().foregroundStyle(.primary).colorInvert()}
+                    .clipShape(RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false)))
+                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.1) , radius: 5, x: 2, y: 4)
                     .submitLabel(.search)
                     .focused($searchBoxIsFocused)
                     .autocorrectionDisabled()
+                    .padding(.bottom)
                 
                 // MARK: Search Results
                 if amSearchWrangler.resultsExist(), !amSearchWrangler.isLoading {

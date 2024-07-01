@@ -23,7 +23,7 @@ struct MusicEntityAddingView: View {
     @State private var isShowingPaywallSheet = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 30) {
             HStack {
                 if let data = musicEntity.imageData, let uiImage = UIImage(data: data) {
                     Image(uiImage: uiImage).resizable().scaledToFill()
@@ -46,7 +46,6 @@ struct MusicEntityAddingView: View {
                 
                 Spacer()
             }
-            .padding(.vertical)
             
             if !selectedTags.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
@@ -76,7 +75,6 @@ struct MusicEntityAddingView: View {
                     Label("Add Tags", systemImage: "tag")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
                 .fontWeight(.medium)
             }
             
@@ -89,19 +87,14 @@ struct MusicEntityAddingView: View {
                     Label("Add Notes", systemImage: "note.text.badge.plus")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
                 .fontWeight(.medium)
             }
             
             Button {
                 handleSave()
             } label: {
-                HStack {
-                    Spacer()
-                    Label("Save to Collection", systemImage: "plus")
-                        .bold()
-                    Spacer()
-                }
+                Label("Save to Collection", systemImage: "plus")
+                    .bold()
             }
             .buttonStyle(.borderedProminent)
         }

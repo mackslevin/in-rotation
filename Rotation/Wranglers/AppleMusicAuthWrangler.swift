@@ -8,6 +8,13 @@ class AppleMusicAuthWrangler {
     var isAuthorized = false
     var musicSubscription: MusicSubscription?
     
+    init() {
+        Task {
+            await getMusicSubscriptionUpdates()
+            await requestMusicAuth()
+        }
+    }
+    
     @MainActor
     func requestMusicAuth() async {
         let status = await MusicAuthorization.request()
@@ -19,6 +26,7 @@ class AppleMusicAuthWrangler {
         }
     }
     
+    @MainActor
     func getMusicSubscriptionUpdates() async {
         for await subscriptionType in MusicSubscription.subscriptionUpdates {
             await MainActor.run {
