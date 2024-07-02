@@ -54,18 +54,18 @@ struct CollectionIndexView: View {
                 ToolbarItem(placement: .automatic) {
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
                         Section {
-                            Toggle("Reverse order", isOn: $vm.reverseSortOrder)
+                            Toggle("Reverse order", systemImage: "arrow.up.arrow.down", isOn: $vm.reverseSortOrder)
                         }
                         
                         Section {
-                            Toggle("Show played", isOn: $vm.shouldShowPlayed)
-                            Toggle("Show archived", isOn: $vm.shouldShowArchived)
+                            Toggle("Show played", systemImage: "circle", isOn: $vm.shouldShowPlayed)
+                            Toggle("Show archived", systemImage: "archivebox", isOn: $vm.shouldShowArchived)
                         }
                         
                         Section {
                             Picker("Select a sorting option", selection: $vm.collectionSorting) {
                                 ForEach(CollectionSort.allCases) { sortOption in
-                                    Text(sortOption.rawValue).tag(sortOption)
+                                    Label(sortOption.rawValue, systemImage: sortOption.systemImage).tag(sortOption)
                                 }
                             }
                         }

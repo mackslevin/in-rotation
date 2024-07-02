@@ -8,12 +8,7 @@
 import Foundation
 import Observation
 
-enum CollectionSort: String, Identifiable, CaseIterable {
-    var id: String { self.rawValue }
-    case dateAdded = "Date Added"
-    case alphabeticalByTitle = "Alphabetical by Title"
-    case alphabeticalByArtist = "Alphabetical by Artist"
-}
+
 
 @Observable
 class CollectionIndexViewModel {
