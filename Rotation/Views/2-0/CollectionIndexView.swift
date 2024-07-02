@@ -51,19 +51,12 @@ struct CollectionIndexView: View {
             .navigationTitle("Collection")
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
-                }
-                
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("Reverse Sorting Direction", systemImage: "arrow.up.arrow.down.circle") {
-                        withAnimation {
-                            vm.reverseSortOrder.toggle()
-                        }
-                    }
-
-                    
+                ToolbarItem(placement: .automatic) {
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
+                        Section {
+                            Toggle("Reverse order", isOn: $vm.reverseSortOrder)
+                        }
+                        
                         Section {
                             Toggle("Show played", isOn: $vm.shouldShowPlayed)
                             Toggle("Show archived", isOn: $vm.shouldShowArchived)
@@ -77,6 +70,10 @@ struct CollectionIndexView: View {
                             }
                         }
                     }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
                 }
             }
             .sheet(isPresented: $vm.shouldShowAddView, content: {
