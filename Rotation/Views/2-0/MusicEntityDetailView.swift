@@ -19,10 +19,8 @@ struct MusicEntityDetailView: View {
             ScrollView {
                 
                 VStack() {
-                    
                     LazyVGrid(columns: 
                                 horizontalSize == .compact ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], content: {
-                        
                         VStack {
                             if musicEntity.imageData != nil {
                                 musicEntity.image.resizable()
@@ -49,8 +47,6 @@ struct MusicEntityDetailView: View {
                     })
                 }
                 .padding()
-                
-                
             }
             .navigationTitle(musicEntity.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -91,6 +87,17 @@ struct MusicEntityDetailView: View {
             }
             .alert("The item was successfully added to your library", isPresented: $vm.isShowingAddSuccess) {
                 Button("OK"){}
+            }
+            .onAppear {
+                if musicEntity.serviceLinks.isEmpty {
+                    Task {
+                        do {
+                            musicEntity.serviceLinks = try await ServiceLinksCollection.linkCollection(fromServiceURL: musicEntity.appleMusicURLString)?.simpleLinks ?? [:]
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
             }
         }
     }
