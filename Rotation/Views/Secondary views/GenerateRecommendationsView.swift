@@ -14,7 +14,6 @@ struct GenerateRecommendationsView: View {
     let buttonAction: () -> Void
     var body: some View {
         VStack {
-            
             Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
                 .resizable().scaledToFit().padding([.horizontal], 60)
                 .foregroundStyle(.quaternary)

@@ -19,7 +19,6 @@ struct AddEntityToTagView: View {
             ScrollView {
                 LazyVGrid(
                     columns: Array(repeating: GridItem(.flexible()), count: horizontalSize == .compact ? 1 : 2)
-    //                alignment: .leading
                 ) {
                     ForEach(allEntities.sorted(by: {$0.title > $1.title})) { musicEntity in
                         Button {

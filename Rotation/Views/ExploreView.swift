@@ -60,33 +60,7 @@ struct ExploreView: View {
                     }
                     .zIndex(1000)
                     
-                    HStack(spacing: 50) {
-                        HStack {
-                            Image(systemName: viewModel.currentCardStatus == .disliked ? "arrowshape.turn.up.left.fill" : "arrowshape.turn.up.left")
-                            Text("Skip")
-                        }
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(viewModel.currentCardStatus == .disliked ? Color.primary : Color.gray)
-                        .onTapGesture {
-                            viewModel.shouldSkipCurrentCard = true
-                            viewModel.shouldSaveCurrentCard = false
-                        }
-                        
-                        HStack {
-                            Text("Save")
-                            Image(systemName: viewModel.currentCardStatus == .liked ? "arrowshape.turn.up.right.fill" : "arrowshape.turn.up.right")
-                        }
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(viewModel.currentCardStatus == .liked ? Color.accentColor : Color.gray)
-                        .onTapGesture {
-                            viewModel.shouldSaveCurrentCard = true
-                            viewModel.shouldSkipCurrentCard = false
-                        }
-                            
-                    }
-                    .bold()
+                    RecommendationSaveSkipView(viewModel: viewModel)
                 }
                 
                 Spacer()

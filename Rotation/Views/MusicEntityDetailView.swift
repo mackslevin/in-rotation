@@ -17,7 +17,6 @@ struct MusicEntityDetailView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                
                 VStack() {
                     LazyVGrid(columns: 
                                 horizontalSize == .compact ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())], content: {

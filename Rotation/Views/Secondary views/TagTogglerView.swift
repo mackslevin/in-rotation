@@ -84,21 +84,13 @@ struct TagTogglerView: View {
             })
             
         }
-        
-        
     }
     
     func toggleTag(_ tag: Tag) {
         if selectedTags.contains(where: {$0.id == tag.id}) {
-            print("^^ contains tag")
-//            withAnimation {
-                selectedTags.removeAll(where: {$0.id == tag.id})
-//            }
+            selectedTags.removeAll(where: {$0.id == tag.id})
         } else {
-            print("^^ doesn't contain tag")
-//            withAnimation {
-                selectedTags.append(tag)
-//            }
+            selectedTags.append(tag)
         }
     }
 }

@@ -9,9 +9,7 @@ import SwiftUI
 
 struct MusicEntityTagsBlock: View {
     @Bindable var musicEntity: MusicEntity
-    
     @State private var isShowingTagToggler = false
-    
     @State private var newTags: [Tag] = []
     
     var body: some View {

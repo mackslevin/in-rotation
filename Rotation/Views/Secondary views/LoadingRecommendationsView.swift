@@ -37,6 +37,8 @@ struct LoadingRecommendationsView: View {
             .padding(.top, 16)
             
             Text("This will take a moment.")
+                .foregroundStyle(.secondary)
+                .italic()
         }
         .padding()
     }

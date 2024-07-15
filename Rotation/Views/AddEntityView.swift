@@ -14,7 +14,6 @@ struct AddEntityView: View {
     @FocusState private var searchBoxIsFocused: Bool
     @State private var vm = AddEntityViewModel()
     
-    
     var body: some View {
         NavigationStack {
             VStack {

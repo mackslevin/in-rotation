@@ -22,8 +22,6 @@ struct NothingSelectedView: View {
 }
 
 #Preview {
-//    NothingSelectedView()
-    
     NavigationStack {
         HStack {
             Spacer()

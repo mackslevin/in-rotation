@@ -12,7 +12,6 @@ struct PrimaryView: View {
     @State private var vm = PrimaryViewModel()
     
     var body: some View {
-        
         TabView(selection: $vm.selectedTab) {
             CollectionIndexView()
             .tag(1)
@@ -43,8 +42,6 @@ struct PrimaryView: View {
                     vm.markWelcomeViewAsSeen()
                 }
         })
-        
-        
     }
     
 }
