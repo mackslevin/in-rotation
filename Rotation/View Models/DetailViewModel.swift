@@ -10,7 +10,6 @@ import Observation
 import MediaPlayer
 import MusicKit
 
-//@MainActor
 @Observable
 class DetailViewModel {
     var isSavedToUserLibrary: Bool? = false

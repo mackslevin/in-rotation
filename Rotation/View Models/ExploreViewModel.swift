@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import Observation
 import MusicKit
+import SwiftData
 
 enum ExploreError: String, Error {
     case unableToFillRecommendations = "Unable to generate recommendations. Please try again."
 }
-
 
 @Observable
 class ExploreViewModel {
@@ -20,10 +19,19 @@ class ExploreViewModel {
     
     let amWrangler = AppleMusicWrangler()
     let amSearchWrangler = AppleMusicSearchWrangler()
+    
     var recommendationsAreLoading = false
+    var isInitialLoad = true
+    var currentCardStatus = CardStatus.neutral
+    var userHasPremiumAccess = false
+    var canSave = true
+    var currentCardID: String? = nil
+    
+    // These state vars are used to facilitate skipping/saving via the button in the view (as an alternative to simply swiping the card)
+    var shouldSkipCurrentCard = false
+    var shouldSaveCurrentCard = false
     
     func fillRecommendations(withSources sources: [MusicEntity]) async throws {
-        
         guard !sources.isEmpty else {
             throw ExploreError.unableToFillRecommendations
         }
@@ -195,6 +203,7 @@ class ExploreViewModel {
         
         return false
     }
+    
     func alreadyExistsInRecommendations(_ musicItem: MusicItem) -> Bool {
         for rec in recommendationEntities {
             if rec.musicEntity.appleMusicID == musicItem.id.rawValue {
@@ -203,6 +212,31 @@ class ExploreViewModel {
         }
         
         return false
+    }
+    
+    func handleRecommendation(_ rec: RecommendationEntity, liked: Bool, modelContext: ModelContext) {
+        recommendationEntities.removeAll(where: {$0.id == rec.id})
+        if liked {
+            modelContext.insert(rec.musicEntity)
+        }
+    }
+    
+    func generateRecommendations(fromMusicEntities musicEntities: [MusicEntity]) {
+        Task {
+            do {
+                try await fillRecommendations(withSources: musicEntities)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func getCurrentCardID() -> String? {
+        if let recEnt = recommendationEntities.last {
+            return recEnt.id.uuidString
+        }
+        
+        return nil
     }
 }
 

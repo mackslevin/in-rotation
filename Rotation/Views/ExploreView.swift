@@ -14,17 +14,6 @@ struct ExploreView: View {
     @Environment(\.modelContext) var modelContext
     @Query var musicEntities: [MusicEntity]
     @State private var viewModel = ExploreViewModel()
-    @State private var isInitialLoad = true
-    
-    @State private var currentCardStatus = CardStatus.neutral
-    
-    @State private var userHasPremiumAccess = false
-    @State private var canSave = true
-    
-    // These state vars are used to facilitate skipping/saving via the button in this view (as an alternative to simply swiping the card)
-    @State private var currentCardID: String? = nil
-    @State private var shouldSkipCurrentCard = false
-    @State private var shouldSaveCurrentCard = false
     
     var body: some View {
         NavigationStack {
@@ -38,7 +27,7 @@ struct ExploreView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     
-                } else if isInitialLoad {
+                } else if viewModel.isInitialLoad {
                     HStack {
                         Spacer()
                         Spacer()
@@ -69,8 +58,8 @@ struct ExploreView: View {
                         
                         VStack {
                             Button("Generate Recommendations") {
-                                generateRecommendations()
-                                isInitialLoad = false
+                                viewModel.generateRecommendations(fromMusicEntities: musicEntities)
+                                viewModel.isInitialLoad = false
                             }
                             .bold()
                             .disabled(musicEntities.count < 3)
@@ -89,7 +78,7 @@ struct ExploreView: View {
                     
                 } else if viewModel.recommendationEntities.isEmpty {
                     Button {
-                        generateRecommendations()
+                        viewModel.generateRecommendations(fromMusicEntities: musicEntities)
                     } label: {
                         Label("Load More Recommendations", systemImage: "arrow.circlepath")
                     }
@@ -100,16 +89,16 @@ struct ExploreView: View {
                             RecommendationCardView(
                                 recEntity: rec,
                                 viewModel: viewModel,
-                                hostingViewCardStatus: $currentCardStatus,
-                                userCanSaveToCollection: $canSave,
-                                currentCardID: $currentCardID,
-                                shouldSkipCurrentCard:$shouldSkipCurrentCard,
-                                shouldSaveCurrentCard: $shouldSaveCurrentCard
+                                hostingViewCardStatus: $viewModel.currentCardStatus,
+                                userCanSaveToCollection: $viewModel.canSave,
+                                currentCardID: $viewModel.currentCardID,
+                                shouldSkipCurrentCard:$viewModel.shouldSkipCurrentCard,
+                                shouldSaveCurrentCard: $viewModel.shouldSaveCurrentCard
                                 ) { liked in
-                                    handleRecommendation(rec, liked: liked)
-                                    currentCardStatus = .neutral
-                                    shouldSaveCurrentCard = false
-                                    shouldSkipCurrentCard = false
+                                    viewModel.handleRecommendation(rec, liked: liked, modelContext: modelContext)
+                                    viewModel.currentCardStatus = .neutral
+                                    viewModel.shouldSaveCurrentCard = false
+                                    viewModel.shouldSkipCurrentCard = false
                             }
                         }
                     }
@@ -117,27 +106,27 @@ struct ExploreView: View {
                     
                     HStack(spacing: 50) {
                         HStack {
-                            Image(systemName: currentCardStatus == .disliked ? "arrowshape.turn.up.left.fill" : "arrowshape.turn.up.left")
+                            Image(systemName: viewModel.currentCardStatus == .disliked ? "arrowshape.turn.up.left.fill" : "arrowshape.turn.up.left")
                             Text("Skip")
                         }
                         .font(.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(currentCardStatus == .disliked ? Color.primary : Color.gray)
+                        .foregroundStyle(viewModel.currentCardStatus == .disliked ? Color.primary : Color.gray)
                         .onTapGesture {
-                            shouldSkipCurrentCard = true
-                            shouldSaveCurrentCard = false
+                            viewModel.shouldSkipCurrentCard = true
+                            viewModel.shouldSaveCurrentCard = false
                         }
                         
                         HStack {
                             Text("Save")
-                            Image(systemName: currentCardStatus == .liked ? "arrowshape.turn.up.right.fill" : "arrowshape.turn.up.right")
+                            Image(systemName: viewModel.currentCardStatus == .liked ? "arrowshape.turn.up.right.fill" : "arrowshape.turn.up.right")
                         }
                         .font(.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(currentCardStatus == .liked ? Color.accentColor : Color.gray)
+                        .foregroundStyle(viewModel.currentCardStatus == .liked ? Color.accentColor : Color.gray)
                         .onTapGesture {
-                            shouldSaveCurrentCard = true
-                            shouldSkipCurrentCard = false
+                            viewModel.shouldSaveCurrentCard = true
+                            viewModel.shouldSkipCurrentCard = false
                         }
                             
                     }
@@ -158,48 +147,24 @@ struct ExploreView: View {
                         print("^^ state failed, error is \(error)")
                     case .success(let transaction):
                         print("^^ state is success")
-                        userHasPremiumAccess = transaction != nil
-                        canSave = userHasPremiumAccess || musicEntities.count < Utility.maximumFreeEntities
-                        print("^^ can save? \(canSave)")
+                        viewModel.userHasPremiumAccess = transaction != nil
+                        viewModel.canSave = viewModel.userHasPremiumAccess || musicEntities.count < Utility.maximumFreeEntities
+                        print("^^ can save? \(viewModel.canSave)")
                     @unknown default:
                         fatalError()
                 }
             }
-            .onChange(of: canSave) { oldValue, newValue in
+            .onChange(of: viewModel.canSave) { oldValue, newValue in
                 print("can save? \(newValue)")
             }
             .onChange(of: viewModel.recommendationEntities) { oldValue, newValue in
-                currentCardID = getCurrentCardID()
+                viewModel.currentCardID = viewModel.getCurrentCardID()
             }
         }
         
     }
     
-    func handleRecommendation(_ rec: RecommendationEntity, liked: Bool) {
-        viewModel.recommendationEntities.removeAll(where: {$0.id == rec.id})
-        if liked {
-            modelContext.insert(rec.musicEntity)
-        }
-        
-    }
     
-    func generateRecommendations() {
-        Task {
-            do {
-                try await viewModel.fillRecommendations(withSources: musicEntities)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func getCurrentCardID() -> String? {
-        if let recEnt = viewModel.recommendationEntities.last {
-            return recEnt.id.uuidString
-        }
-        
-        return nil
-    }
 }
 
 #Preview {
