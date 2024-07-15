@@ -26,56 +26,11 @@ struct ExploreView: View {
                     }
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
-                    
                 } else if viewModel.isInitialLoad {
-                    HStack {
-                        Spacer()
-                        Spacer()
+                    GenerateRecommendationsView {
+                        viewModel.generateRecommendations(fromMusicEntities: musicEntities)
+                        viewModel.isInitialLoad = false
                     }
-                    VStack {
-                        
-                        Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
-                            .resizable().scaledToFit().padding([.horizontal], 60)
-                            .foregroundStyle(.quaternary)
-                        
-                        VStack(alignment: .leading, spacing: 20) {
-                            Text("In Rotation can fetch album recommendations based on songs & albums in your collection.")
-                            
-                            Text("We'll show you some cards with albums on them. Swipe right to save to your collection, swipe left to skip it and move on to the next.")
-                        }
-                        .fontWeight(.medium)
-                        .multilineTextAlignment(.leading)
-                        .padding()
-                        .background {
-                            
-                            RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
-                                .foregroundStyle(.quaternary)
-                                .opacity(0.5)
-                        }
-                        .padding(.bottom, 40)
-                        
-                        
-                        
-                        VStack {
-                            Button("Generate Recommendations") {
-                                viewModel.generateRecommendations(fromMusicEntities: musicEntities)
-                                viewModel.isInitialLoad = false
-                            }
-                            .bold()
-                            .disabled(musicEntities.count < 3)
-                            
-                            if musicEntities.count < 3 {
-                                Text("Recommendations work best with more music to go off of. Please add at least three albums to your collection to get started.")
-                                    .italic()
-                                    .fontWeight(.regular)
-                                    .foregroundStyle(.accent)
-                                    .padding(.top)
-                            }
-                        }
-                    }
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 400)
-                    
                 } else if viewModel.recommendationEntities.isEmpty {
                     Button {
                         viewModel.generateRecommendations(fromMusicEntities: musicEntities)
@@ -83,6 +38,7 @@ struct ExploreView: View {
                         Label("Load More Recommendations", systemImage: "arrow.circlepath")
                     }
                     .bold()
+                    .buttonStyle(.bordered)
                 } else {
                     ZStack {
                         ForEach(viewModel.recommendationEntities) { rec in
@@ -102,7 +58,7 @@ struct ExploreView: View {
                             }
                         }
                     }
-                    .zIndex(100)
+                    .zIndex(1000)
                     
                     HStack(spacing: 50) {
                         HStack {
@@ -139,6 +95,7 @@ struct ExploreView: View {
             .padding()
             .background { Utility.customBackground(withColorScheme: colorScheme) }
             .navigationTitle("Explore")
+            .navigationBarTitleDisplayMode(.inline)
             .currentEntitlementTask(for: Utility.premiumUnlockProductID) { state in
                 switch state {
                     case .loading:
