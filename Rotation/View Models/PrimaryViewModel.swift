@@ -32,7 +32,6 @@ class PrimaryViewModel {
     
     func setUpAppearance() {
         setUpNavBar()
-        setUpTabBar()
     }
     
     func markWelcomeViewAsSeen() {
@@ -48,9 +47,5 @@ class PrimaryViewModel {
             .font: UIFont(name: "PPPierSans-Bold", size: 20)!,
             .foregroundColor: UIColor(Color.accentColor)
         ]
-    }
-    
-    private func setUpTabBar() {
-        UITabBar.appearance().backgroundColor = UIColor(Color.customBG)
     }
 }

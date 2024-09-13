@@ -10,6 +10,8 @@ import SwiftUI
 struct PrimaryView: View {
     @Environment(\.appleMusicAuthWrangler) var appleMusicAuthWrangler
     @State private var vm = PrimaryViewModel()
+    @State private var tabViewStyle: any TabViewStyle = DefaultTabViewStyle()
+    
     
     var body: some View {
         TabView(selection: $vm.selectedTab) {
@@ -35,6 +37,11 @@ struct PrimaryView: View {
         }
         .onAppear {
             vm.setUpAppearance()
+            
+            if #available(iOS 18.0, *) {
+                print("hooha")
+                tabViewStyle = TabBarOnlyTabViewStyle()
+            }
         }
         .sheet(isPresented: $vm.shouldShowWelcomeView, content: {
             WelcomeView()
@@ -42,6 +49,8 @@ struct PrimaryView: View {
                     vm.markWelcomeViewAsSeen()
                 }
         })
+        
+        
     }
     
 }
