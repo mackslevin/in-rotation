@@ -77,6 +77,7 @@ struct TagsIndexView: View {
                 .background { Color.customBG.ignoresSafeArea() }
             }
         }
+        .navigationSplitViewStyle(.balanced)
     }
 }
 

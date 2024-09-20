@@ -14,34 +14,34 @@ struct PrimaryView: View {
     
     
     var body: some View {
+        
+        
         TabView(selection: $vm.selectedTab) {
-            CollectionIndexView()
-            .tag(1)
-            .tabItem { Label("Collection", systemImage: "circle.grid.3x3.fill") }
             
-            TagsIndexView()
-                .tag(2)
-                .tabItem { Label("Tags", systemImage: "tag.fill") }
+            Tab("Collection", systemImage: "circle.grid.3x3" , value: 1) {
+                CollectionIndexView()
+            }
             
-            ExploreView()
-                .tag(3)
-                .tabItem { Label("Explore", systemImage: "rectangle.portrait.on.rectangle.portrait.angled.fill") }
+            Tab("Tags", systemImage: "tag" , value: 2) {
+                TagsIndexView()
+            }
             
-            SettingsView()
-                .tag(4)
-                .tabItem { Label("Settings", systemImage: "gear") }
+            Tab("Explore", systemImage: "rectangle.portrait.on.rectangle.portrait.angled" , value: 3) {
+                ExploreView()
+            }
+            
+            Tab("Settings", systemImage: "gear" , value: 4) {
+                SettingsView()
+            }
+            
         }
+        .tabViewStyle(.tabBarOnly)
         .task {
             await appleMusicAuthWrangler.requestMusicAuth()
             await appleMusicAuthWrangler.getMusicSubscriptionUpdates()
         }
         .onAppear {
             vm.setUpAppearance()
-            
-            if #available(iOS 18.0, *) {
-                print("hooha")
-                tabViewStyle = TabBarOnlyTabViewStyle()
-            }
         }
         .sheet(isPresented: $vm.shouldShowWelcomeView, content: {
             WelcomeView()
