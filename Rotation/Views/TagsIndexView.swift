@@ -51,9 +51,6 @@ struct TagsIndexView: View {
                     }
                 }
             }
-            .listStyle(.plain)
-            .background { Color.customBG.ignoresSafeArea() }
-            .navigationTitle("Tags")
             .toolbar {
                 ToolbarItem(
                     placement: UIDevice.current.userInterfaceIdiom == .pad ? .bottomBar : .topBarTrailing
@@ -63,6 +60,9 @@ struct TagsIndexView: View {
                     }
                 }
             }
+            .listStyle(.plain)
+            .background { Color.customBG.ignoresSafeArea() }
+            .navigationTitle("Tags")
             .sheet(isPresented: $isShowingAddView) {
                 AddTagView()
             }

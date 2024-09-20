@@ -47,7 +47,7 @@ struct MusicEntityDetailView: View {
                 }
                 .padding()
             }
-            .navigationTitle(musicEntity.title)
+            .navigationTitle(UIDevice.current.userInterfaceIdiom == .pad ? "" : musicEntity.title)
             .navigationBarTitleDisplayMode(.inline)
             .background {
                 ZStack {
