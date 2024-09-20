@@ -13,6 +13,7 @@ enum ExploreError: String, Error {
     case unableToFillRecommendations = "Unable to generate recommendations. Please try again."
 }
 
+@MainActor
 @Observable
 class ExploreViewModel {
     var recommendationEntities: [RecommendationEntity] = []
@@ -100,7 +101,13 @@ class ExploreViewModel {
                 // Get image data
                 var imgData: Data? = nil
                 if let artURL = recMusicItem.artwork?.url(width: 1000, height: 1000) {
-                    imgData = try? Data(contentsOf: artURL)
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: artURL)
+                        imgData = data
+                    } catch {
+                        print(error)
+                        imgData = nil
+                    }
                 }
                 
                 // Convert recommended album to MusicEntity
@@ -232,6 +239,12 @@ class ExploreViewModel {
     }
     
     func getCurrentCardID() -> String? {
+        
+        guard !recommendationEntities.isEmpty else {
+            return nil
+        }
+            
+            
         if let recEnt = recommendationEntities.last {
             return recEnt.id.uuidString
         }

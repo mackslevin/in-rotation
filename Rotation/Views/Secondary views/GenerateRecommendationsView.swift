@@ -47,7 +47,7 @@ struct GenerateRecommendationsView: View {
                 }
                 .bold()
                 .disabled(musicEntities.count < 3)
-                .font(.title2)
+                .font(Font.displayFont(ofSize: 24))
                 
                 if musicEntities.count < 3 {
                     Text("Recommendations work best with more music to go off of. Please add at least three albums to your collection to get started.")
