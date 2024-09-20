@@ -107,7 +107,8 @@ class AppleMusicSearchWrangler {
             duration = song.duration ?? .zero
             if let url = song.artwork?.url(width: 1000, height: 1000) {
                 do {
-                    imageData = try Data(contentsOf: url)
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    imageData = data
                 } catch {
                     searchError = .badArtwork
                 }
@@ -131,7 +132,8 @@ class AppleMusicSearchWrangler {
                 titles.append(track.title)
                 if let url = album.artwork?.url(width: 1000, height: 1000) {
                     do {
-                        imageData = try Data(contentsOf: url)
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        imageData = data
                     } catch {
                         searchError = .badArtwork
                     }
@@ -157,7 +159,8 @@ class AppleMusicSearchWrangler {
                 titles.append(track.title)
                 if let url = playlist.artwork?.url(width: 1000, height: 1000) {
                     do {
-                        imageData = try Data(contentsOf: url)
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        imageData = data
                     } catch {
                         searchError = .badArtwork
                     }

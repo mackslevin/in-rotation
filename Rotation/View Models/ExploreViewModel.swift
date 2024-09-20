@@ -157,7 +157,13 @@ class ExploreViewModel {
                 // Get album art Data
                 var imgData: Data? = nil
                 if let artURL = relatedArtistAlbum.artwork?.url(width: 1000, height: 1000) {
-                    imgData = try? Data(contentsOf: artURL)
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: artURL)
+                        imgData = data
+                    } catch {
+                        print(error)
+                        imgData = nil
+                    }
                 }
                 
                 // Convert to MusicEntity
