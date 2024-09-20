@@ -31,8 +31,8 @@ struct GenerateRecommendationsView: View {
                 
                 Text("We'll show you some cards with albums on them. Swipe right to save to your collection, swipe left to skip it and move on to the next.")
             }
-            .fontWeight(.medium)
             .multilineTextAlignment(.leading)
+            .minimumScaleFactor(0.5)
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: Utility.defaultCorderRadius(small: false))
