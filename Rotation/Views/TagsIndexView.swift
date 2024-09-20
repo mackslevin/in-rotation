@@ -55,7 +55,9 @@ struct TagsIndexView: View {
             .background { Color.customBG.ignoresSafeArea() }
             .navigationTitle("Tags")
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(
+                    placement: UIDevice.current.userInterfaceIdiom == .pad ? .bottomBar : .topBarTrailing
+                ) {
                     Button("Add", systemImage: "plus.circle") {
                         isShowingAddView.toggle()
                     }

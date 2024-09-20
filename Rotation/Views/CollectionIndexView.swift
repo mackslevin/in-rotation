@@ -51,7 +51,10 @@ struct CollectionIndexView: View {
             .navigationTitle("Collection")
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
-                ToolbarItem(placement: .automatic) {
+                ToolbarItemGroup(
+                    // Move the toolbar so that the stupid iOS 18 TabView doesn't cover it on iPad
+                    placement: UIDevice.current.userInterfaceIdiom == .pad ? .bottomBar : .topBarTrailing
+                ) {
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
                         Section {
                             Toggle("Reverse order", systemImage: "arrow.up.arrow.down", isOn: $vm.reverseSortOrder)
@@ -70,9 +73,7 @@ struct CollectionIndexView: View {
                             }
                         }
                     }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
+                    
                     Button("Add", systemImage: "plus.circle") { vm.shouldShowAddView.toggle() }
                 }
             }
@@ -92,7 +93,6 @@ struct CollectionIndexView: View {
                 .background { Color.customBG.ignoresSafeArea() }
             }
         }
-        
     }
 }
 
