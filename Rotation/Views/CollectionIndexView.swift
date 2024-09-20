@@ -87,7 +87,7 @@ struct CollectionIndexView: View {
                     if let selectedEntityID = vm.selectedEntityID, let musicEntity = musicEntities.first(where: {$0.id == selectedEntityID}) {
                         MusicEntityDetailView(musicEntity: musicEntity)
                     } else {
-                        NothingSelectedView()
+                        EmptyCollectionDetailView(shouldShowAddView: $vm.shouldShowAddView)
                     }
                 }
                 .background { Color.customBG.ignoresSafeArea() }

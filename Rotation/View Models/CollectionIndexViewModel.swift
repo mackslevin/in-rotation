@@ -15,7 +15,6 @@ class CollectionIndexViewModel {
     var selectedEntityID: UUID?
     var shouldShowAddView = false
     var searchText = ""
-    
     var shouldShowArchived = false
     var shouldShowPlayed = true
     var collectionSorting: CollectionSort = .dateAdded

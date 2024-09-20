@@ -72,7 +72,7 @@ struct TagsIndexView: View {
                     if let selection, let tag = allTags.first(where: {$0.id == selection}) {
                         TagDetailView(tag: tag)
                     } else {
-                        NothingSelectedView()
+                        NoTagsSelectedView(shouldShowAddView: $isShowingAddView)
                     }
                         
                 }
