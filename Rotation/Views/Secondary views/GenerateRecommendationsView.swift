@@ -16,7 +16,15 @@ struct GenerateRecommendationsView: View {
         VStack {
             Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
                 .resizable().scaledToFit().padding([.horizontal], 60)
-                .foregroundStyle(.quaternary)
+                .foregroundStyle(MeshGradient(width: 3, height: 3, points: [
+                    .init(0, 0), .init(0.5, 0), .init(1, 0),
+                    .init(0, 0.5), .init(0.5, 0.5), .init(1, 0.5),
+                    .init(0, 1), .init(0.5, 1), .init(1, 1)
+                ], colors: [
+                    .accent, .accent, .accent,
+                    .accent, .secondary, .white,
+                    .accent, .accent, .cyan
+                ]))
             
             VStack(alignment: .leading, spacing: 20) {
                 Text("In Rotation can fetch album recommendations based on songs & albums in your collection.")
@@ -39,6 +47,7 @@ struct GenerateRecommendationsView: View {
                 }
                 .bold()
                 .disabled(musicEntities.count < 3)
+                .font(.title2)
                 
                 if musicEntities.count < 3 {
                     Text("Recommendations work best with more music to go off of. Please add at least three albums to your collection to get started.")
