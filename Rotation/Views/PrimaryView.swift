@@ -16,7 +16,8 @@ struct PrimaryView: View {
     @State private var vm = PrimaryViewModel()
     @State private var tabViewStyle: any TabViewStyle = DefaultTabViewStyle()
     @State private var viewMode: ViewMode = .collection
-    @State private var shouldShowTabView = true
+    @State private var shouldShowTabView = false
+        @State private var shouldShowTabViewBackground = false
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -25,25 +26,54 @@ struct PrimaryView: View {
         VStack(spacing: 0) {
             
             // TODO: Figure out default selected tab thing. (Probably try and save ViewMode to UserDefaults)
-            
-            switch viewMode {
-                case .collection:
-                    CollectionIndexView()
-                case .tags:
-                    TagsIndexView()
-                case .explore:
-                    ExploreView()
-                case .settings:
-                    SettingsView()
+            VStack(spacing: 0) {
+                switch viewMode {
+                    case .collection:
+                        CollectionIndexView()
+                    case .tags:
+                        TagsIndexView()
+                    case .explore:
+                        ExploreView()
+                    case .settings:
+                        SettingsView()
+                }
             }
+            .overlay(alignment: .bottom) {
+                Button {
+                    withAnimation {
+                        shouldShowTabView.toggle()
+                    }
+                    
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        shouldShowTabViewBackground.toggle()
+                    }
+                } label: {
+                    Image(systemName: "chevron.up.2")
+                        .font(.title)
+                        .bold()
+                        .padding()
+                        .rotationEffect(shouldShowTabView ? .degrees(180) : .degrees(0))
+                    
+                }
+                .tint(.secondary)
+                .padding()
+            }
+            .transition(.opacity)
+            
+            
             
             if shouldShowTabView {
                 ZStack {
-                    if colorScheme == .light {
-                        Rectangle().foregroundStyle(.accent).opacity(0.2)
-                    } else {
-                        Rectangle().foregroundStyle(.regularMaterial)
+                    if shouldShowTabViewBackground {
+                        if colorScheme == .light {
+                            Rectangle().foregroundStyle(.accent).opacity(0.2)
+                                .transition(.opacity)
+                        } else {
+                            Rectangle().foregroundStyle(.regularMaterial)
+                                .transition(.opacity)
+                        }
                     }
+                    
                     
                     
                     VStack {
@@ -112,6 +142,7 @@ struct PrimaryView: View {
                     
                 }
                 .frame(height: 90)
+                .transition(.opacity)
             }
         }
         .ignoresSafeArea()
