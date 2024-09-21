@@ -33,10 +33,11 @@ struct NavigationShelf: View {
                             VStack(spacing: 4) {
                                 mode.sfSymbol
                                     .font(.title2)
-                                    .bold()
+                                    .fontWeight(.semibold)
                                 
                                 Text(mode.rawValue)
-                                    .font(.caption2)
+                                    .font(Font.displayFont(ofSize: 10))
+                                    .textCase(.uppercase)
                                     .fontWeight(.medium)
                             }
                         }
