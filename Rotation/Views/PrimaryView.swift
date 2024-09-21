@@ -93,6 +93,15 @@ struct PrimaryView: View {
                             withAnimation {
                                 viewMode = .tags
                             }
+                            
+                            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+                                withAnimation(
+                                    .interactiveSpring(response: 0.75)
+                                ) {
+                                    shouldShowTabView.toggle()
+                                }
+                            }
+                            
                         } label: {
                             VStack(spacing: 4) {
                                 Image(systemName: "tag").font(.title2).bold()
