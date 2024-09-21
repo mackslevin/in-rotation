@@ -38,21 +38,28 @@ struct PrimaryView: View {
                 }
             }
             .overlay(alignment: .bottom) {
-                VStack {
+                VStack() {
                     Button {
-                        withAnimation {
+                        withAnimation(
+                            .interactiveSpring(response: 0.4)
+                        ) {
                             shouldShowTabView.toggle()
                         }
                     } label: {
-                        Image(systemName: "chevron.up.2")
-                            .font(.title)
-                            .bold()
-                            .padding()
-                            .rotationEffect(shouldShowTabView ? .degrees(180) : .degrees(0))
+                        ZStack {
+                            Circle().foregroundStyle(Color.primary).opacity(0.001) // Circle w/ barely non-zero opacity, otherwise tap won't register consistently
+                            Image(systemName: "chevron.up.2")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .rotationEffect(shouldShowTabView ? .degrees(180) : .degrees(0))
+                                .opacity(0.5)
+                        }
+                        .frame(width: 44)
                         
                     }
                     .tint(.primary)
-                    .padding()
+                    .padding(.bottom, shouldShowTabView ? 0 : 30)
+                    .buttonStyle(PlainButtonStyle())
                     
                     Rectangle().foregroundStyle(.primary)
                         .frame(height: 1)
@@ -61,7 +68,6 @@ struct PrimaryView: View {
                 }
                 
             }
-            .transition(.opacity)
             
             
             
@@ -122,6 +128,7 @@ struct PrimaryView: View {
                             }
                         }
                         .tint(viewMode == .settings ? .accentColor : .secondary)
+                        
                         
                     }
                     .frame(maxWidth: 500)
