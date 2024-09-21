@@ -17,6 +17,7 @@ struct PrimaryView: View {
     @State private var tabViewStyle: any TabViewStyle = DefaultTabViewStyle()
     @State private var viewMode: ViewMode = .collection
     @State private var shouldShowTabView = true
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -38,7 +39,12 @@ struct PrimaryView: View {
             
             if shouldShowTabView {
                 ZStack {
-                    Rectangle().foregroundStyle(.accent).opacity(0.3)
+                    if colorScheme == .light {
+                        Rectangle().foregroundStyle(.accent).opacity(0.2)
+                    } else {
+                        Rectangle().foregroundStyle(.regularMaterial)
+                    }
+                    
                     
                     VStack {
                         HStack(alignment: .bottom) {
