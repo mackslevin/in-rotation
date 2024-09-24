@@ -61,6 +61,7 @@ struct ExploreView: View {
                     .zIndex(1000)
                     
                     RecommendationSaveSkipView(viewModel: viewModel)
+                        .padding(.bottom, 20)
                 }
                 
                 Spacer()
