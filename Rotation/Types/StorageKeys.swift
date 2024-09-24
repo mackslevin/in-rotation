@@ -11,5 +11,5 @@ enum StorageKeys: String {
     case defaultScreen = "defaultScreen"
     case shouldShowWelcomeView = "shouldShowWelcomeView"
     case collectionSortCriteria = "collectionSortCriteria"
-    case alwaysShowTabBar = "alwaysShowTabBar"
+    case alwaysShowTabBar = "alwaysShowTabBar" 
 }

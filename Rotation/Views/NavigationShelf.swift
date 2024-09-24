@@ -14,7 +14,15 @@ struct NavigationShelf: View {
     
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
+                
+                // Add upper border only if tab bar is always showing. It doesn't animate well if placed here, so when the bar is set to show/hide, the border is part of the toggler view.
+                if alwaysShowTabBar {
+                    Rectangle().foregroundStyle(.primary)
+                        .frame(height: 1)
+                        .opacity(0.1)
+                }
+                
                 HStack(alignment: .bottom) {
                     
                     ForEach(ViewMode.allCases, id: \.rawValue) { mode in
