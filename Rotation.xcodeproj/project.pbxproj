@@ -302,9 +302,9 @@
 				01DE48122C2B85E400E96FE5 /* TagsIndexView.swift */,
 				01DE48162C2BC15B00E96FE5 /* TagDetailView.swift */,
 				017AA69B2B041A54005E43D8 /* ExploreView.swift */,
+				0127985C2C9F42F100C98222 /* NavigationShelf.swift */,
 				017AA69D2B041A6A005E43D8 /* SettingsView.swift */,
 				01A150822C126699006DB549 /* Secondary views */,
-				0127985C2C9F42F100C98222 /* NavigationShelf.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

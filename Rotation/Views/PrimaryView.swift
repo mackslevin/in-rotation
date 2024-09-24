@@ -12,7 +12,7 @@ import SwiftUI
 struct PrimaryView: View {
     @Environment(\.appleMusicAuthWrangler) var appleMusicAuthWrangler
     @State private var vm = PrimaryViewModel()
-
+    @AppStorage(StorageKeys.alwaysShowTabBar.rawValue) var alwaysShowTabBar = false
     
     var body: some View {
         
@@ -33,35 +33,36 @@ struct PrimaryView: View {
                 }
             }
             .overlay(alignment: .bottom) {
-                VStack() {
-                    Button {
-                        withAnimation(
-                            .interactiveSpring(response: 0.4)
-                        ) {
-                            vm.shouldShowNavigationShelf.toggle()
+                if !alwaysShowTabBar {
+                    VStack() {
+                        Button {
+                            withAnimation(
+                                .interactiveSpring(response: 0.4)
+                            ) {
+                                vm.shouldShowNavigationShelf.toggle()
+                            }
+                        } label: {
+                            ZStack {
+                                Circle().foregroundStyle(Color.primary).opacity(0.001) // Circle w/ barely non-zero opacity, otherwise tap won't register consistently
+                                Image(systemName: "chevron.up.2")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .rotationEffect(vm.shouldShowNavigationShelf ? .degrees(180) : .degrees(0))
+                                    .opacity(0.5)
+                            }
+                            .frame(width: 44)
+                            
                         }
-                    } label: {
-                        ZStack {
-                            Circle().foregroundStyle(Color.primary).opacity(0.001) // Circle w/ barely non-zero opacity, otherwise tap won't register consistently
-                            Image(systemName: "chevron.up.2")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .rotationEffect(vm.shouldShowNavigationShelf ? .degrees(180) : .degrees(0))
-                                .opacity(0.5)
-                        }
-                        .frame(width: 44)
+                        .tint(.primary)
+                        .padding(.bottom, vm.shouldShowNavigationShelf ? 0 : 30)
+                        .buttonStyle(PlainButtonStyle())
                         
+                        Rectangle().foregroundStyle(.primary)
+                            .frame(height: 1)
+                            .opacity(vm.shouldShowNavigationShelf ? 0.1 : 0)
+                            .transition(.scale)
                     }
-                    .tint(.primary)
-                    .padding(.bottom, vm.shouldShowNavigationShelf ? 0 : 30)
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    Rectangle().foregroundStyle(.primary)
-                        .frame(height: 1)
-                        .opacity(vm.shouldShowNavigationShelf ? 0.1 : 0)
-                        .transition(.scale)
                 }
-                
             }
             
             NavigationShelf(shouldShowNavigationShelf: $vm.shouldShowNavigationShelf, viewMode: $vm.viewMode)
@@ -73,7 +74,11 @@ struct PrimaryView: View {
         }
         .onAppear {
             vm.setUpAppearance()
+            vm.shouldShowNavigationShelf = alwaysShowTabBar
         }
+        .onChange(of: alwaysShowTabBar, { _, newValue in
+            vm.shouldShowNavigationShelf = newValue
+        })
         .sheet(isPresented: $vm.shouldShowWelcomeView, content: {
             WelcomeView()
                 .onDisappear {

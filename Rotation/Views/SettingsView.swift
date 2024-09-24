@@ -10,6 +10,8 @@ import StoreKit
 
 struct SettingsView: View {
     @AppStorage(StorageKeys.defaultScreen.rawValue) var defaultScreen = ViewMode.collection.rawValue
+    @AppStorage(StorageKeys.alwaysShowTabBar.rawValue) var alwaysShowTabBar = false
+    
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
@@ -28,6 +30,20 @@ struct SettingsView: View {
                     .foregroundStyle(Color.customBG)
                 
                 Form {
+                    
+                    Section("Interface") {
+                        Picker("Default Screen", selection: $defaultScreen) {
+                            ForEach(ViewMode.allCases, id: \.rawValue) { screen in
+                                Text(screen.rawValue.capitalized)
+                                    .tag(screen.rawValue)
+                            }
+                        }
+                        .fontWeight(.medium)
+                        
+                        Toggle("Always Show Tab Bar", isOn: $alwaysShowTabBar)
+                            .fontWeight(.medium)
+                    }
+                    
                     
                     Section("Apple Music") {
                         HStack {
@@ -48,18 +64,12 @@ struct SettingsView: View {
                             .listRowSeparator(.hidden)
                     }
                     
-                    Section {
-                        Picker("Default screen", selection: $defaultScreen) {
-                            ForEach(ViewMode.allCases, id: \.rawValue) { screen in
-                                Text(screen.rawValue.capitalized)
-                                    .tag(screen.rawValue)
-                            }
-                        }
-                    }
+                    
                     
                     Section {
                         PremiumUnlockProductView(showExplainer: true)
                     }
+                    
                     
                     Section {
                         Button("Restore Purchase") {

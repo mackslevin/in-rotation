@@ -10,6 +10,7 @@ import SwiftUI
 struct NavigationShelf: View {
     @Binding var shouldShowNavigationShelf: Bool
     @Binding var viewMode: ViewMode
+    @AppStorage(StorageKeys.alwaysShowTabBar.rawValue) var alwaysShowTabBar: Bool = false
     
     var body: some View {
         ZStack {
@@ -22,11 +23,13 @@ struct NavigationShelf: View {
                                 viewMode = mode
                             }
                             
-                            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
-                                withAnimation(
-                                    .interactiveSpring(response: 0.75)
-                                ) {
-                                    shouldShowNavigationShelf.toggle()
+                            if !alwaysShowTabBar {
+                                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+                                    withAnimation(
+                                        .interactiveSpring(response: 0.75)
+                                    ) {
+                                        shouldShowNavigationShelf.toggle()
+                                    }
                                 }
                             }
                         } label: {
