@@ -9,7 +9,7 @@ import SwiftUI
 import StoreKit
 
 struct SettingsView: View {
-    @AppStorage(StorageKeys.defaultScreen.rawValue) var defaultScreen = DefaultScreen.collection
+    @AppStorage(StorageKeys.defaultScreen.rawValue) var defaultScreen = ViewMode.collection.rawValue
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.appleMusicAuthWrangler) var amAuthWrangler
@@ -50,9 +50,9 @@ struct SettingsView: View {
                     
                     Section {
                         Picker("Default screen", selection: $defaultScreen) {
-                            ForEach(DefaultScreen.allCases, id: \.rawValue) { screen in
+                            ForEach(ViewMode.allCases, id: \.rawValue) { screen in
                                 Text(screen.rawValue.capitalized)
-                                    .tag(screen)
+                                    .tag(screen.rawValue)
                             }
                         }
                     }

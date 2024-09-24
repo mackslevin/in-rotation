@@ -12,16 +12,16 @@ import Observation
 class PrimaryViewModel {
     var selectedTab = 1
     var shouldShowWelcomeView = false
+    var shouldShowNavigationShelf = false
+    var viewMode: ViewMode = .collection
     
     init() {
-        if let defaultScreen = UserDefaults.standard.value(forKey: StorageKeys.defaultScreen.rawValue) as? DefaultScreen {
-            switch defaultScreen {
-                case .collection:
-                    selectedTab = 1
-                case .tags:
-                    selectedTab = 2
-                case .explore:
-                    selectedTab = 3
+        if let defaultScreen = UserDefaults.standard.value(forKey: StorageKeys.defaultScreen.rawValue) as? String {
+            for viewMode in ViewMode.allCases {
+                if viewMode.rawValue.lowercased() == defaultScreen.lowercased() {
+                    self.viewMode = viewMode
+                    break
+                }
             }
         }
         

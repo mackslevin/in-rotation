@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-enum ViewMode: String, CaseIterable {
+enum ViewMode: String, CaseIterable, Codable {
     case collection = "Collection"
     case tags = "Tags"
     case explore = "Explore"

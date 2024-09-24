@@ -61,7 +61,7 @@ struct ExploreView: View {
                     .zIndex(1000)
                     
                     RecommendationSaveSkipView(viewModel: viewModel)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 20) // Make a little room for the tab view toggler 
                 }
                 
                 Spacer()
