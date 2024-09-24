@@ -52,8 +52,7 @@ struct CollectionIndexView: View {
             .background { Color.customBG.ignoresSafeArea() }
             .toolbar {
                 ToolbarItemGroup(
-                    // Move the toolbar so that the stupid iOS 18 TabView doesn't cover it on iPad
-                    placement: UIDevice.current.userInterfaceIdiom == .pad ? .bottomBar : .topBarTrailing
+                    placement: .topBarTrailing
                 ) {
                     Menu("List Options", systemImage: "line.horizontal.3.decrease.circle") {
                         Section {

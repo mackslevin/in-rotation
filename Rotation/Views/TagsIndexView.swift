@@ -53,7 +53,7 @@ struct TagsIndexView: View {
             }
             .toolbar {
                 ToolbarItem(
-                    placement: UIDevice.current.userInterfaceIdiom == .pad ? .bottomBar : .topBarTrailing
+                    placement: .topBarTrailing
                 ) {
                     Button("Add", systemImage: "plus.circle") {
                         isShowingAddView.toggle()
