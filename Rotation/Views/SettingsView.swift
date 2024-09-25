@@ -84,6 +84,7 @@ struct SettingsView: View {
                         }
                     }
                 }
+                .tint(.accent)
                 .scrollContentBackground(.hidden)
                 .navigationTitle("Settings")
                 .frame(maxWidth: 800, alignment: .center)

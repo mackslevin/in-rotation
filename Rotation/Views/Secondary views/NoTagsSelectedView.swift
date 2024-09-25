@@ -4,7 +4,6 @@ import SwiftData
 struct NoTagsSelectedView: View {
     @Binding var shouldShowAddView: Bool
     @Query var tags: [Tag]
-    @State private var isPortrait = false
     
     var body: some View {
         VStack(spacing: 40) {
@@ -37,48 +36,35 @@ struct NoTagsSelectedView: View {
                 .buttonStyle(.borderedProminent)
                 .bold()
             } else {
-                
                 VStack {
                     Text("Nothing Selected")
                         .font(.displayFont(ofSize: 36))
                         .foregroundStyle(.secondary)
                     
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        if isPortrait  {
-                            Text("Toggle the sidebar \(Image(systemName: "sidebar.left")) to browse tags")
-                                .foregroundStyle(.secondary)
-                        }
+                    if UIDevice.current.userInterfaceIdiom == .pad && UIDevice.current.orientation.isPortrait {
+                        Text("Toggle the sidebar \(Image(systemName: "sidebar.left")) to browse tags")
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .onAppear {
-            isPortrait = UIDevice.current.orientation == .portrait
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            
-            isPortrait = UIDevice.current.orientation == .portrait
-            
-            
-            print("^^ orientation changed")
-        }
     }
 }
 
-#Preview {
-    NavigationStack {
-        HStack {
-            Spacer()
-            VStack {
-                Spacer()
-                NoTagsSelectedView(shouldShowAddView: .constant(false))
-                Spacer()
-            }
-            Spacer()
-        }
-        .navigationTitle("Something")
-        .background { Color.customBG.ignoresSafeArea() }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        HStack {
+//            Spacer()
+//            VStack {
+//                Spacer()
+//                NoTagsSelectedView(shouldShowAddView: .constant(false))
+//                Spacer()
+//            }
+//            Spacer()
+//        }
+//        .navigationTitle("Something")
+//        .background { Color.customBG.ignoresSafeArea() }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+//    }
+//}
